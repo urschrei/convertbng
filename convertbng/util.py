@@ -9,7 +9,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1"
+__version__ = "0.1.1"
 
 # hacky: http://stackoverflow.com/a/30789980/416626
 class Int32_2(Structure):
