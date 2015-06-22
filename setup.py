@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 import os
 import re
 import io
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Distribution
 
 def read(*names, **kwargs):
     with io.open(
@@ -28,6 +28,9 @@ def find_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
+class BinaryDistribution(Distribution):
+    def is_pure(self):
+        return False
 
 version=find_version("convertbng/util.py")
 
@@ -40,13 +43,14 @@ setup(
     license='MIT License',
     url='https://github.com/urschrei/rust_bng',
     include_package_data=True,
+    distclass=BinaryDistribution,
     download_url='https://github.com/urschrei/rust_bng/tarball/v%s' % version,
     keywords=['Geo'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'License :: OSI Approved :: MIT License',
@@ -59,10 +63,10 @@ Fast lon, lat to BNG conversion
 ---------------------------------------------
 
 Uses a Rust 1.0 binary to perform fast lon, lat to BNG conversion\n
-This module exposes a single method: util.convert()\n
+This module exposes a single method: util.convertbng()\n
 call it like so:\n\n
-from convertbng.util import convert\n
-res = convert(lon, lat)\n\n
+from convertbng.util import convertbng\n
+res = convertbng(lon, lat)\n\n
 
 This version requires Python 2.7.x / 3.4.x"""
 )
