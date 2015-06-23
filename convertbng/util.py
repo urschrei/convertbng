@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ctypes import cdll, c_float, Structure, ARRAY, c_int32
+from ctypes import cdll, c_float, Structure, c_int32
 from sys import platform
 import os
 
@@ -10,11 +10,11 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.8"
+__version__ = "0.1.9"
 
 # hacky: http://stackoverflow.com/a/30789980/416626
 class Int32_2(Structure):
-    _fields_ = [("array", ARRAY(c_int32, 2))]
+    _fields_ = [("array", c_int32 * 2)]
 
 # liblonlat_bng.dylib
 file_path = os.path.dirname(__file__)
