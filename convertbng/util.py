@@ -71,7 +71,7 @@ class FFIArray(Structure):
     # integers.
     @classmethod
     def from_param(cls, seq):
-        return cls(seq)
+        return seq if isinstance(seq, cls) else cls(seq)
 
     # Wrap sequence of values. You can specify another type besides a
     # 32-bit unsigned integer.
