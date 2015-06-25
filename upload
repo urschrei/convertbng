@@ -1,8 +1,15 @@
 #! /usr/bin/env bash
 set -e
-
+initial_wd=`pwd`
 # just in case
 export WHEEL_TOOL=/Users/sth/dev/convertbng/venv/bin/wheel
+# build rust binary
+cd ../latlong_bng
+cargo test
+cargo build --release
+echo "Testing and release build complete. Copying binary…"
+cd $initial_wd
+cp ../latlong_bng/target/release/liblonlat_bng.dylib convertbng/
 echo "Removing build and dist dir"
 rm -rf build
 rm -rf dist

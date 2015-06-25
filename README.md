@@ -18,5 +18,10 @@ It returns a list of tuples containing Easting and Northing integers.
     res = convertbng(lon, lat)
     res_list = convertbng([lons], [lats])
 
+#Building the binary for local development
+- clone https://github.com/urschrei/rust_bng
+- build the dylib using cargo (see README)
+- copy the binary to `convertbng/`
+
 #License
 [MIT](license.txt)
