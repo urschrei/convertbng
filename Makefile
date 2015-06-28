@@ -1,7 +1,7 @@
 RUSTDIR = ../latlong_bng
 # no args: checks for out-of-date binary, rebuilds wheel, and uploads
-all: build upload
 .PHONY: all
+all: build upload
 
 # wheel is always built with up-to-date binary
 dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl: $(RUSTDIR)/target/release/liblonlat_bng.dylib
@@ -14,10 +14,11 @@ $(RUSTDIR)/target/release/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
 	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/
 
 # build alone won't upload, but upload will first call build
-.PHONY: build upload
+.PHONY: build
 build: dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl
 
 # upload depends on build
+.PHONY: upload
 upload: build
 	@echo "Rebuilding wheel"
 	@export WHEEL_TOOL=/Users/sth/dev/convertbng/venv/bin/wheel
