@@ -19,9 +19,9 @@ It returns a list of tuples containing Easting and Northing integers.
     res_list = convertbng([lons], [lats])
 
 #Building the binary for local development
+- ensure you have Rust 1.x and Cargo installed
 - clone https://github.com/urschrei/rust_bng
-- build the dylib using cargo (see README)
-- copy the binary to `convertbng/`
+- run `make clean`, then `make build`
 
 #License
 [MIT](license.txt)
