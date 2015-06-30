@@ -39,7 +39,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.12"
+__version__ = "0.1.13"
 
 
 # hacky: http://stackoverflow.com/a/30789980/416626
@@ -86,7 +86,7 @@ class FFIArray(Structure):
 def void_array_to_tuple_list(array, _func, _args):
     return cast(array.data, POINTER(FFITuple * array.len))[0]
 
-convert_vec = lib.convert_vec_c
+convert_vec = lib.convert_vec_c_threaded
 convert_vec.argtypes = (FFIArray, FFIArray)
 convert_vec.restype = FFIArray
 convert_vec.errcheck = void_array_to_tuple_list
