@@ -20,8 +20,8 @@ It returns a list of tuples containing Easting and Northing integers.
 
 #Building the binary for local development
 - ensure you have Rust 1.x and Cargo installed
-- clone https://github.com/urschrei/rust_bng
-- run `make clean`, then `make build`
+- clone https://github.com/urschrei/rust_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/latlon_bng`)
+- in this dir, run `make clean` then `make build`
 
 #License
 [MIT](license.txt)
