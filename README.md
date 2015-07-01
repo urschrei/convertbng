@@ -16,7 +16,7 @@ It returns a list of tuples containing Easting and Northing integers.
     from convertbng.util import convertbng, convertbng_list
 
     res = convertbng(lon, lat)
-    res_list = convertbng([lons], [lats])
+    res_list = convertbng_list([lons], [lats])
 
 #Building the binary for local development
 - ensure you have Rust 1.x and Cargo installed
