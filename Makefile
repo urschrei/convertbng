@@ -1,4 +1,4 @@
-RUSTDIR = ../latlong_bng
+RUSTDIR = ../rust_bng
 # no args: checks for out-of-date binary, rebuilds wheel, and uploads
 .PHONY: all
 all: build upload
