@@ -33,10 +33,10 @@ from ctypes import cdll, c_uint32, c_float, Structure, c_int32, c_void_p, cast, 
 from sys import platform
 import os
 
-if platform == "darwin":
-    ext = "dylib"
-else:
-    ext = "so"
+# if platform == "darwin":
+ext = "dylib"
+# else:
+    # ext = "so"
 
 __author__ = u"Stephan Hügel"
 __version__ = "0.1.14"
