@@ -1,9 +1,12 @@
+[![Build Status](https://travis-ci.org/urschrei/convertbng.png?branch=master)](https://travis-ci.org/urschrei/convertbng)  
 #Description
 A utility library for converting longitude and latitude coordinates into British National Grid ([epsg:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) coordinates.  
 Conversion is handled by a Rust binary, and is quite fast. Some not-very-thorough tests can be found [here](https://github.com/urschrei/rust_bng/blob/master/rust_BNG.ipynb).
 
 #Installation
 `pip install convertbng`
+## Note
+`convertbng` is currently only available for OSX, and will remain that way until I figure out how to cross-compile the binary. Sorry!
 
 #Usage
 `convertbng` accepts a longitude value and a latitude value, floating-point.  
