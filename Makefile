@@ -16,6 +16,7 @@ $(RUSTDIR)/target/release/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
 # build alone won't upload, but upload will first call build
 .PHONY: build
 build: dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl
+	@nosetests
 
 # upload depends on build
 .PHONY: upload
@@ -38,4 +39,6 @@ clean:
 	@echo "Removing Wheel build and dist dir"
 	@rm -rf build
 	@rm -rf dist
+	@rm *.pyc
+	@rm convertbng/*.pyc
 
