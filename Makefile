@@ -4,19 +4,20 @@ RUSTDIR = ../latlong_bng
 all: build upload
 
 # wheel is always built with up-to-date binary
-dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl: $(RUSTDIR)/target/release/liblonlat_bng.dylib \
-	lonlat_linux_build/target/release/liblonlat_bng.so
+dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl: convertbng/liblonlat_bng.dylib \
+	convertbng/liblonlat_bng.so
 
-# here's how to build an up-to-date-binary
-$(RUSTDIR)/target/release/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
+# here's how to build an up-to-date OSX binary
+convertbng/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
 	@echo "Rebuilding binary"
 	@cd $(RUSTDIR) && cargo test && cargo build --release
 	-@rm convertbng/liblonlat_bng.dylib
 	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/
-	@echo "Copied OSX dylib"
+	@echo "Copied OSX .dylib"
 
-lonlat_linux_build/target/release/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
-	@echo "Attempting to build .so on VM"
+# here's how to build an up-to-date Linux binary
+convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
+	@echo "Rebuilding .so on VM"
 	@cd ../lonlat_linux_build && vagrant ssh -c 'ar -x /vagrant/target/release/liblonlat_bng.a && gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt'
 	@-rm convertbng/liblonlat_bng.so
 	@cp ../lonlat_linux_build/target/release/liblonlat_bng.so convertbng/
