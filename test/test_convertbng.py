@@ -5,7 +5,6 @@ from convertbng.convertbng.util import convertbng_list
 class ConvertbngTests(unittest.TestCase):
     """ Tests for pyzotero
     """
-    # cwd = os.path.dirname(os.path.realpath(__file__))
 
     def setUp(self):
         """ Set stuff up
