@@ -68,7 +68,7 @@ util.convertbng_list() – pass lists of lons, lats. Returns a list of tuples\n\
 Call them like so:\n
 from convertbng.util import convertbng, convertbng_list\n\n
 res = convertbng(lon, lat)\n
-res_list = convertbng([lons], [lats])\n\n
+res_list = convertbng_list([lons], [lats])\n\n
 
 This version requires Python 2.7.x / 3.4.x"""
 )
