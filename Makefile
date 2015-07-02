@@ -18,8 +18,12 @@ convertbng/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
 # here's how to build an up-to-date Linux binary
 convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	@echo "Rebuilding .so on VM"
+	-@rm -rf ../lonlat_linux_build/src
+	-@rm -rf ../lonlat_linux_build/Cargo.toml
+	@cp -r $(RUSTDIR)/src ../lonlat_linux_build/
+	@cp $(RUSTDIR)/Cargo.toml ../lonlat_linux_build/
 	@cd ../lonlat_linux_build && vagrant ssh -c 'ar -x /vagrant/target/release/liblonlat_bng.a && gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt'
-	@-rm convertbng/liblonlat_bng.so
+	-@rm convertbng/liblonlat_bng.so
 	@cp ../lonlat_linux_build/target/release/liblonlat_bng.so convertbng/
 	@echo "Copied Linux .so"
 
