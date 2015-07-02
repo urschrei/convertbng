@@ -64,7 +64,8 @@ Fast lon, lat to BNG conversion
 Uses a Rust 1.0 binary to perform fast lon, lat to BNG conversion\n
 This module exposes two methods:\n
 util.convertbng() – pass a lon, lat. Returns a tuple of Eastings, Northings\n
-util.convertbng_list() – pass lists of lons, lats. Returns a list of tuples\n\n
+util.convertbng_list() – pass lists (or Numpy arrays) of lons, lats. 
+Returns a list of Easting, Northing tuples\n\n
 Call them like so:\n
 from convertbng.util import convertbng, convertbng_list\n\n
 res = convertbng(lon, lat)\n
