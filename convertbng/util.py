@@ -39,7 +39,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.16"
+__version__ = "0.1.17"
 
 
 # hacky: http://stackoverflow.com/a/30789980/416626
