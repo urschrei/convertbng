@@ -17,9 +17,9 @@ class ConvertbngTests(unittest.TestCase):
         expected = [
             (516276L, 173141L),
             (398915L, 521545L),
-            (604932L, 188805L),
-            (574082L, 61932L),
-            (523242L, 517194L),
+            (604932L, 188804L),
+            (574082L, 61931L),
+            (523242L, 517193L),
             (515004L, 105661L),
             (566898L, 616298L)]
         result = convertbng_list([
