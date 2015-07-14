@@ -16,18 +16,21 @@ It returns a tuple of Easting and Northing integers.
 returns a list of tuples containing Easting and Northing integers.
 
 
-    from convertbng.util import convertbng, convertbng_list
+    from convertbng.util import convertbng, convertbng_list, convertlonlat_list
 
+    res = convertbng(lon, lat)
 
     lons = [lon1, lon2, lon3]
     lats = [lat1, lat2, lat3]
-    # assumes you've imported numpy as np
+    eastings = [easting1, easting2, easting3]
+    northings = [northing1, northing2, northing3]
+    # assumes numpy imported as np
     lons_np = np.array(lons)
     lats_np = np.array(lats)
-
-    res = convertbng(lon, lat)
+    
     res_list = convertbng_list(lons, lats)
-    res_np = convertbng_list(lons_np, lats_np)
+    res_list_np = convertbng_list(lons_np, lats_np) 
+    res_list_en = convertlonlat_list(eastings, northings)
 
 #Building the binary for local development
 - ensure you have Rust 1.x and Cargo installed
