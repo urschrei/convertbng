@@ -15,6 +15,9 @@ It returns a tuple of Easting and Northing integers.
 `convertbng_list` accepts a list of longitude values, and a list of latitude values. Numpy arrays are OK too, but note the return type:  
 returns a list of tuples containing Easting and Northing integers.
 
+`convertlonlat_list` accepts a list of BNG Eastings, and a list of BNG Northings. Numpy arrays are OK too, but note the return type:  
+returns a list of tuples containing longitudes and latitudes as floating-point numbers.
+
 ```python
 from convertbng.util import convertbng, convertbng_list, convertlonlat_list
 
