@@ -1,5 +1,5 @@
 import unittest
-from convertbng.convertbng.util import convertbng_list
+from convertbng.convertbng.util import convertbng_list, convertlonlat_list
 
 
 class ConvertbngTests(unittest.TestCase):
@@ -11,8 +11,10 @@ class ConvertbngTests(unittest.TestCase):
         """
         pass
 
-    def testConvertList(self):
-        """ Ensure that threaded vector function returns correct values
+    def testConvertLonLat(self):
+        """
+        Ensure that threaded vector function returns correct
+        lon, lat -> BNG values
         """
         expected = [
             (516276L, 173141L),
@@ -38,4 +40,37 @@ class ConvertbngTests(unittest.TestCase):
             54.535021436247419,
             50.839059313135706,
             55.412189281234419])
+        self.assertEqual(expected, result)
+
+    def testConvertBNG(self):
+        """
+        Ensure that threaded vector function returns correct
+        BNG -> lon, lat values
+        """
+
+        expected = [
+            (-0.328247994184494, 51.44533920288086),
+            (-2.0183045864105225, 54.589115142822266),
+            (0.95512455701828, 51.56087875366211),
+            (0.44975531101226807, 50.43143081665039),
+            (-0.09681292623281479, 54.535037994384766),
+            (-0.36807215213775635, 50.83906555175781),
+            (0.6348583698272705, 55.412208557128906)
+        ]
+        result = convertlonlat_list([
+            516276L,
+            398915L,
+            604932L,
+            574082L,
+            523242L,
+            515004L,
+            566898L],
+        [
+            173141L,
+            521545L,
+            188804L,
+            61931L,
+            517193L,
+            105661L,
+            616298L])
         self.assertEqual(expected, result)
