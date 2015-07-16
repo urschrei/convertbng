@@ -15,22 +15,26 @@ It returns a tuple of Easting and Northing integers.
 `convertbng_list` accepts a list of longitude values, and a list of latitude values. Numpy arrays are OK too, but note the return type:  
 returns a list of tuples containing Easting and Northing integers.
 
-
+    ::python
     from convertbng.util import convertbng, convertbng_list, convertlonlat_list
 
+    # convert a single value
     res = convertbng(lon, lat)
 
+    # convert lists of longitude and latitude values to BNG Eastings and Northings
     lons = [lon1, lon2, lon3]
     lats = [lat1, lat2, lat3]
+    res_list = convertbng_list(lons, lats)
+
+    # convert lists of BNG Eastings and Northings to longitude, latitude
     eastings = [easting1, easting2, easting3]
     northings = [northing1, northing2, northing3]
+    res_list_en = convertlonlat_list(eastings, northings)
+
     # assumes numpy imported as np
     lons_np = np.array(lons)
     lats_np = np.array(lats)
-    
-    res_list = convertbng_list(lons, lats)
     res_list_np = convertbng_list(lons_np, lats_np) 
-    res_list_en = convertlonlat_list(eastings, northings)
 
 #Building the binary for local development
 - ensure you have Rust 1.x and Cargo installed
