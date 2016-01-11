@@ -85,8 +85,9 @@ class BNG_FFIArray(Structure):
 # nicer to consume.
 def bng_void_array_to_tuple_list(array, _func, _args):
     res = cast(array.data, POINTER(BNG_FFITuple * array.len))[0]
+    res_list = [(i.a, i.b) for i in iter(res)]
     drop_bng_array(array)
-    return res
+    return res_list
 
 
 class LONLAT_FFITuple(Structure):
@@ -115,8 +116,9 @@ class LONLAT_FFIArray(Structure):
 # nicer to consume.
 def lonlat_void_array_to_tuple_list(array, _func, _args):
     res = cast(array.data, POINTER(LONLAT_FFITuple * array.len))[0]
+    res_list = [(i.a, i.b) for i in iter(res)]
     drop_ll_array(array)
-    return res
+    return res_list
 
 # Single-threaded
 convert_vec = lib.convert_vec_c
