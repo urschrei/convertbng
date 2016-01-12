@@ -9,7 +9,7 @@ dist/convertbng/convertbng-0.1.12-cp27-none-macosx_10_6_intel.whl: convertbng/li
 
 # here's how to build an up-to-date OSX binary
 convertbng/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs
-	@echo "Rebuilding binary"
+	@echo "Running rust tests and rebuilding binary"
 	@cd $(RUSTDIR) && cargo test && cargo build --release
 	-@rm convertbng/liblonlat_bng.dylib
 	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/
@@ -56,3 +56,8 @@ clean:
 	-@rm *.pyc
 	-@rm convertbng/*.pyc
 
+# rebuild OSX binary if it's out of date, then run Python module tests 
+.PHONY: test
+test: convertbng/liblonlat_bng.dylib
+	@echo "Running Python module tests"
+	@nosetests -v
