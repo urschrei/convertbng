@@ -13,10 +13,7 @@ class ConvertbngTests(unittest.TestCase):
         pass
 
     def testConvertLonLat(self):
-        """
-        Ensure that threaded vector function returns correct
-        lon, lat -> BNG values
-        """
+        """ Testing the threaded lon, lat --> BNG function """
         expected = [
             (516276L, 173141L),
             (398915L, 521545L),
@@ -44,10 +41,7 @@ class ConvertbngTests(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def testConvertBNG(self):
-        """
-        Ensure that threaded vector function returns correct
-        BNG -> lon, lat values
-        """
+        """ Testing the threaded BNG --> lon, lat function """
 
         expected = [
             (-0.328247994184494, 51.44533920288086),
@@ -77,7 +71,7 @@ class ConvertbngTests(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def testLargeArrayConversion(self):
-        """ Ensure that we aren't getting segmentation fault: 11 on large arrays """
+        """ Ensure that we don't get segmentation fault: 11 on large (1MM points) arrays """
         # UK bounding box
         N = 55.811741
         E = 1.768960
@@ -91,7 +85,7 @@ class ConvertbngTests(unittest.TestCase):
         
 
     def testConvertLonLatSingle(self):
-        """ Ensure the single-threaded function works """
+        """ Ensure that the single lon, lat --> BNG function works """
         expected = (516276L, 173141L)
         result = convertbng(-0.32824866, 51.44533267)
         self.assertEqual(expected, result)
