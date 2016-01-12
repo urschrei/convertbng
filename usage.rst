@@ -3,7 +3,7 @@ Fast lon, lat to BNG conversion, and vice versa
 ===============================================
 |  Uses a Rust 1.x binary to perform fast longitude, latitude to `BNG <https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid>`_ conversion.
 
-|  This module exposes two methods: 
+|  This module exposes three methods: 
 
 |  ``util.convertbng()`` – pass a lon, lat. Returns a tuple of Eastings, Northings
 |  ``util.convertbng_list()`` – pass lists (or Numpy arrays) of lons, lats.
@@ -43,3 +43,7 @@ Usage
     lons_np = np.array(lons)
     lats_np = np.array(lats)
     res_list_np = convertbng_list(lons_np, lats_np)
+
+Testing
+=======
+Run ``nosetests`` (requires `Nose <http://nose.readthedocs.org/en/latest/>`_)
