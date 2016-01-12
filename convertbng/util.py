@@ -109,12 +109,12 @@ def _lonlat_void_array_to_tuple_list(array, _func, _args):
 
 
 # Multi-threaded
-convert_bng = lib.convert_to_bng
+convert_bng = lib.convert_to_bng_threaded
 convert_bng.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
 convert_bng.restype = _BNG_FFIArray
 convert_bng.errcheck = _bng_void_array_to_tuple_list
 
-convert_lonlat = lib.convert_to_lonlat
+convert_lonlat = lib.convert_to_lonlat_threaded
 convert_lonlat.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
 convert_lonlat.restype = _LONLAT_FFIArray
 convert_lonlat.errcheck = _lonlat_void_array_to_tuple_list
