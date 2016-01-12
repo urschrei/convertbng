@@ -1,9 +1,10 @@
 import unittest
-from convertbng.convertbng.util import convertbng_list, convertlonlat_list
+import numpy as np
+from convertbng.convertbng.util import convertbng_list, convertlonlat_list, convertbng
 
 
 class ConvertbngTests(unittest.TestCase):
-    """ Tests for pyzotero
+    """ Tests for convertbng
     """
 
     def setUp(self):
@@ -73,4 +74,24 @@ class ConvertbngTests(unittest.TestCase):
             517193L,
             105661L,
             616298L])
+        self.assertEqual(expected, result)
+
+    def testLargeArrayConversion(self):
+        """ Ensure that we aren't getting segmentation fault: 11 on large arrays """
+        # UK bounding box
+        N = 55.811741
+        E = 1.768960
+        S = 49.871159
+        W = -6.379880
+
+        num_coords = 1000000
+        lon_ls = list(np.random.uniform(W, E, [num_coords]))
+        lat_ls = list(np.random.uniform(S, N, [num_coords]))
+        convertbng_list(lon_ls, lat_ls)
+        
+
+    def testConvertLonLatSingle(self):
+        """ Ensure the single-threaded function works """
+        expected = (516276L, 173141L)
+        result = convertbng(-0.32824866, 51.44533267)
         self.assertEqual(expected, result)

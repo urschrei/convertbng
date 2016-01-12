@@ -52,5 +52,9 @@ res_list_np = convertbng_list(lons_np, lats_np)
 - clone https://github.com/urschrei/rust_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/rust_bng`)
 - in this dir, run `make clean` then `make build`
 
+#Tests
+You can run the Python module tests by running "make test".  
+Tests require both `numpy` and `nose`.
+
 #License
 [MIT](license.txt)
