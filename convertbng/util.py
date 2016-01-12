@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-from ctypes import cdll, c_uint32, c_float, Structure, c_int32, c_void_p, cast, c_size_t, POINTER
+from ctypes import cdll, c_uint32, c_float, Structure, c_void_p, cast, c_size_t, POINTER
 from sys import platform
 import os
 
@@ -41,26 +41,16 @@ else:
 __author__ = u"Stephan Hügel"
 __version__ = "0.1.19"
 
-
-# hacky: http://stackoverflow.com/a/30789980/416626
-class Int32_2(Structure):
-    _fields_ = [("array", c_int32 * 2)]
-
-
-# liblonlat_bng.dylib
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
-rust_bng = lib.convert_vec_c
-rust_bng.argtypes = [c_float, c_float]
-rust_bng.restype = Int32_2
 
 
-class BNG_FFITuple(Structure):
+class _BNG_FFITuple(Structure):
     _fields_ = [("a", c_uint32),
                 ("b", c_uint32)]
 
 
-class BNG_FFIArray(Structure):
+class _BNG_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
     # Allow implicit conversions from a sequence of 32-bit unsigned
@@ -79,19 +69,19 @@ class BNG_FFIArray(Structure):
 
 # A conversion function that cleans up the result value to make it
 # nicer to consume.
-def bng_void_array_to_tuple_list(array, _func, _args):
-    res = cast(array.data, POINTER(BNG_FFITuple * array.len))[0]
+def _bng_void_array_to_tuple_list(array, _func, _args):
+    res = cast(array.data, POINTER(_BNG_FFITuple * array.len))[0]
     res_list = [(i.a, i.b) for i in iter(res)]
     drop_bng_array(array)
     return res_list
 
 
-class LONLAT_FFITuple(Structure):
+class _LONLAT_FFITuple(Structure):
     _fields_ = [("a", c_float),
                 ("b", c_float)]
 
 
-class LONLAT_FFIArray(Structure):
+class _LONLAT_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
     # Allow implicit conversions from a sequence of 32-bit unsigned
@@ -111,8 +101,8 @@ class LONLAT_FFIArray(Structure):
 
 # A conversion function that cleans up the result value to make it
 # nicer to consume.
-def lonlat_void_array_to_tuple_list(array, _func, _args):
-    res = cast(array.data, POINTER(LONLAT_FFITuple * array.len))[0]
+def _lonlat_void_array_to_tuple_list(array, _func, _args):
+    res = cast(array.data, POINTER(_LONLAT_FFITuple * array.len))[0]
     res_list = [(i.a, i.b) for i in iter(res)]
     drop_ll_array(array)
     return res_list
@@ -120,23 +110,25 @@ def lonlat_void_array_to_tuple_list(array, _func, _args):
 
 # Multi-threaded
 convert_bng = lib.convert_to_bng
-convert_bng.argtypes = (BNG_FFIArray, BNG_FFIArray)
-convert_bng.restype = BNG_FFIArray
-convert_bng.errcheck = bng_void_array_to_tuple_list
+convert_bng.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
+convert_bng.restype = _BNG_FFIArray
+convert_bng.errcheck = _bng_void_array_to_tuple_list
 
 convert_lonlat = lib.convert_to_lonlat
-convert_lonlat.argtypes = (LONLAT_FFIArray, LONLAT_FFIArray)
-convert_lonlat.restype = LONLAT_FFIArray
-convert_lonlat.errcheck = lonlat_void_array_to_tuple_list
+convert_lonlat.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
+convert_lonlat.restype = _LONLAT_FFIArray
+convert_lonlat.errcheck = _lonlat_void_array_to_tuple_list
 
 # cleanup
 drop_bng_array = lib.drop_int_array
-drop_bng_array.argtypes = (BNG_FFIArray,)
+drop_bng_array.argtypes = (_BNG_FFIArray,)
 drop_bng_array.restype = None
 drop_ll_array = lib.drop_float_array
-drop_ll_array.argtypes = (LONLAT_FFIArray,)
+drop_ll_array.argtypes = (_LONLAT_FFIArray,)
 drop_ll_array.restype = None
 
+
+# The module exports these functions
 def convertbng(lon, lat):
     """ Single-threaded lon, lat --> BNG conversion """
     return convert_bng([lon], [lat])[0]
