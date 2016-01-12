@@ -117,11 +117,6 @@ def lonlat_void_array_to_tuple_list(array, _func, _args):
     drop_ll_array(array)
     return res_list
 
-# Single-threaded
-convert_vec = lib.convert_vec_c
-convert_vec.argtypes = (BNG_FFIArray, BNG_FFIArray)
-convert_vec.restype = BNG_FFIArray
-convert_vec.errcheck = bng_void_array_to_tuple_list
 
 # Multi-threaded
 convert_bng = lib.convert_to_bng
@@ -144,7 +139,7 @@ drop_ll_array.restype = None
 
 def convertbng(lon, lat):
     """ Single-threaded lon, lat --> BNG conversion """
-    return tuple(r for r in rust_bng(lon, lat).array)
+    return convert_bng([lon], [lat])[0]
 
 def convertbng_list(lons, lats):
     """ Multi-threaded lon, lat --> BNG conversion """
