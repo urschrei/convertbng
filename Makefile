@@ -20,11 +20,26 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	@echo "Rebuilding .so on VM"
 	-@rm -rf ../lonlat_linux_build/src
 	-@rm -rf ../lonlat_linux_build/Cargo.toml
+	# copy rust source and cargo
 	@cp -r $(RUSTDIR)/src ../lonlat_linux_build/
 	@cp $(RUSTDIR)/Cargo.toml ../lonlat_linux_build/
-	@cd ../lonlat_linux_build && vagrant ssh -c 'ar -x /vagrant/target/release/liblonlat_bng.a && gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt'
+	# build library
+	@cd ../lonlat_linux_build && vagrant ssh -c \
+		'cd /vagrant && cargo build --release \
+		&& ar -x /vagrant/target/release/liblonlat_bng.a \
+		&& gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt \
+		'
+	# copy python source to VM
+	@cp setup.* ../lonlat_linux_build/pysrc
+	@cp usage.rst ../lonlat_linux_build/pysrc
+	@cp manifest.in ../lonlat_linux_build/pysrc
+	@cp -r convertbng/ ../lonlat_linux_build/pysrc/convertbng
 	-@rm convertbng/liblonlat_bng.so
+	# copy linux binary to OSX and VM
 	@cp ../lonlat_linux_build/target/release/liblonlat_bng.so convertbng/
+	@cp ../lonlat_linux_build/target/release/liblonlat_bng.so ../lonlat_linux_build/pysrc/convertbng
+	# clean up
+	-@rm ../lonlat_linux_build/*.o
 	@echo "Copied Linux .so"
 
 # build alone won't upload, but upload will first call build
@@ -40,8 +55,20 @@ upload: build
 	@echo "Removing build and dist dir"
 	-@rm -rf build
 	-@rm -rf dist
+	-@rm -rf *.egg-info
+	-@rm -rf ../lonlat_linux_build/pysrc/build
+	-@rm -rf ../lonlat_linux_build/pysrc/dist
+	-@rm -rf ../lonlat_linux_build/pysrc/*.egg-info
 	@echo "Packaging source and binary"
 	@python setup.py bdist_wheel sdist
+	# build linux wheel
+	@echo "Packaging linux binary"
+	@cd ../lonlat_linux_build && vagrant ssh -c \
+		'cd /vagrant/pysrc && rm -rf build && rm -rf dist \
+		&& /vagrant/venv/bin/python setup.py bdist_wheel sdist \
+	'
+	# PyPi doesn't support binary wheels on Linux ffs
+	# cp ../lonlat_linux_build/pysrc/dist/convertbng-0.1.21-cp27-none-linux_x86_64.whl dist/
 	@echo "Uploading to PyPI"
 	@twine upload dist/* --sign --identity 39C1ED9A
 	@echo "Finished uploading"
