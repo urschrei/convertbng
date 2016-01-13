@@ -68,7 +68,7 @@ upload: build
 		&& /vagrant/venv/bin/python setup.py bdist_wheel sdist \
 	'
 	# PyPi doesn't support binary wheels on Linux ffs
-	# cp ../lonlat_linux_build/pysrc/dist/convertbng-0.1.21-cp27-none-linux_x86_64.whl dist/
+	# cp ../lonlat_linux_build/pysrc/dist/*.whl dist/
 	@echo "Uploading to PyPI"
 	@twine upload dist/* --sign --identity 39C1ED9A
 	@echo "Finished uploading"
