@@ -13,7 +13,7 @@ Finally, we refer to the Rust conversion functions from the Python library [here
 #Installation
 `pip install convertbng`
 ## Note
-`convertbng` is currently only available for OSX on PyPI, until I figure out a sensible workflow for building Linux wheels. However, you can still install it using pip: `pip install git+git://github.com/urschrei/convertbng.git`
+`convertbng` is currently only available in Wheel format for OSX, though standard installation for *nix using pip from PyPI works, and **doesn't require a Rust installation**.
 
 #Usage
 `convertbng` accepts a longitude value and a latitude value, floating-point.  
