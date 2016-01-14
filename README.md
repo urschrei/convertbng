@@ -5,8 +5,8 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), 
 
 ## Implementation
 The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L48-L108), and the Rust side of which can be found [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L63-L115).  
-The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L42-L58). We then define methods on the `Array` struct, [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#111-L128), which allow us to receive and return data across the FFI boundary.  
-Finally, we refer to the Rust conversion functions from the Python library [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L125-L134). Note the `errcheck` assignments, which convert the Rust data structures to tuple lists. 
+The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to [receive](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L368-L375), [safely access](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L90-L97), [return](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L99-L114), and [free](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L69-L87) data across the FFI boundary.  
+Finally, we refer to the Rust conversion functions from the Python library [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L111-L128). Note the `errcheck` assignments, which convert the Rust data structures to tuple lists. 
 
 
 
