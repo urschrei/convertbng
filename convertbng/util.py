@@ -39,7 +39,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.24"
+__version__ = "0.1.25"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -128,15 +128,17 @@ drop_ll_array.argtypes = (_LONLAT_FFIArray,)
 drop_ll_array.restype = None
 
 
-# The module exports these functions
-def convertbng(lon, lat):
-    """ Single-threaded lon, lat --> BNG conversion """
-    return convert_bng([lon], [lat])[0]
-
-def convertbng_list(lons, lats):
+# The type checks are not exhaustive. I know.
+def convertbng(lons, lats):
     """ Multi-threaded lon, lat --> BNG conversion """
+    if isinstance(lons, float):
+        lons = [lons]
+        lats = [lats]
     return convert_bng(lons, lats)
 
-def convertlonlat_list(eastings, northings):
+def convertlonlat(eastings, northings):
     """ Multi-threaded BNG --> lon, lat conversion """
+    if isinstance(eastings, (int, long)):
+        eastings = [eastings]
+        northings = [northings]
     return convert_lonlat(eastings, northings)

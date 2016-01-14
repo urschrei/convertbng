@@ -16,17 +16,14 @@ Finally, we refer to the Rust conversion functions from the Python library [here
 `convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**.
 
 #Usage
-`convertbng` accepts a longitude value and a latitude value, floating-point.  
-It returns a tuple of Easting and Northing integers.  
+`convertbng` accepts either a single longitude value and single latitude value, **or** a list of longitude values and a list of latitude values. Numpy arrays are OK too, but note the return type:  
+`"returns a list of tuples containing Easting and Northing integers (longs)."`
 
-`convertbng_list` accepts a list of longitude values, and a list of latitude values. Numpy arrays are OK too, but note the return type:  
-returns a list of tuples containing Easting and Northing integers.
-
-`convertlonlat_list` accepts a list of BNG Eastings, and a list of BNG Northings. Numpy arrays are OK too, but note the return type:  
+`convertlonlat` accepts either a single Easting and a Single Northing, or a list of BNG Eastings, and a list of BNG Northings. Numpy arrays are OK too, but note the return type:  
 `"returns a list of tuples containing longitudes and latitudes as floating-point numbers."`
 
 ```python
-from convertbng.util import convertbng, convertbng_list, convertlonlat_list
+from convertbng.util import convertbng, convertlonlat
 
 # convert a single value
 res = convertbng(lon, lat)
@@ -34,17 +31,17 @@ res = convertbng(lon, lat)
 # convert lists of longitude and latitude values to BNG Eastings and Northings
 lons = [lon1, lon2, lon3]
 lats = [lat1, lat2, lat3]
-res_list = convertbng_list(lons, lats)
+res_list = convertbng(lons, lats)
 
 # convert lists of BNG Eastings and Northings to longitude, latitude
 eastings = [easting1, easting2, easting3]
 northings = [northing1, northing2, northing3]
-res_list_en = convertlonlat_list(eastings, northings)
+res_list_en = convertlonlat(eastings, northings)
 
 # assumes numpy imported as np
 lons_np = np.array(lons)
 lats_np = np.array(lats)
-res_list_np = convertbng_list(lons_np, lats_np)
+res_list_np = convertbng(lons_np, lats_np)
 ```
 
 #Building the binary for local development
