@@ -4,8 +4,8 @@ A proof-of-concept utility library for converting longitude and latitude coordin
 Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), and is quite fast. Some not-very-thorough tests can be found [here](https://github.com/urschrei/rust_bng/blob/master/rust_BNG.ipynb).  
 
 ## Implementation
-The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L62-L117), and the Rust side of which can be found [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L369-L441).  
-The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L42-L58). We then define methods on the `Array` struct, [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L66-L92), which allow us to receive and return data across the FFI boundary.  
+The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L48-L108), and the Rust side of which can be found [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L63-L115).  
+The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L42-L58). We then define methods on the `Array` struct, [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#111-L128), which allow us to receive and return data across the FFI boundary.  
 Finally, we refer to the Rust conversion functions from the Python library [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L125-L134). Note the `errcheck` assignments, which convert the Rust data structures to tuple lists. 
 
 
