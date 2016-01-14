@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from convertbng.convertbng.util import convertbng_list, convertlonlat_list, convertbng
+from convertbng.convertbng.util import convertbng, convertlonlat
 
 
 class ConvertbngTests(unittest.TestCase):
@@ -22,7 +22,7 @@ class ConvertbngTests(unittest.TestCase):
             (523242L, 517193L),
             (515004L, 105661L),
             (566898L, 616298L)]
-        result = convertbng_list([
+        result = convertbng([
             -0.32824866,
             -2.0183041005533306,
             0.95511887434519682,
@@ -52,7 +52,7 @@ class ConvertbngTests(unittest.TestCase):
             (-0.36807215213775635, 50.83906555175781),
             (0.6348583698272705, 55.412208557128906)
         ]
-        result = convertlonlat_list([
+        result = convertlonlat([
             516276L,
             398915L,
             604932L,
@@ -70,6 +70,25 @@ class ConvertbngTests(unittest.TestCase):
             616298L])
         self.assertEqual(expected, result)
 
+    def testConvertLonLatSingle(self):
+        """ Ensure that the single lon, lat --> BNG function works """
+        expected = [(516276L, 173141L)]
+        result = convertbng(-0.32824866, 51.44533267)
+        self.assertEqual(expected, result)
+
+    def testNumpyConversion(self):
+        """ Testing lon, lat --> BNG conversion of numpy arrays """
+        # UK bounding box
+        N = 55.811741
+        E = 1.768960
+        S = 49.871159
+        W = -6.379880
+
+        num_coords = 1000
+        lon_arr = np.random.uniform(W, E, [num_coords])
+        lat_arr = np.random.uniform(S, N, [num_coords])
+        convertbng(lon_arr, lat_arr)
+        
     def testLargeArrayConversion(self):
         """ Ensure that we don't get segmentation fault: 11 on large (1MM points) arrays """
         # UK bounding box
@@ -81,11 +100,4 @@ class ConvertbngTests(unittest.TestCase):
         num_coords = 1000000
         lon_ls = list(np.random.uniform(W, E, [num_coords]))
         lat_ls = list(np.random.uniform(S, N, [num_coords]))
-        convertbng_list(lon_ls, lat_ls)
-        
-
-    def testConvertLonLatSingle(self):
-        """ Ensure that the single lon, lat --> BNG function works """
-        expected = (516276L, 173141L)
-        result = convertbng(-0.32824866, 51.44533267)
-        self.assertEqual(expected, result)
+        convertbng(lon_ls, lat_ls)
