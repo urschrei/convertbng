@@ -32,6 +32,7 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 		&& gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt \
 		'
 	# copy python source to VM
+	@mkdir -p $(LINUXHOST)/pysrc
 	@cp setup.* $(LINUXHOST)/pysrc
 	@cp usage.rst $(LINUXHOST)/pysrc
 	@cp manifest.in $(LINUXHOST)/pysrc
