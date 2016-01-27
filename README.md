@@ -5,8 +5,8 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), 
 
 ## Implementation
 The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L49-L109), and the Rust side of which can be found [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L62-L72).  
-The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to [receive](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L421-L426), [safely access](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L130-L138), [return](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L140-L155), and [free](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L102-L111) data across the FFI boundary.  
-Finally, we refer to the Rust conversion functions from the Python library [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L111-L128). Note the `errcheck` assignments, which convert the Rust data structures to tuple lists. 
+The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to [receive](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L415-L420), [safely access](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L125-L132), [return](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L134-L149), and [free](https://github.com/urschrei/lonlat_bng/blob/master/src/lib.rs#L96-L105) data across the FFI boundary.  
+Finally, we link the Rust conversion functions from the Python library [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L112-L128). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
 
 
 
