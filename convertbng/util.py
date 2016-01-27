@@ -50,28 +50,27 @@ class _BNG_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
 
-    # Allow implicit conversions from a sequence of 32-bit unsigned
-    # integers.
     @classmethod
     def from_param(cls, seq):
+        """  Allow implicit conversions from a sequence of 32-bit floats."""
         return seq if isinstance(seq, cls) else cls(seq)
 
-    # Wrap sequence of values. You can specify another type besides a
-    # float.
     def __init__(self, seq, data_type = c_float):
+        """ Convert sequence of values into array, then ctypes Structure """
         buf = array('f', seq)
         array_type = data_type * len(buf)
         raw_seq = array_type.from_buffer(buf)
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
+
 class _BNG_RESTuple(Structure):
     _fields_ = [("e", _BNG_FFIArray),
-                ("n", _BNG_FFIArray)]        
+                ("n", _BNG_FFIArray)]
 
-# A conversion function that cleans up the result value to make it
-# nicer to consume.
+
 def _bng_void_array_to_tuple_list(restuple, _func, _args):
+    """ Convert the lon, lat --> BNG FFI result to Python data structures """
     eastings = cast(restuple.e.data, POINTER(c_uint32 * restuple.e.len))[0]
     northings = cast(restuple.n.data, POINTER(c_uint32 * restuple.n.len))[0]
     res_list = [list(eastings), list(northings)]
@@ -79,43 +78,37 @@ def _bng_void_array_to_tuple_list(restuple, _func, _args):
     return res_list
 
 
-class _LONLAT_FFITuple(Structure):
-    _fields_ = [("a", c_float),
-                ("b", c_float)]
-
 class _LONLAT_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
 
-    # Allow implicit conversions from a sequence of 32-bit unsigned
-    # integers.
     @classmethod
     def from_param(cls, seq):
+        """  Allow implicit conversions from a sequence of 32-bit unsigned ints """
         return seq if isinstance(seq, cls) else cls(seq)
 
-    # Wrap sequence of values. You can specify another type besides a
-    # 32-bit unsigned integer.
     def __init__(self, seq, data_type = c_uint32):
+        """ Convert sequence of values into array, then ctypes Structure """
         array_type = data_type * len(seq)
         raw_seq = array_type(*seq)
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
+
 class _LONLAT_RESTuple(Structure):
     _fields_ = [("lon", _LONLAT_FFIArray),
                 ("lat", _LONLAT_FFIArray)]           
 
-# A conversion function that cleans up the result value to make it
-# nicer to consume.
+
 def _lonlat_void_array_to_tuple_list(restuple, _func, _args):
+    """ Convert the BNG --> lon, lat result to Python data structures """
     lons = cast(restuple.lon.data, POINTER(c_float * restuple.lon.len))[0]
     lats = cast(restuple.lat.data, POINTER(c_float * restuple.lat.len))[0]
     res_list = [list(lons), list(lats)]
     drop_ll_array(restuple.lon, restuple.lat)
     return res_list
 
-
-# Multi-threaded
+# Multi-threaded FFI functions
 convert_bng = lib.convert_to_bng_threaded
 convert_bng.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
 convert_bng.restype = _BNG_RESTuple
@@ -126,14 +119,13 @@ convert_lonlat.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
 convert_lonlat.restype = _LONLAT_RESTuple
 convert_lonlat.errcheck = _lonlat_void_array_to_tuple_list
 
-# cleanup
+# Free FFI-allocated memory
 drop_bng_array = lib.drop_int_array
 drop_bng_array.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
 drop_bng_array.restype = None
 drop_ll_array = lib.drop_float_array
 drop_ll_array.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
 drop_ll_array.restype = None
-
 
 # The type checks are not exhaustive. I know.
 def convertbng(lons, lats):
