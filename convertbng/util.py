@@ -31,6 +31,7 @@ THE SOFTWARE.
 """
 from ctypes import cdll, c_uint32, c_float, Structure, c_void_p, cast, c_size_t, POINTER
 from sys import platform
+from array import array
 import os
 
 if platform == "darwin":
@@ -45,14 +46,10 @@ file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
 
 
-class _BNG_FFITuple(Structure):
-    _fields_ = [("a", c_uint32),
-                ("b", c_uint32)]
-
-
 class _BNG_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
+
     # Allow implicit conversions from a sequence of 32-bit unsigned
     # integers.
     @classmethod
@@ -60,19 +57,25 @@ class _BNG_FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     # Wrap sequence of values. You can specify another type besides a
-    # 32-bit unsigned integer.
+    # float.
     def __init__(self, seq, data_type = c_float):
-        array_type = data_type * len(seq)
-        raw_seq = array_type(*seq)
+        buf = array('f', seq)
+        array_type = data_type * len(buf)
+        raw_seq = array_type.from_buffer(buf)
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
+class _BNG_RESTuple(Structure):
+    _fields_ = [("e", _BNG_FFIArray),
+                ("n", _BNG_FFIArray)]        
+
 # A conversion function that cleans up the result value to make it
 # nicer to consume.
-def _bng_void_array_to_tuple_list(array, _func, _args):
-    res = cast(array.data, POINTER(_BNG_FFITuple * array.len))[0]
-    res_list = [(i.a, i.b) for i in iter(res)]
-    drop_bng_array(array)
+def _bng_void_array_to_tuple_list(restuple, _func, _args):
+    eastings = cast(restuple.e.data, POINTER(c_uint32 * restuple.e.len))[0]
+    northings = cast(restuple.n.data, POINTER(c_uint32 * restuple.n.len))[0]
+    res_list = [list(eastings), list(northings)]
+    drop_bng_array(restuple.e, restuple.n)
     return res_list
 
 
@@ -111,7 +114,7 @@ def _lonlat_void_array_to_tuple_list(array, _func, _args):
 # Multi-threaded
 convert_bng = lib.convert_to_bng_threaded
 convert_bng.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
-convert_bng.restype = _BNG_FFIArray
+convert_bng.restype = _BNG_RESTuple
 convert_bng.errcheck = _bng_void_array_to_tuple_list
 
 convert_lonlat = lib.convert_to_lonlat_threaded
@@ -121,7 +124,7 @@ convert_lonlat.errcheck = _lonlat_void_array_to_tuple_list
 
 # cleanup
 drop_bng_array = lib.drop_int_array
-drop_bng_array.argtypes = (_BNG_FFIArray,)
+drop_bng_array.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
 drop_bng_array.restype = None
 drop_ll_array = lib.drop_float_array
 drop_ll_array.argtypes = (_LONLAT_FFIArray,)

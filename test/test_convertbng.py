@@ -15,13 +15,9 @@ class ConvertbngTests(unittest.TestCase):
     def testConvertLonLat(self):
         """ Testing the threaded lon, lat --> BNG function """
         expected = [
-            (516276L, 173141L),
-            (398915L, 521545L),
-            (604932L, 188804L),
-            (574082L, 61931L),
-            (523242L, 517193L),
-            (515004L, 105661L),
-            (566898L, 616298L)]
+            [516276L, 398915L, 604932L, 574082L, 523242L, 515004L, 566898L],
+            [173141L, 521545L, 188804L, 61931L, 517193L, 105661L, 616298L]
+        ]
         result = convertbng([
             -0.32824866,
             -2.0183041005533306,
@@ -72,7 +68,7 @@ class ConvertbngTests(unittest.TestCase):
 
     def testConvertLonLatSingle(self):
         """ Ensure that the single lon, lat --> BNG function works """
-        expected = [(516276L, 173141L)]
+        expected = [[516276L], [173141L]]
         result = convertbng(-0.32824866, 51.44533267)
         self.assertEqual(expected, result)
 

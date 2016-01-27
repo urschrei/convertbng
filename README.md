@@ -17,7 +17,7 @@ Finally, we refer to the Rust conversion functions from the Python library [here
 
 #Usage
 `convertbng` accepts either a single longitude value and single latitude value, **or** a list of longitude values and a list of latitude values. Numpy arrays are OK too, but note the return type:  
-`"returns a list of tuples containing Easting and Northing integers (longs)."`
+`"returns a list of two lists containing Easting and Northing integers (longs), respectively"`
 
 `convertlonlat` accepts either a single Easting and a Single Northing, or a list of BNG Eastings, and a list of BNG Northings. Numpy arrays are OK too, but note the return type:  
 `"returns a list of tuples containing longitudes and latitudes as floating-point numbers."`
