@@ -40,7 +40,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.25"
+__version__ = "0.2.0"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -83,10 +83,10 @@ class _LONLAT_FFITuple(Structure):
     _fields_ = [("a", c_float),
                 ("b", c_float)]
 
-
 class _LONLAT_FFIArray(Structure):
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
+
     # Allow implicit conversions from a sequence of 32-bit unsigned
     # integers.
     @classmethod
@@ -101,13 +101,17 @@ class _LONLAT_FFIArray(Structure):
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
+class _LONLAT_RESTuple(Structure):
+    _fields_ = [("lon", _LONLAT_FFIArray),
+                ("lat", _LONLAT_FFIArray)]           
 
 # A conversion function that cleans up the result value to make it
 # nicer to consume.
-def _lonlat_void_array_to_tuple_list(array, _func, _args):
-    res = cast(array.data, POINTER(_LONLAT_FFITuple * array.len))[0]
-    res_list = [(i.a, i.b) for i in iter(res)]
-    drop_ll_array(array)
+def _lonlat_void_array_to_tuple_list(restuple, _func, _args):
+    lons = cast(restuple.lon.data, POINTER(c_float * restuple.lon.len))[0]
+    lats = cast(restuple.lat.data, POINTER(c_float * restuple.lat.len))[0]
+    res_list = [list(lons), list(lats)]
+    drop_ll_array(restuple.lon, restuple.lat)
     return res_list
 
 
@@ -119,7 +123,7 @@ convert_bng.errcheck = _bng_void_array_to_tuple_list
 
 convert_lonlat = lib.convert_to_lonlat_threaded
 convert_lonlat.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
-convert_lonlat.restype = _LONLAT_FFIArray
+convert_lonlat.restype = _LONLAT_RESTuple
 convert_lonlat.errcheck = _lonlat_void_array_to_tuple_list
 
 # cleanup
@@ -127,20 +131,28 @@ drop_bng_array = lib.drop_int_array
 drop_bng_array.argtypes = (_BNG_FFIArray, _BNG_FFIArray)
 drop_bng_array.restype = None
 drop_ll_array = lib.drop_float_array
-drop_ll_array.argtypes = (_LONLAT_FFIArray,)
+drop_ll_array.argtypes = (_LONLAT_FFIArray, _LONLAT_FFIArray)
 drop_ll_array.restype = None
 
 
 # The type checks are not exhaustive. I know.
 def convertbng(lons, lats):
-    """ Multi-threaded lon, lat --> BNG conversion """
+    """
+    Multi-threaded lon, lat --> BNG conversion
+    Returns a list of two lists containing Easting and Northing integers (longs),
+    respectively
+    """
     if isinstance(lons, float):
         lons = [lons]
         lats = [lats]
     return convert_bng(lons, lats)
 
 def convertlonlat(eastings, northings):
-    """ Multi-threaded BNG --> lon, lat conversion """
+    """
+    Multi-threaded BNG --> lon, lat conversion
+    Returns a list of two lists containing Longitude and Latitude floats,
+    respectively
+    """
     if isinstance(eastings, (int, long)):
         eastings = [eastings]
         northings = [northings]
