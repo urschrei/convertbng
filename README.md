@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/urschrei/convertbng.png?branch=master)](https://travis-ci.org/urschrei/convertbng)  
 #Description
 A proof-of-concept utility library for converting longitude and latitude coordinates into British National Grid ([epsg:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) coordinates, and vice versa.  
-Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), and is quite fast. Some not-very-thorough tests can be found [here](https://github.com/urschrei/rust_bng/blob/master/rust_BNG.ipynb).  
+Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), and is quite fast. Some not-very-thorough speed tests can be found [here](https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb).  
 
 ## Implementation
 The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found [here](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L48-L108), and the Rust side of which can be found [here](https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L63-L115).  
@@ -46,7 +46,7 @@ res_list_np = convertbng(lons_np, lats_np)
 
 #Building the binary for local development
 - ensure you have Rust 1.x and Cargo installed
-- clone https://github.com/urschrei/rust_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/rust_bng`)
+- clone https://github.com/urschrei/lonlat_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/rust_bng`)
 - in this dir, run `make clean` then `make build`
 
 #Tests
