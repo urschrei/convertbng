@@ -40,13 +40,14 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
 
 
 class _BNG_FFIArray(Structure):
+    """ Convert sequence of floats to a C-compatible void array """
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
 
@@ -57,14 +58,14 @@ class _BNG_FFIArray(Structure):
 
     def __init__(self, seq, data_type = c_float):
         """ Convert sequence of values into array, then ctypes Structure """
-        buf = array('f', seq)
-        array_type = data_type * len(buf)
-        raw_seq = array_type.from_buffer(buf)
+        array_type = data_type * len(seq)
+        raw_seq = array_type.from_buffer(array('f', seq))
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
 
 class _BNG_RESTuple(Structure):
+    """ Container for returned FFI BNG data """
     _fields_ = [("e", _BNG_FFIArray),
                 ("n", _BNG_FFIArray)]
 
@@ -79,6 +80,7 @@ def _bng_void_array_to_tuple_list(restuple, _func, _args):
 
 
 class _LONLAT_FFIArray(Structure):
+    """ convert sequence of ints to a C-compatible void array """
     _fields_ = [("data", c_void_p),
                 ("len", c_size_t)]
 
@@ -96,6 +98,7 @@ class _LONLAT_FFIArray(Structure):
 
 
 class _LONLAT_RESTuple(Structure):
+    """ Container for returned FFI lon, lat data """
     _fields_ = [("lon", _LONLAT_FFIArray),
                 ("lat", _LONLAT_FFIArray)]           
 
