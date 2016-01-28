@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+import array
 from convertbng.convertbng.util import convertbng, convertlonlat
 
 
@@ -13,7 +14,7 @@ class ConvertbngTests(unittest.TestCase):
         pass
 
     def testConvertLonLat(self):
-        """ Testing the threaded lon, lat --> BNG function """
+        """ Test multithreaded lon, lat --> BNG function """
         expected = [
             [516276L, 398915L, 604932L, 574082L, 523242L, 515004L, 566898L],
             [173141L, 521545L, 188804L, 61931L, 517193L, 105661L, 616298L]
@@ -37,7 +38,7 @@ class ConvertbngTests(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def testConvertBNG(self):
-        """ Testing the threaded BNG --> lon, lat function """
+        """ Test multithreaded BNG --> lon, lat function """
         expected = [
             [-0.328247994184494,-2.0183045864105225, 0.95512455701828, 0.44975531101226807, -0.09681292623281479, -0.36807215213775635, 0.6348583698272705],
             [51.44533920288086, 54.589115142822266, 51.56087875366211, 50.43143081665039, 54.535037994384766, 50.83906555175781, 55.412208557128906]
@@ -61,13 +62,25 @@ class ConvertbngTests(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def testConvertLonLatSingle(self):
-        """ Ensure that the single lon, lat --> BNG function works """
+        """ Test lon, lat --> BNG conversion of single values """
         expected = [[516276L], [173141L]]
         result = convertbng(-0.32824866, 51.44533267)
         self.assertEqual(expected, result)
 
+    def testConvertTuple(self):
+        """ Test lon, lat --> BNG conversion of tuples """
+        expected = [[516276L], [173141L]]
+        result = convertbng((-0.32824866,), (51.44533267,))
+        self.assertEqual(expected, result)
+
+    def testConvertArray(self):
+        """ Test lon, lat --> BNG conversion of array.array """
+        expected = [[516276L], [173141L]]
+        result = convertbng(array.array('f', [-0.32824866]), array.array('f', [51.44533267]))
+        self.assertEqual(expected, result)
+
     def testNumpyConversion(self):
-        """ Testing lon, lat --> BNG conversion of numpy arrays """
+        """ Test lon, lat --> BNG conversion of numpy arrays """
         # UK bounding box
         N = 55.811741
         E = 1.768960
@@ -80,7 +93,7 @@ class ConvertbngTests(unittest.TestCase):
         convertbng(lon_arr, lat_arr)
         
     def testLargeArrayConversion(self):
-        """ Ensure that we don't get segmentation fault: 11 on large (1MM points) arrays """
+        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays """
         # UK bounding box
         N = 55.811741
         E = 1.768960
