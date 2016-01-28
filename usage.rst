@@ -5,8 +5,8 @@ Fast lon, lat to BNG conversion, and vice versa
 
 |  This module exposes two methods: 
 
-|  ``util.convertbng()`` – pass lists (or Numpy arrays) of lons, lats, or single values. Returns a list of two lists containing Easting and Northing integers (longs), respectively
-|  ``util.convertlonlat_list()`` – pass lists (or Numpy arrays) of Eastings, Northings, or single values. Returns a list of two lists containing Longitude and Latitude floats, respectively
+|  ``util.convertbng()`` – pass sequences of lons, lats, or single values. Returns a list of two lists containing Easting and Northing integers (longs), respectively
+|  ``util.convertlonlat_list()`` – pass sequences of Eastings, Northings, or single values. Returns a list of two lists containing Longitude and Latitude floats, respectively
  
 
 Installation

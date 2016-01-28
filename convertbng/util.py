@@ -29,9 +29,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-from ctypes import cdll, c_uint32, c_float, Structure, c_void_p, cast, c_size_t, POINTER
+from ctypes import cdll, c_uint32, c_float, c_double, Structure, c_void_p, cast, c_size_t, POINTER
 from sys import platform
 from array import array
+import numpy as np
 import os
 
 if platform == "darwin":
@@ -40,7 +41,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -57,9 +58,28 @@ class _BNG_FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_float):
-        """ Convert sequence of values into array, then ctypes Structure """
+        """
+        Convert sequence of values into array, then ctypes Structure
+
+        Rather than checking types (bad), we just try to blam seq
+        into a ctypes object using from_buffer. If that doesn't work,
+        we try successively more conservative approaches:
+        numpy array -> array.array -> read-only buffer -> CPython iterable
+        """
+        try:
+            len(seq)
+        except TypeError:
+             # we've got an iterator or a generator, so consume it
+            seq = array('f', seq)
         array_type = data_type * len(seq)
-        raw_seq = array_type.from_buffer(array('f', seq))
+        try:
+            raw_seq = array_type.from_buffer(seq.astype(np.float32))
+        except (TypeError, AttributeError):
+            try:
+                raw_seq = array_type.from_buffer_copy(seq.astype(np.float32))
+            except (TypeError, AttributeError):
+                # it's a list or a tuple
+                raw_seq = array_type.from_buffer(array('f', seq))
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
@@ -90,9 +110,28 @@ class _LONLAT_FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_uint32):
-        """ Convert sequence of values into array, then ctypes Structure """
+        """
+        Convert sequence of values into array, then ctypes Structure
+
+        Rather than checking types (bad), we just try to blam seq
+        into a ctypes object using from_buffer. If that doesn't work,
+        we try successively more conservative approaches:
+        numpy array -> array.array -> read-only buffer -> CPython iterable
+        """
+        try:
+            len(seq)
+        except TypeError:
+             # we've got an iterator or a generator, so consume it
+            seq = array('f', seq)
         array_type = data_type * len(seq)
-        raw_seq = array_type(*seq)
+        try:
+            raw_seq = array_type.from_buffer(seq.astype(np.uint32))
+        except (TypeError, AttributeError):
+            try:
+                raw_seq = array_type.from_buffer_copy(seq.astype(np.uint32))
+            except (TypeError, AttributeError):
+                # it's a list or a tuple
+                raw_seq = array_type.from_buffer(array('i', seq))
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 

@@ -61,5 +61,6 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     packages=find_packages(),
+    install_requires=['numpy >= 1.9.0']
     long_description=readme
 )

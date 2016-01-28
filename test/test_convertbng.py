@@ -73,10 +73,43 @@ class ConvertbngTests(unittest.TestCase):
         result = convertbng((-0.32824866,), (51.44533267,))
         self.assertEqual(expected, result)
 
+    def testConvertIterable(self):
+        """ Test lon, lat --> BNG conversion of tuples """
+        expected = [[516276L], [173141L]]
+        result = convertbng(iter([-0.32824866]), iter([51.44533267]))
+        self.assertEqual(expected, result)
+
     def testConvertArray(self):
         """ Test lon, lat --> BNG conversion of array.array """
         expected = [[516276L], [173141L]]
         result = convertbng(array.array('f', [-0.32824866]), array.array('f', [51.44533267]))
+        self.assertEqual(expected, result)
+
+    def testGenerator(self):
+        """ Test that the lon, lat -> BNG function can consume generators """
+        expected = [
+            [516276L, 398915L, 604932L, 574082L, 523242L, 515004L, 566898L],
+            [173141L, 521545L, 188804L, 61931L, 517193L, 105661L, 616298L]
+        ]
+        inp = [
+            [-0.32824866,
+                -2.0183041005533306,
+                0.95511887434519682,
+                0.44975855518383501,
+                -0.096813621191803811,
+                -0.36807065656416427,
+                0.63486335458665621],
+            [51.44533267,
+                54.589097162646141,
+                51.560873800587828,
+                50.431429161121699,
+                54.535021436247419,
+                50.839059313135706,
+                55.412189281234419]
+        ]
+        lon_generator = (n for n in inp[0])
+        lat_generator = (n for n in inp[1])
+        result = convertbng(lon_generator, lat_generator)
         self.assertEqual(expected, result)
 
     def testNumpyConversion(self):
