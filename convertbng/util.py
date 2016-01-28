@@ -92,8 +92,8 @@ class _BNG_RESTuple(Structure):
 
 def _bng_void_array_to_tuple_list(restuple, _func, _args):
     """ Convert the lon, lat --> BNG FFI result to Python data structures """
-    eastings = cast(restuple.e.data, POINTER(c_uint32 * restuple.e.len))[0]
-    northings = cast(restuple.n.data, POINTER(c_uint32 * restuple.n.len))[0]
+    eastings = POINTER(c_uint32 * restuple.e.len).from_buffer_copy(restuple.e)[0]
+    northings = POINTER(c_uint32 * restuple.n.len).from_buffer_copy(restuple.n)[0]
     res_list = [list(eastings), list(northings)]
     drop_bng_array(restuple.e, restuple.n)
     return res_list
@@ -144,8 +144,8 @@ class _LONLAT_RESTuple(Structure):
 
 def _lonlat_void_array_to_tuple_list(restuple, _func, _args):
     """ Convert the BNG --> lon, lat result to Python data structures """
-    lons = cast(restuple.lon.data, POINTER(c_float * restuple.lon.len))[0]
-    lats = cast(restuple.lat.data, POINTER(c_float * restuple.lat.len))[0]
+    lons = POINTER(c_float * restuple.lon.len).from_buffer_copy(restuple.lon)[0]
+    lats = POINTER(c_float * restuple.lat.len).from_buffer_copy(restuple.lat)[0]
     res_list = [list(lons), list(lats)]
     drop_ll_array(restuple.lon, restuple.lat)
     return res_list
