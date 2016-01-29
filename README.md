@@ -16,10 +16,10 @@ Finally, we link the Rust conversion functions from the Python library [here](ht
 `convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**.
 
 #Usage
-`convertbng` accepts either a single longitude value and single latitude value, **or** a sequence of longitude values and a list of latitude values. Note the return type:  
+`convertbng` accepts either a sequence (such as a list or numpy array) of longitude values and a sequence of latitude values, **or** a single longitude value and single latitude value. Note the return type:  
 `"returns a list of two lists containing Easting and Northing integers (longs), respectively"`
 
-`convertlonlat` accepts either a single Easting and a Single Northing, or a  of BNG Eastings, and a list of BNG Northings. Note the return type:  
+`convertlonlat` accepts either a sequence (such as a list or a numpy array) of BNG Eastings, and a sequence of BNG Northings, or a single Easting and a Single Northing. Note the return type:  
 `"returns a list of two lists containing Longitude and Latitude floats, respectively"`
 
 Both functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
