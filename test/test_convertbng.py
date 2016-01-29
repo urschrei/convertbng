@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 import array
 from convertbng.convertbng.util import convertbng, convertlonlat
+from ctypes import ArgumentError
 
 
 class ConvertbngTests(unittest.TestCase):
@@ -72,6 +73,11 @@ class ConvertbngTests(unittest.TestCase):
         expected = [[516276L], [173141L]]
         result = convertbng((-0.32824866,), (51.44533267,))
         self.assertEqual(expected, result)
+
+    def testConvertString(self):
+        """ Test that an error is thrown for incorrect types """
+        with self.assertRaises(ArgumentError) as result:
+            convertbng(['Foo'], ['Bar'])
 
     def testConvertIterable(self):
         """ Test lon, lat --> BNG conversion of tuples """
