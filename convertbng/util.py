@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-from ctypes import cdll, c_uint32, c_float, c_double, Structure, c_void_p, cast, c_size_t, POINTER
+from ctypes import cdll, c_uint32, c_float, Structure, c_void_p, cast, c_size_t, POINTER
 from sys import platform
 from array import array
 import numpy as np
