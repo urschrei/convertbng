@@ -27,7 +27,7 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	@cp $(RUSTDIR)/Cargo.toml $(LINUXHOST)/
 	# build library
 	@cd $(LINUXHOST) && vagrant ssh -c \
-		'cd /vagrant && cargo update && cargo build --release \
+		'cd /vagrant && cargo update && cargo test && cargo build --release \
 		&& ar -x /vagrant/target/release/liblonlat_bng.a \
 		&& gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt \
 		'
