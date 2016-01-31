@@ -143,3 +143,18 @@ class ConvertbngTests(unittest.TestCase):
         lon_ls = list(np.random.uniform(W, E, [num_coords]))
         lat_ls = list(np.random.uniform(S, N, [num_coords]))
         convertbng(lon_ls, lat_ls)
+
+    def testBadValues(self):
+        """ Test that values outside the bounding box return -1, -1 """
+        bad_coords = [
+            # Below minimum longitude
+            [[-6.379881], [49.871159]],
+            # Below minimum latitude
+            [[1.768960], [49.871156]],
+            # Above maximum longitude
+            [[1.768961], [55.811741]],
+            # Above maximum latitude
+            [[1.768961], [55.811742]]
+        ]
+        for coord in bad_coords:
+            self.assertEqual([[9999], [9999]], convertbng(coord[0], coord[1]))

@@ -19,6 +19,16 @@ Finally, we link the Rust conversion functions from the Python library [here](ht
 `convertbng` accepts either a sequence (such as a list or numpy array) of longitude values and a sequence of latitude values, **or** a single longitude value and single latitude value. Note the return type:  
 `"returns a list of two lists containing Easting and Northing integers (longs), respectively"`
 
+**NOTE**: Coordinate pairs outside the BNG bounding box will return a result of  
+`[[9999], [9999]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
+
+**Latitude**:  
+East: 1.768960  
+West: -6.379880  
+**Longitude**:  
+North: 55.811741  
+South: 49.871159  
+
 `convertlonlat` accepts either a sequence (such as a list or a numpy array) of BNG Eastings, and a sequence of BNG Northings, or a single Easting and a Single Northing. Note the return type:  
 `"returns a list of two lists containing Longitude and Latitude floats, respectively"`
 

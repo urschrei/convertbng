@@ -8,6 +8,16 @@ Fast lon, lat to BNG conversion, and vice versa
 |  ``util.convertbng()`` – pass sequences (such as lists or numpy arrays) of lons, lats, or single values of each. Returns a list of two lists containing Easting and Northing integers (longs), respectively
 |  ``util.convertlonlat_list()`` – pass sequences (such as lists or numpy arrays) of Eastings, Northings, or single values of each. Returns a list of two lists containing Longitude and Latitude floats, respectively
  
+| NOTE: Coordinate pairs outside the BNG bounding box will return a result of  
+``[[9999], [9999]]``, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
+
+| **Latitude**:  
+| East: 1.768960  
+| West: -6.379880  
+
+| **Longitude**:  
+| North: 55.811741  
+| South: 49.871159  
 
 Installation
 ============
