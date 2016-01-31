@@ -1,4 +1,4 @@
-RUSTDIR = ../rust_bng
+RUSTDIR = ../lonlat_bng
 LINUXHOST = ../lonlat_linux_build
 # no args: checks for out-of-date binary, rebuilds wheel, and uploads
 .PHONY: all
