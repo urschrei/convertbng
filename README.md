@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/urschrei/convertbng.png?branch=master)](https://travis-ci.org/urschrei/convertbng)  
+[![Build Status](https://travis-ci.org/urschrei/convertbng.png?branch=master)](https://travis-ci.org/urschrei/convertbng) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng)
+
 #Description
 A proof-of-concept utility library for converting longitude and latitude coordinates into British National Grid ([epsg:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) coordinates, and vice versa.  
 Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), and is quite fast. Some not-very-thorough speed tests can be found [here](https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb).  
