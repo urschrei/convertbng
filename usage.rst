@@ -1,22 +1,22 @@
-===============================================
-Fast lon, lat to BNG conversion, and vice versa
-===============================================
-|  Uses a Rust 1.x binary to perform fast longitude, latitude to `BNG <https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid>`_ conversion.
+============================================================================
+Fast longitude, latitude to British National Grid conversion, and vice versa
+============================================================================
+| Fast longitude, latitude to `BNG <https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid>`_ conversion, and vice versa, using a multithreaded `Rust <https://www.rust-lang.org>`_ `binary <https://github.com/urschrei/lonlat_bng>`_ and FFI.
 
-|  This module exposes two methods: 
+| This module provides two methods: 
 
-|  ``util.convertbng()`` – pass sequences (such as lists or numpy arrays) of lons, lats, or single values of each. Returns a list of two lists containing Easting and Northing integers (longs), respectively
-|  ``util.convertlonlat_list()`` – pass sequences (such as lists or numpy arrays) of Eastings, Northings, or single values of each. Returns a list of two lists containing Longitude and Latitude floats, respectively
- 
+| ``util.convertbng(lons, lats)`` – pass sequences (such as lists or numpy arrays) of Longitudes andLatitudes, or single values of each. Returns a list of two lists containing Easting and Northing integers (longs), respectively.
+| ``util.convertlonlat(eastings, northings)`` – pass sequences (such as lists or numpy arrays) of Eastings, Northings, or single values of each. Returns a list of two lists containing Longitude and Latitude floats, respectively
+| 
 | NOTE: Coordinate pairs outside the BNG bounding box will return a result of  ``[[9999], [9999]]``, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:
-
+|
 | **Latitude**:  
-| East: 1.768960  
-| West: -6.379880  
+| East: 1.768960 (Max)
+| West: -6.379880 (Min)
 
 | **Longitude**:  
-| North: 55.811741  
-| South: 49.871159  
+| North: 55.811741 (Max)
+| South: 49.871159 (Min)
 
 Installation
 ============
