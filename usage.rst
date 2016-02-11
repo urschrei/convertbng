@@ -3,12 +3,25 @@ Fast longitude, latitude to British National Grid conversion, and vice versa
 ============================================================================
 | Fast longitude, latitude to `BNG <https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid>`_ conversion, and vice versa, using a multithreaded `Rust <https://www.rust-lang.org>`_ `binary <https://github.com/urschrei/lonlat_bng>`_ and FFI.
 
-| This module provides two methods: 
+| This module provides two fast methods: 
 
-| ``util.convertbng(lons, lats)`` – pass sequences (such as lists or numpy arrays) of Longitudes andLatitudes, or single values of each. Returns a list of two lists containing Easting and Northing integers (longs), respectively.
+| ``util.convertbng(lons, lats)`` – pass sequences (such as lists or numpy arrays) of Longitudes and Latitudes, or single values of each. Returns a list of two lists containing Easting and Northing floats, respectively.
 | ``util.convertlonlat(eastings, northings)`` – pass sequences (such as lists or numpy arrays) of Eastings, Northings, or single values of each. Returns a list of two lists containing Longitude and Latitude floats, respectively
-| 
-| NOTE: Coordinate pairs outside the BNG bounding box will return a result of  ``[[9999], [9999]]``, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:
+
+| And four accurate `OSTN02 <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html>`_-enabled methods, suitable for surveying and other geodetic work:
+
+.. note:: The OSTN02-enabled methods are envisaged to be used with accurate measurements collected using the `National GPS Network <https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html>`_.
+
+| ``convert_osgb36(lons, lats)`` – convert ETRS89 Longitudes and Latitudes to OSGB36
+| ``convert_osgb36_to_lonlat(eastings, northings)`` – convert OSGB36 Eastings and Northings to ETRS89 longitudes and latitudes 
+| ``convert_etrs89_to_osgb36(eastings, northings)`` – convert ETRS89 Eastings and Northings to OSGB36 Eastings and Northings
+| ``convert_osgb36_to_etrs89(eastings, northings)`` – convert OSGB36 eastings and Northings to ETRS89 Eastings and Northings.
+
+| All four methods accept and return floating-point numbers. 
+
+
+.. warning:: Coordinate pairs outside the BNG bounding box will return a result of  ``[[9999], [9999]]``, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:
+
 |
 | **Latitude**:  
 | East: 1.768960 (Max)

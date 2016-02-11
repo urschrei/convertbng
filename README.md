@@ -11,7 +11,7 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), 
 If greater accuracy is required, you may use the OSTN02-enabled functions, which use [OSTN02](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html) data for highly accurate conversions from ETRS89 latitude and longitude or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [National GPS Network](https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html):
 
 - Use **`convert_osgb36(lons, lats)`** to convert ETRS89 Longitudes and Latitudes to OSGB36
-- Use **`convert_osgb36_to_lonlat(eastings, northings)`** to convert OSGB36 Eastings and Northings to ETRS89 longitudes and latitudes 
+- Use **`convert_osgb36_to_lonlat(eastings, northings)`** to convert OSGB36 Eastings and Northings to ETRS89 longitudes and latitudes
 - Use **`convert_etrs89_to_osgb36(eastings, northings)`** to convert ETRS89 Eastings and Northings to OSGB36 Eastings and Northings
 - Use **`convert_osgb36_to_etrs89(eastings, northings)`** to convert OSGB36 eastings and Northings to ETRS89 Eastings and Northings.
 
