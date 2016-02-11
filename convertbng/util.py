@@ -95,7 +95,7 @@ def _void_array_to_list(restuple, _func, _args):
     eastings = POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0]
     northings = POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0]
     res_list = [list(eastings), list(northings)]
-    drop_bng_array(restuple.e, restuple.n)
+    drop_array(restuple.e, restuple.n)
     return res_list
 
 
@@ -110,20 +110,38 @@ convert_lonlat.argtypes = (_FFIArray, _FFIArray)
 convert_lonlat.restype = _Result_Tuple
 convert_lonlat.errcheck = _void_array_to_list
 
+convert_to_osgb36_threaded = lib.convert_to_osgb36_threaded
+convert_to_osgb36_threaded.argtypes = (_FFIArray, _FFIArray)
+convert_to_osgb36_threaded.restype = _Result_Tuple
+convert_to_osgb36_threaded.errcheck = _void_array_to_list
+
+convert_osgb36_to_ll = lib.convert_osgb36_to_ll_threaded
+convert_osgb36_to_ll.argtypes = (_FFIArray, _FFIArray)
+convert_osgb36_to_ll.restype = _Result_Tuple
+convert_osgb36_to_ll.errcheck = _void_array_to_list
+
+convert_etrs89_en_to_osgb36 = lib.convert_etrs89_to_osgb36_threaded
+convert_etrs89_en_to_osgb36.argtypes = (_FFIArray, _FFIArray)
+convert_etrs89_en_to_osgb36.restype = _Result_Tuple
+convert_etrs89_en_to_osgb36.errcheck = _void_array_to_list
+
+convert_osgb36_en_to_etrs89 = lib.convert_osgb36_to_etrs89_threaded
+convert_osgb36_en_to_etrs89.argtypes = (_FFIArray, _FFIArray)
+convert_osgb36_en_to_etrs89.restype = _Result_Tuple
+convert_osgb36_en_to_etrs89.errcheck = _void_array_to_list
+
 # Free FFI-allocated memory
-drop_bng_array = lib.drop_float_array
-drop_bng_array.argtypes = (_FFIArray, _FFIArray)
-drop_bng_array.restype = None
-drop_ll_array = lib.drop_float_array
-drop_ll_array.argtypes = (_FFIArray, _FFIArray)
-drop_ll_array.restype = None
+drop_array = lib.drop_float_array
+drop_array.argtypes = (_FFIArray, _FFIArray)
+drop_array.restype = None
 
 # The type checks are not exhaustive. I know.
 def convertbng(lons, lats):
     """
     Multi-threaded lon, lat --> BNG conversion
-    Returns a list of two lists containing Easting and Northing integers (longs),
+    Returns a list of two lists containing Easting and Northing floats,
     respectively
+    Uses the Helmert transform
     """
     if isinstance(lons, float):
         lons = [lons]
@@ -135,8 +153,54 @@ def convertlonlat(eastings, northings):
     Multi-threaded BNG --> lon, lat conversion
     Returns a list of two lists containing Longitude and Latitude floats,
     respectively
+    Uses the Helmert transform
     """
     if isinstance(eastings, (int, long)):
         eastings = [eastings]
         northings = [northings]
     return convert_lonlat(eastings, northings)
+
+def convert_osgb36(lons, lats):
+    """
+    Multi-threaded lon, lat --> OSGB36 conversion, using OSTN02 data
+    Returns a list of two lists containing Easting and Northing floats,
+    respectively
+    """
+    if isinstance(lons, float):
+        lons = [lons]
+        lats = [lats]
+    return convert_to_osgb36_threaded(lons, lats)
+
+def convert_osgb36_to_lonlat(eastings, northings):
+    """
+    Multi-threaded OSGB36 --> Lon, Lat conversion, using OSTN02 data
+    Returns a list of two lists containing Easting and Northing floats,
+    respectively
+    """
+    if isinstance(eastings, float):
+        eastings = [eastings]
+        northings = [northings]
+    return convert_osgb36_to_ll(eastings, northings)
+
+def convert_etrs89_to_osgb36(eastings, northings):
+    """
+    Multi-threaded ETRS89 Eastings and Northings --> OSGB36 conversion, using OSTN02 data
+    Returns a list of two lists containing Easting and Northing floats,
+    respectively
+    """
+    if isinstance(eastings, float):
+        eastings = [eastings]
+        northings = [northings]
+    return convert_etrs89_en_to_osgb36(eastings, northings)
+
+def convert_osgb36_to_etrs89(eastings, northings):
+    """
+    Multi-threaded OSGB36 Eastings and Northings --> ETRS89 Eastings and Northings conversion,
+    using OSTN02 data
+    Returns a list of two lists containing Easting and Northing floats,
+    respectively
+    """
+    if isinstance(eastings, float):
+        eastings = [eastings]
+        northings = [northings]
+    return convert_osgb36_en_to_etrs89(eastings, northings)

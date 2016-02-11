@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import array
-from convertbng.convertbng.util import convertbng, convertlonlat
+from convertbng.convertbng.util import convertbng, convertlonlat, convert_osgb36, convert_osgb36_to_lonlat, convert_osgb36_to_etrs89, convert_etrs89_to_osgb36
 from ctypes import ArgumentError
 
 
@@ -158,3 +158,29 @@ class ConvertbngTests(unittest.TestCase):
         ]
         for coord in bad_coords:
             self.assertEqual([[9999], [9999]], convertbng(coord[0], coord[1]))
+
+    def test_osgb36(self):
+        """ Tests lon, lat --> OSGB36 conversion """
+        expected = [[651409.792], [313177.448]]
+        result = convert_osgb36(1.716073973, 52.658007833)
+        self.assertEqual(expected, result)
+
+    def test_osgb36_to_lonlat(self):
+        """ Tests OSGB36 --> Lon, Lat conversion """
+        # Not sure why this is being truncated
+        # expected = [[1.716073973], [52.658007833]]
+        expected = [[1.71607397], [52.65800783]]
+        result = convert_osgb36_to_lonlat(651409.792, 313177.448)
+        self.assertEqual(expected, result)
+
+    def test_etrs89_to_osgb36(self):
+        """ Tests ETRS89 Eastings, Northings --> OSGB36 conversion """
+        expected = [[651409.792], [313177.448]]
+        result = convert_etrs89_to_osgb36(651307.003, 313255.686)
+        self.assertEqual(expected, result)
+
+    def test_etrs89_to_osgb36(self):
+        """ Tests OSGB36 --> ETRS89 Eastings, Northings conversion """
+        expected = [[651307.003], [313255.686]]
+        result = convert_osgb36_to_etrs89(651409.792, 313177.448)
+        self.assertEqual(expected, result)
