@@ -17,8 +17,8 @@ class ConvertbngTests(unittest.TestCase):
     def testConvertLonLat(self):
         """ Test multithreaded lon, lat --> BNG function """
         expected = [
-            [516276L, 398915L, 604932L, 574082L, 523242L, 515004L, 566898L],
-            [173141L, 521545L, 188804L, 61931L, 517193L, 105661L, 616298L]
+            [516275.973, 398915.033, 604931.645, 574082.246, 523242.007, 515004.123, 566898.408],
+            [173141.092, 521545.067, 188804.36, 61931.28, 517193.249, 105660.976, 616298.251]
         ]
         result = convertbng([
             -0.32824866,
@@ -41,8 +41,8 @@ class ConvertbngTests(unittest.TestCase):
     def testConvertBNG(self):
         """ Test multithreaded BNG --> lon, lat function """
         expected = [
-            [-0.328247994184494,-2.0183045864105225, 0.95512455701828, 0.44975531101226807, -0.09681292623281479, -0.36807215213775635, 0.6348583698272705],
-            [51.44533920288086, 54.589115142822266, 51.56087875366211, 50.43143081665039, 54.535037994384766, 50.83906555175781, 55.412208557128906]
+            [-0.32824799, -2.01830465, 0.95512453, 0.44975531, -0.09681292, -0.36807217, 0.63485837],
+            [51.44534027, 54.58911602, 51.56087908, 50.43143151, 54.53503836, 50.83906588, 55.41220958]
         ]
         result = convertlonlat([
             516276L,
@@ -64,13 +64,13 @@ class ConvertbngTests(unittest.TestCase):
 
     def testConvertLonLatSingle(self):
         """ Test lon, lat --> BNG conversion of single values """
-        expected = [[516276L], [173141L]]
+        expected = [[516275.973], [173141.092]]
         result = convertbng(-0.32824866, 51.44533267)
         self.assertEqual(expected, result)
 
     def testConvertTuple(self):
         """ Test lon, lat --> BNG conversion of tuples """
-        expected = [[516276L], [173141L]]
+        expected = [[516275.973], [173141.092]]
         result = convertbng((-0.32824866,), (51.44533267,))
         self.assertEqual(expected, result)
 
@@ -81,21 +81,21 @@ class ConvertbngTests(unittest.TestCase):
 
     def testConvertIterable(self):
         """ Test lon, lat --> BNG conversion of tuples """
-        expected = [[516276L], [173141L]]
+        expected = [[516275.973], [173141.092]]
         result = convertbng(iter([-0.32824866]), iter([51.44533267]))
         self.assertEqual(expected, result)
 
     def testConvertArray(self):
         """ Test lon, lat --> BNG conversion of array.array """
-        expected = [[516276L], [173141L]]
+        expected = [[516275.977], [173140.97]]
         result = convertbng(array.array('f', [-0.32824866]), array.array('f', [51.44533267]))
         self.assertEqual(expected, result)
 
     def testGenerator(self):
         """ Test that the lon, lat -> BNG function can consume generators """
         expected = [
-            [516276L, 398915L, 604932L, 574082L, 523242L, 515004L, 566898L],
-            [173141L, 521545L, 188804L, 61931L, 517193L, 105661L, 616298L]
+            [516275.973, 398915.033, 604931.645, 574082.246, 523242.007, 515004.123, 566898.408],
+            [173141.092, 521545.067, 188804.36, 61931.28, 517193.249, 105660.976, 616298.251]
         ]
         inp = [
             [-0.32824866,
