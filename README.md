@@ -30,8 +30,9 @@ Finally, we link the Rust conversion functions from the Python library [here](ht
 
 
 #Installation
-`pip install convertbng`
-## Note
+`pip install convertbng`  
+
+##Note
 `convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**.
 
 #Usage
