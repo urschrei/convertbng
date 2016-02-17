@@ -2,4 +2,4 @@ include convertbng/liblonlat_bng.dylib
 include convertbng/liblonlat_bng.so
 include license.txt
 include README.md
-include usage.rst
+include README.rst

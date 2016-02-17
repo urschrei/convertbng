@@ -56,6 +56,7 @@ build: dist/convertbng/*.whl
 	-@rm -rf dist
 	-@rm -rf *.egg-info
 	@echo "Packaging source and binary"
+	@pandoc --from=markdown --to=rst --output=README.rst README.md
 	@python setup.py bdist_wheel sdist
 
 # upload depends on build
@@ -84,6 +85,7 @@ clean:
 	-@rm -rf build
 	-@rm -rf dist
 	-@rm *.pyc
+	-@rm *.rst
 	-@rm convertbng/*.pyc
 	-@rm convertbng/*.dylib
 	-@rm convertbng/*.so
