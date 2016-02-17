@@ -33,14 +33,14 @@ class BinaryDistribution(Distribution):
         return False
 
 version=find_version("convertbng/util.py")
-with open('usage.rst') as f:
+with open('README.rst') as f:
     readme = f.read()
 
 
 setup(
     name='convertbng',
     version=version,
-    description='Fast lon, lat to BNG conversion',
+    description='Fast lon, lat to and from ETRS89 and BNG (OSGB36) using Rust FFI',
     author='Stephan Hügel',
     author_email='urschrei@gmail.com',
     license='MIT License',
@@ -48,7 +48,7 @@ setup(
     include_package_data=True,
     distclass=BinaryDistribution,
     download_url='https://github.com/urschrei/convertbng/tarball/v%s' % version,
-    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89'],
+    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89', 'OSTN02'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
