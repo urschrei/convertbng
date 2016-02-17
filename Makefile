@@ -34,7 +34,8 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	# copy python source to VM
 	@mkdir -p $(LINUXHOST)/pysrc
 	@cp setup.* $(LINUXHOST)/pysrc
-	@cp usage.rst $(LINUXHOST)/pysrc
+	@pandoc --from=markdown --to=rst --output=README.rst README.md
+	@cp README.rst $(LINUXHOST)/pysrc
 	@cp manifest.in $(LINUXHOST)/pysrc
 	@cp -r convertbng/ $(LINUXHOST)/pysrc/convertbng
 	-@rm convertbng/liblonlat_bng.so
@@ -56,7 +57,6 @@ build: dist/convertbng/*.whl
 	-@rm -rf dist
 	-@rm -rf *.egg-info
 	@echo "Packaging source and binary"
-	@pandoc --from=markdown --to=rst --output=README.rst README.md
 	@python setup.py bdist_wheel sdist
 
 # upload depends on build
