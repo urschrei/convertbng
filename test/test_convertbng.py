@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import array
-from convertbng.convertbng.util import convertbng, convertlonlat, convert_osgb36, convert_osgb36_to_lonlat, convert_osgb36_to_etrs89, convert_etrs89_to_osgb36
+from convertbng.convertbng.util import convertbng, convertlonlat, convert_osgb36, convert_osgb36_to_lonlat, convert_osgb36_to_etrs89, convert_etrs89_to_osgb36, convert_etrs89_to_ll
 from ctypes import ArgumentError
 
 
@@ -183,4 +183,10 @@ class ConvertbngTests(unittest.TestCase):
         """ Tests OSGB36 --> ETRS89 Eastings, Northings conversion """
         expected = [[651307.003], [313255.686]]
         result = convert_osgb36_to_etrs89(651409.792, 313177.448)
+        self.assertEqual(expected, result)
+
+    def test_etrs89_to_lonlat(self):
+        """ Tests ETRS89 --> Lon, Lat conversion"""
+        expected =[[1.71607397], [52.65800783]]
+        result = convert_etrs89_to_ll(651307.003, 313255.686)
         self.assertEqual(expected, result)

@@ -66,6 +66,8 @@ class _FFIArray(Structure):
         we try successively more conservative approaches:
         numpy array -> array.array -> read-only buffer -> CPython iterable
         """
+        if isinstance(seq, float):
+            seq = array('d', [seq])
         try:
             len(seq)
         except TypeError:
@@ -119,6 +121,11 @@ convert_osgb36_to_ll = lib.convert_osgb36_to_ll_threaded
 convert_osgb36_to_ll.argtypes = (_FFIArray, _FFIArray)
 convert_osgb36_to_ll.restype = _Result_Tuple
 convert_osgb36_to_ll.errcheck = _void_array_to_list
+
+convert_etrs89_to_ll = lib.convert_etrs89_to_ll_threaded
+convert_etrs89_to_ll.argtypes = (_FFIArray, _FFIArray)
+convert_etrs89_to_ll.restype = _Result_Tuple
+convert_etrs89_to_ll.errcheck = _void_array_to_list
 
 convert_etrs89_en_to_osgb36 = lib.convert_etrs89_to_osgb36_threaded
 convert_etrs89_en_to_osgb36.argtypes = (_FFIArray, _FFIArray)
@@ -204,3 +211,14 @@ def convert_osgb36_to_etrs89(eastings, northings):
         eastings = [eastings]
         northings = [northings]
     return convert_osgb36_en_to_etrs89(eastings, northings)
+
+def convert_etrs89_to_lonlat(eastings, northings):
+    """
+    Multi-threaded ETRS89 Eastings and Northings --> Lon, Lat conversion,
+    Returns a list of two lists containing Longitude and Latitude floats,
+    respectively
+    """
+    if isinstance(eastings, float):
+        eastings = [eastings]
+        northings = [northings]
+    return convert_etrs89_to_ll(eastings, northings)

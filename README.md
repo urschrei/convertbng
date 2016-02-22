@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/urschrei/convertbng.png?branch=master)](https://travis-ci.org/urschrei/convertbng) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng)
 
 #Description
-A proof-of-concept utility library for converting longitude and latitude coordinates into British National Grid ([epsg:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) coordinates, and vice versa.  
+A proof-of-concept utility library for converting longitude and latitude coordinates into ETRS89 ([EPSG:25830](http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/)) and British National Grid ([epsg:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) coordinates, and vice versa.  
 Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng), and is quite fast. Some not-very-thorough speed tests can be found [here](https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb).
 
 #Accuracy
@@ -13,7 +13,8 @@ If greater accuracy is required, you may use the OSTN02-enabled functions, which
 - Use **`convert_osgb36(lons, lats)`** to convert ETRS89 Longitudes and Latitudes to OSGB36
 - Use **`convert_osgb36_to_lonlat(eastings, northings)`** to convert OSGB36 Eastings and Northings to ETRS89 longitudes and latitudes
 - Use **`convert_etrs89_to_osgb36(eastings, northings)`** to convert ETRS89 Eastings and Northings to OSGB36 Eastings and Northings
-- Use **`convert_osgb36_to_etrs89(eastings, northings)`** to convert OSGB36 eastings and Northings to ETRS89 Eastings and Northings.
+- Use **`convert_osgb36_to_etrs89(eastings, northings)`** to convert OSGB36 Eastings and Northings to ETRS89 Eastings and Northings.
+- Use **`convert_etrs89_to_ll(eastings, northings)`** to convert ETRS89 Eastings and Northings to ETRS89 Longitude and Latitude.
 
 ###Accuracy of the OSTN02 transformation used in this library
 
