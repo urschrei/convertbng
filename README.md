@@ -82,7 +82,7 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
 - if you got your coordinates from a smartphone or a consumer GPS:
     - They're probably [WGS84](http://spatialreference.org/ref/epsg/wgs-84/). Everything's fine!
 - if you have x and y coordinates, or you got your coordinates from Google Maps or Bing Maps, and they look something like `(-626172.1357121646, 6887893.4928337997)`:
-    - they're probably in [Web Mercator](http://spatialreference.org/ref/sr-org/6864/). You **must** convert them to WGS84 first.
+    - they're probably in [Web Mercator](http://spatialreference.org/ref/sr-org/6864/). You **must** convert them to WGS84 first. Use `convert_epsg3857_to_wgs84([x_coordinates], [y_coordinates])` to do so.
 
 #Accuracy
 `convertbng` and `convertlonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS ) probably exceed this level of error in any case.

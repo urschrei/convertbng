@@ -3,76 +3,19 @@
 Description
 ===========
 
-| A proof-of-concept utility library for converting longitude and
-  latitude coordinates into British National Grid
-  (`epsg:27700 <http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/>`__)
-  coordinates, and vice versa.
-| Conversion is handled by a `Rust
-  binary <https://github.com/urschrei/rust_bng>`__, and is quite fast.
-  Some not-very-thorough speed tests can be found
-  `here <https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb>`__.
+A proof-of-concept utility library for converting decimal longitude and
+latitude coordinates into ETRS89
+(`EPSG:25830 <http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/>`__)
+and British National Grid
+(`epsg:27700 <http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/>`__)
+Eastings and Northings, and vice versa.
 
-Accuracy
-========
-
-``convertbng`` and ``convertlonlat`` use the standard seven-step
-`Helmert
-transform <https://en.wikipedia.org/wiki/Helmert_transformation>`__ to
-convert coordinates. This is fast, but not particularly accurate – it
-can introduce positional error up to approximately 7 metres. For most
-applications, this is not of particular concern – the input data
-(especially those originating with smartphone GPS ) probably exceed this
-level of error in any case.
-
-OSTN02
-------
-
-If greater accuracy is required, you may use the OSTN02-enabled
-functions, which use
-`OSTN02 <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html>`__
-data for highly accurate conversions from ETRS89 latitude and longitude
-or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and
-vice versa. These data will usually have been recorded using the
-`National GPS
-Network <https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html>`__:
-
--  Use **``convert_osgb36(lons, lats)``** to convert ETRS89 Longitudes
-   and Latitudes to OSGB36
--  Use **``convert_osgb36_to_lonlat(eastings, northings)``** to convert
-   OSGB36 Eastings and Northings to ETRS89 longitudes and latitudes
--  Use **``convert_etrs89_to_osgb36(eastings, northings)``** to convert
-   ETRS89 Eastings and Northings to OSGB36 Eastings and Northings
--  Use **``convert_osgb36_to_etrs89(eastings, northings)``** to convert
-   OSGB36 eastings and Northings to ETRS89 Eastings and Northings.
-
-Accuracy of the OSTN02 transformation used in this library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  ETRS89 longitude and latitude / Eastings and Northings to OSGB36
-   conversion agrees with the provided Ordnance Survey test data in 31
-   of the 42 test coordinates (excluding two coordinates designed to
-   return no data). The 11 discrepancies are of 1mm in each case.
--  OSGB36 to ETRS89 longitude and latitude conversion is accurate to
-   within 8 decimal places, or 1.1mm.
-
-|OSTN02|
-
-Implementation
---------------
-
-| The main detail of interest is the FFI interface between Python and
-  Rust, the Python side of which can be found
-  `here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L50-L99>`__,
-  and the Rust side of which can be found
-  `here <https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L158-L180>`__.
-| The `ctypes <https://docs.python.org/2/library/ctypes.html>`__ library
-  expects C-compatible data structures, which we define in Rust (see
-  above). We then define methods which allow us to receive, safely
-  access, return, and free data across the FFI boundary.
-| Finally, we link the Rust conversion functions from the Python library
-  `here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126>`__.
-  Note the ``errcheck`` assignments, which convert the FFI-compatible
-  ctypes data structures to tuple lists.
+Conversion is handled by a `Rust
+binary <https://github.com/urschrei/rust_bng>`__ using FFI, and is quite
+fast. Some not-very-thorough speed tests can be found
+`here <https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb>`__.
+Generally speaking, conversion of one million coordinate pairs takes
+just over half a second.
 
 Installation
 ============
@@ -97,7 +40,7 @@ Usage
 
 | **NOTE**: Coordinate pairs outside the BNG bounding box will return a
   result of
-| ``[[9999], [9999]]``, which cannot be mapped. Since transformed
+| ``[[9999.00], [9999.00]]``, which cannot be mapped. Since transformed
   coordinates are guaranteed to be returned in the same order as the
   input, it is trivial to check for this value. Alternatively, ensure
   your data fall within the bounding box before transforming them:
@@ -116,12 +59,12 @@ generators.
 
 .. code:: python
 
-    from convertbng.util import convertbng, convertlonlat
+    from convertbng.util import convert_osgb36, convertlonlat
 
     # convert a single value
-    res = convertbng(lon, lat)
+    res = convert_osgb36(lon, lat)
 
-    # convert lists of longitude and latitude values to BNG Eastings and Northings
+    # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN02 corrections
     lons = [lon1, lon2, lon3]
     lats = [lat1, lat2, lat3]
     res_list = convertbng(lons, lats)
@@ -135,6 +78,153 @@ generators.
     lons_np = np.array(lons)
     lats_np = np.array(lats)
     res_list_np = convertbng(lons_np, lats_np)
+
+I Want To…
+----------
+
+-  transform longitudes and latitudes to OSGB36 Eastings and Northings,
+   **very quickly**:
+
+   -  use ``convert_etrs89()``
+
+-  transform longitudes and latitudes to OSGB36 Eastings and Northings
+   **very accurately**:
+
+   -  use ``convert_osgb36()``
+
+-  transform OSGB36 Eastings and Northings to latitude and longitude,
+   **very quickly**:
+
+   -  use ``convert_etrs89_to_lonlat()``
+
+-  transform OSGB36 Eastings and Northings to latitude and longitude,
+   **very accurately**:
+
+   -  use ``convert_osgb36_to_ll()``
+
+-  convert ETRS89 Eastings and Northings to their most accurate
+   real-world representation, using the OSTN02 corrections:
+
+   -  use ``convert_etrs89_to_osgb36()``
+
+Provided for completeness:
+
+-  transform accurate OSGB36 Eastings and Northings to *less-accurate*
+   ETRS89 Eastings and Northings:
+
+   -  use ``convert_osgb36_to_etrs89()``
+
+-  transform ETRS89 Eastings and Northings to longitude and latitude:
+
+   -  use ``convert_etrs89_to_ll()``
+
+Relationship between ETRS89 and WGS84
+=====================================
+
+From *`Transformations and OSGM02™, User
+guide <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/formats-for-developers.html>`__*,
+p7. Emphasis mine. >[…] In Europe, ETRS89 is a precise version of the
+better known WGS84 reference system optimised for use in Europe;
+**however, for most purposes it can be considered equivalent to WGS84**.
+Specifically, the motion of the European continental plate is not
+apparent in ETRS89, which allows a fixed relationship to be established
+between this system and Ordnance Survey mapping coordinate systems.
+Additional precise versions of WGS84 are currently in use, notably ITRS;
+these are not equivalent to ETRS89. The difference between ITRS and
+ETRS89 is in the order of 0.25 m (in 1999), and growing by 0.025 m per
+year in UK and Ireland. This effect is only relevant in international
+scientific applications. **For all navigation, mapping, GIS, and
+engineering applications within the tectonically stable parts of Europe
+(including UK and Ireland), the term ETRS89 should be taken as
+synonymous with WGS84**.
+
+In essence, this means that anywhere you see ETRS89 in this README, you
+can substitute WGS84.
+
+What CRS Are My Data In
+-----------------------
+
+-  if you have latitude and longitude coordinates:
+
+   -  They're probably
+      `WGS84 <http://spatialreference.org/ref/epsg/wgs-84/>`__.
+      Everything's fine!
+
+-  if you got your coordinates from a smartphone or a consumer GPS:
+
+   -  They're probably
+      `WGS84 <http://spatialreference.org/ref/epsg/wgs-84/>`__.
+      Everything's fine!
+
+-  if you have x and y coordinates, or you got your coordinates from
+   Google Maps or Bing Maps, and they look something like
+   ``(-626172.1357121646, 6887893.4928337997)``:
+
+   -  they're probably in `Web
+      Mercator <http://spatialreference.org/ref/sr-org/6864/>`__. You
+      **must** convert them to WGS84 first.
+
+Accuracy
+========
+
+``convertbng`` and ``convertlonlat`` use the standard seven-step
+`Helmert
+transform <https://en.wikipedia.org/wiki/Helmert_transformation>`__ to
+convert coordinates. This is fast, but not particularly accurate – it
+can introduce positional error up to approximately 5 metres. For most
+applications, this is not of particular concern – the input data
+(especially those originating with smartphone GPS ) probably exceed this
+level of error in any case.
+
+OSTN02
+------
+
+`OSTN02 <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html>`__
+data are used for highly accurate conversions from ETRS89 latitude and
+longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and
+Northings, and vice versa. These data will usually have been recorded
+using the `National GPS
+Network <https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html>`__:
+
+Accuracy of *Your* Data
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Conversion of your coordinates using OSTN02 transformations will be
+accurate, but if you're using consumer equipment, or got your data off
+the web, be aware that you're converting coordinates which probably
+weren't accurately recorded in the first place. That's because `accurate
+surveying is
+difficult <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html>`__.
+If you work in surveying or geodesy, you already know all this – sorry!
+
+Accuracy of the OSTN02 transformation used in this library
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  ETRS89 longitude and latitude / Eastings and Northings to OSGB36
+   conversion agrees with the provided Ordnance Survey test data in 31
+   of the 42 test coordinates (excluding two coordinates designed to
+   return no data). The 11 discrepancies are of **1mm** in each case.
+-  OSGB36 to ETRS89 longitude and latitude conversion is accurate to
+   within 8 decimal places, or 1.1mm.
+
+|OSTN02|
+
+Implementation
+--------------
+
+| The main detail of interest is the FFI interface between Python and
+  Rust, the Python side of which can be found
+  `here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L50-L99>`__,
+  and the Rust side of which can be found
+  `here <https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L158-L180>`__.
+| The `ctypes <https://docs.python.org/2/library/ctypes.html>`__ library
+  expects C-compatible data structures, which we define in Rust (see
+  above). We then define methods which allow us to receive, safely
+  access, return, and free data across the FFI boundary.
+| Finally, we link the Rust conversion functions from the Python library
+  `here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126>`__.
+  Note the ``errcheck`` assignments, which convert the FFI-compatible
+  ctypes data structures to tuple lists.
 
 Building the binary for local development
 =========================================

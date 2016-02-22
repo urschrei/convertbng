@@ -1,7 +1,17 @@
 import unittest
 import numpy as np
 import array
-from convertbng.convertbng.util import convertbng, convertlonlat, convert_osgb36, convert_osgb36_to_lonlat, convert_osgb36_to_etrs89, convert_etrs89_to_osgb36, convert_etrs89_to_ll
+from convertbng.convertbng.util import (
+    convertbng,
+    convertlonlat,
+    convert_osgb36,
+    convert_osgb36_to_lonlat,
+    convert_osgb36_to_etrs89,
+    convert_etrs89_to_osgb36,
+    convert_etrs89_to_ll,
+    convert_epsg3857_to_wgs84
+)
+
 from ctypes import ArgumentError
 
 
@@ -190,3 +200,8 @@ class ConvertbngTests(unittest.TestCase):
         expected =[[1.71607397], [52.65800783]]
         result = convert_etrs89_to_ll(651307.003, 313255.686)
         self.assertEqual(expected, result)
+
+    def test_epsg3857_to_wgs84(self):
+        """ Tests EPSG3857 to WGS84 conversion """
+        expected = [[-5.625000000783013], [52.48278022732355]]
+        result = convert_epsg3857_to_wgs84(-626172.1357121646, 6887893.4928337997)

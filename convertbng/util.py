@@ -41,7 +41,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.3.3"
+__version__ = "0.3.4"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -137,6 +137,11 @@ convert_osgb36_en_to_etrs89.argtypes = (_FFIArray, _FFIArray)
 convert_osgb36_en_to_etrs89.restype = _Result_Tuple
 convert_osgb36_en_to_etrs89.errcheck = _void_array_to_list
 
+convert_epsg3857_en_to_wgs84 = lib.convert_epsg3857_to_wgs84_threaded
+convert_epsg3857_en_to_wgs84.argtypes = (_FFIArray, _FFIArray)
+convert_epsg3857_en_to_wgs84.restype = _Result_Tuple
+convert_epsg3857_en_to_wgs84.errcheck = _void_array_to_list
+
 # Free FFI-allocated memory
 drop_array = lib.drop_float_array
 drop_array.argtypes = (_FFIArray, _FFIArray)
@@ -222,3 +227,15 @@ def convert_etrs89_to_lonlat(eastings, northings):
         eastings = [eastings]
         northings = [northings]
     return convert_etrs89_to_ll(eastings, northings)
+
+def convert_epsg3857_to_wgs84(x, y):
+    """
+    Convert Google Web Mercator (EPSG3857) coordinates to WGS84
+    Latitude and Longitude
+    Returns a list of two lists containing latitudes and longitudes,
+    respectively
+    """
+    if isinstance(x, float):
+        x = [x]
+        y = [y]
+    return convert_epsg3857_en_to_wgs84(x, y)
