@@ -16,7 +16,7 @@ The functions accept either a sequence (such as a list or numpy array) of longit
 `"returns a list of two lists containing floats, respectively"`
 
 **NOTE**: Coordinate pairs outside the BNG bounding box will return a result of  
-`[[9999.00], [9999.00]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
+`[[nan], [nan]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
 
 **Latitude**:  
 East: 1.768960  

@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
 import array
+import math
 from convertbng.convertbng.util import (
     convertbng,
     convertlonlat,
@@ -167,7 +168,9 @@ class ConvertbngTests(unittest.TestCase):
             [[1.768961], [55.811742]]
         ]
         for coord in bad_coords:
-            self.assertEqual([[9999], [9999]], convertbng(coord[0], coord[1]))
+            result = convertbng(coord[0], coord[1])
+            self.assertTrue(math.isnan(result[0][0]))
+            self.assertTrue(math.isnan(result[1][0]))
 
     def test_osgb36(self):
         """ Tests lon, lat --> OSGB36 conversion """
@@ -189,7 +192,7 @@ class ConvertbngTests(unittest.TestCase):
         result = convert_etrs89_to_osgb36(651307.003, 313255.686)
         self.assertEqual(expected, result)
 
-    def test_etrs89_to_osgb36(self):
+    def test_osgb36_to_etrs89(self):
         """ Tests OSGB36 --> ETRS89 Eastings, Northings conversion """
         expected = [[651307.003], [313255.686]]
         result = convert_osgb36_to_etrs89(651409.792, 313177.448)
