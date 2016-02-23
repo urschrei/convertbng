@@ -3,11 +3,12 @@
 Description
 ===========
 
-A proof-of-concept utility library for converting decimal longitude and
+A utility library for converting decimal
+`WGS84 <http://spatialreference.org/ref/epsg/wgs-84/>`__ longitude and
 latitude coordinates into ETRS89
 (`EPSG:25830 <http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/>`__)
-and British National Grid
-(`epsg:27700 <http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/>`__)
+and/or British National Grid (More correctly: OSGB36, or
+`EPSG:27700 <http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/>`__)
 Eastings and Northings, and vice versa.
 
 Conversion is handled by a `Rust
@@ -38,9 +39,9 @@ Usage
   latitude/northing value. Note the return type:
 | ``"returns a list of two lists containing floats, respectively"``
 
-| **NOTE**: Coordinate pairs outside the BNG bounding box will return a
-  result of
-| ``[[9999.00], [9999.00]]``, which cannot be mapped. Since transformed
+| **NOTE**: Coordinate pairs outside the BNG bounding box, or without
+  OSTN02 coverage will return a result of
+| ``[[nan], [nan]]``, which cannot be mapped. Since transformed
   coordinates are guaranteed to be returned in the same order as the
   input, it is trivial to check for this value. Alternatively, ensure
   your data fall within the bounding box before transforming them:
@@ -59,48 +60,48 @@ generators.
 
 .. code:: python
 
-    from convertbng.util import convert_osgb36, convertlonlat
+    from convertbng.util import convert_bng, convert_lonlat
 
     # convert a single value
-    res = convert_osgb36(lon, lat)
+    res = convert_bng(lon, lat)
 
     # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN02 corrections
     lons = [lon1, lon2, lon3]
     lats = [lat1, lat2, lat3]
-    res_list = convertbng(lons, lats)
+    res_list = convert_bng(lons, lats)
 
     # convert lists of BNG Eastings and Northings to longitude, latitude
     eastings = [easting1, easting2, easting3]
     northings = [northing1, northing2, northing3]
-    res_list_en = convertlonlat(eastings, northings)
+    res_list_en = convert_lonlat(eastings, northings)
 
     # assumes numpy imported as np
     lons_np = np.array(lons)
     lats_np = np.array(lats)
-    res_list_np = convertbng(lons_np, lats_np)
+    res_list_np = convert_bng(lons_np, lats_np)
 
 I Want To…
 ----------
 
--  transform longitudes and latitudes to OSGB36 Eastings and Northings,
-   **very quickly**:
-
-   -  use ``convert_etrs89()``
-
 -  transform longitudes and latitudes to OSGB36 Eastings and Northings
    **very accurately**:
 
-   -  use ``convert_osgb36()``
+   -  use ``convert_bng()``
+
+-  transform OSGB36 Eastings and Northings to latitude and longitude,
+   **very accurately**:
+
+   -  use ``convert_lonlat()``
+
+-  transform longitudes and latitudes to ETRS89 Eastings and Northings,
+   **very quickly**:
+
+   -  use ``convert_etrs89()``
 
 -  transform OSGB36 Eastings and Northings to latitude and longitude,
    **very quickly**:
 
    -  use ``convert_etrs89_to_lonlat()``
-
--  transform OSGB36 Eastings and Northings to latitude and longitude,
-   **very accurately**:
-
-   -  use ``convert_osgb36_to_ll()``
 
 -  convert ETRS89 Eastings and Northings to their most accurate
    real-world representation, using the OSTN02 corrections:
@@ -157,24 +158,30 @@ What CRS Are My Data In
       Everything's fine!
 
 -  if you have x and y coordinates, or you got your coordinates from
-   Google Maps or Bing Maps, and they look something like
-   ``(-626172.1357121646, 6887893.4928337997)``:
+   Google Maps or Bing Maps and they look something like
+   ``(-626172.1357121646, 6887893.4928337997)``, or the phrase
+   "Spherical Mercator" is mentioned anywhere:
 
    -  they're probably in `Web
       Mercator <http://spatialreference.org/ref/sr-org/6864/>`__. You
-      **must** convert them to WGS84 first.
+      **must** convert them to WGS84 first. Use
+      ``convert_epsg3857_to_wgs84([x_coordinates], [y_coordinates])`` to
+      do so.
 
 Accuracy
 ========
 
-``convertbng`` and ``convertlonlat`` use the standard seven-step
+``convert_bng`` and ``convert_lonlat`` use the standard seven-step
 `Helmert
 transform <https://en.wikipedia.org/wiki/Helmert_transformation>`__ to
 convert coordinates. This is fast, but not particularly accurate – it
 can introduce positional error up to approximately 5 metres. For most
 applications, this is not of particular concern – the input data
 (especially those originating with smartphone GPS ) probably exceed this
-level of error in any case.
+level of error in any case. In order to adjust for this, ``convert_bng``
+then retrieves the OSTN02 adjustments for the kilometer-grid the point
+falls in, and then performs a linear interpolation. This process happens
+in reverse for ``convert_lonlat``.
 
 OSTN02
 ------

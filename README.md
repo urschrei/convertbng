@@ -15,7 +15,7 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  
 `"returns a list of two lists containing floats, respectively"`
 
-**NOTE**: Coordinate pairs outside the BNG bounding box will return a result of  
+**NOTE**: Coordinate pairs outside the BNG bounding box, or without OSTN02 coverage will return a result of  
 `[[nan], [nan]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
 
 **Latitude**:  
@@ -28,36 +28,36 @@ South: 49.871159
 All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
 
 ```python
-from convertbng.util import convert_osgb36, convertlonlat
+from convertbng.util import convert_bng, convert_lonlat
 
 # convert a single value
-res = convert_osgb36(lon, lat)
+res = convert_bng(lon, lat)
 
 # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN02 corrections
 lons = [lon1, lon2, lon3]
 lats = [lat1, lat2, lat3]
-res_list = convertbng(lons, lats)
+res_list = convert_bng(lons, lats)
 
 # convert lists of BNG Eastings and Northings to longitude, latitude
 eastings = [easting1, easting2, easting3]
 northings = [northing1, northing2, northing3]
-res_list_en = convertlonlat(eastings, northings)
+res_list_en = convert_lonlat(eastings, northings)
 
 # assumes numpy imported as np
 lons_np = np.array(lons)
 lats_np = np.array(lats)
-res_list_np = convertbng(lons_np, lats_np)
+res_list_np = convert_bng(lons_np, lats_np)
 ```
 
 ## I Want To…
-- transform longitudes and latitudes to OSGB36 Eastings and Northings, **very quickly**:
-    - use `convert_etrs89()`
 - transform longitudes and latitudes to OSGB36 Eastings and Northings **very accurately**:
-    - use `convert_osgb36()`
-- transform OSGB36 Eastings and Northings to latitude and longitude, **very quickly**:
-    - use `convert_etrs89_to_lonlat()`
+    - use `convert_bng()`
 - transform OSGB36 Eastings and Northings to latitude and longitude, **very accurately**:
-    - use `convert_osgb36_to_ll()`
+    - use `convert_lonlat()`
+- transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN02 corrections):
+    - use `convert_etrs89()`
+- transform OSGB36 Eastings and Northings to ETRS89 latitude and longitude, **very quickly** (without OSTN02 corrections):
+    - use `convert_etrs89_to_lonlat()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN02 corrections:
     - use `convert_etrs89_to_osgb36()`
 
@@ -65,8 +65,8 @@ Provided for completeness:
 
 - transform accurate OSGB36 Eastings and Northings to *less-accurate* ETRS89 Eastings and Northings:
     - use `convert_osgb36_to_etrs89()`
-- transform ETRS89 Eastings and Northings to longitude and latitude:
-    - use `convert_etrs89_to_ll()`
+- transform ETRS89 Eastings and Northings to ETRS89 longitude and latitude:
+    - use `convert_etrs89_to_lonlat()`
 
 #Relationship between ETRS89 and WGS84
 From *[Transformations and OSGM02™, User guide](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/formats-for-developers.html)*, p7. Emphasis mine.
@@ -85,7 +85,7 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
     - they're probably in [Web Mercator](http://spatialreference.org/ref/sr-org/6864/). You **must** convert them to WGS84 first. Use `convert_epsg3857_to_wgs84([x_coordinates], [y_coordinates])` to do so.
 
 #Accuracy
-`convertbng` and `convertlonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS ) probably exceed this level of error in any case.
+`convert_bng` and `convert_lonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS ) probably exceed this level of error in any case. In order to adjust for this, `convert_bng` then retrieves the OSTN02 adjustments for the kilometer-grid the point falls in, and then performs a linear interpolation. This process happens in reverse for `convert_lonlat`.
 
 ##OSTN02
 [OSTN02](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html) data are used for highly accurate conversions from ETRS89 latitude and longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [National GPS Network](https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html):

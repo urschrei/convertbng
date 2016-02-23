@@ -41,7 +41,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.3.4"
+__version__ = "0.4.0"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -106,136 +106,87 @@ convert_bng = lib.convert_to_bng_threaded
 convert_bng.argtypes = (_FFIArray, _FFIArray)
 convert_bng.restype = _Result_Tuple
 convert_bng.errcheck = _void_array_to_list
-
-convert_lonlat = lib.convert_to_lonlat_threaded
-convert_lonlat.argtypes = (_FFIArray, _FFIArray)
-convert_lonlat.restype = _Result_Tuple
-convert_lonlat.errcheck = _void_array_to_list
-
-convert_to_osgb36_threaded = lib.convert_to_osgb36_threaded
-convert_to_osgb36_threaded.argtypes = (_FFIArray, _FFIArray)
-convert_to_osgb36_threaded.restype = _Result_Tuple
-convert_to_osgb36_threaded.errcheck = _void_array_to_list
-
-convert_osgb36_to_ll = lib.convert_osgb36_to_ll_threaded
-convert_osgb36_to_ll.argtypes = (_FFIArray, _FFIArray)
-convert_osgb36_to_ll.restype = _Result_Tuple
-convert_osgb36_to_ll.errcheck = _void_array_to_list
-
-convert_etrs89_to_ll = lib.convert_etrs89_to_ll_threaded
-convert_etrs89_to_ll.argtypes = (_FFIArray, _FFIArray)
-convert_etrs89_to_ll.restype = _Result_Tuple
-convert_etrs89_to_ll.errcheck = _void_array_to_list
-
-convert_etrs89_en_to_osgb36 = lib.convert_etrs89_to_osgb36_threaded
-convert_etrs89_en_to_osgb36.argtypes = (_FFIArray, _FFIArray)
-convert_etrs89_en_to_osgb36.restype = _Result_Tuple
-convert_etrs89_en_to_osgb36.errcheck = _void_array_to_list
-
-convert_osgb36_en_to_etrs89 = lib.convert_osgb36_to_etrs89_threaded
-convert_osgb36_en_to_etrs89.argtypes = (_FFIArray, _FFIArray)
-convert_osgb36_en_to_etrs89.restype = _Result_Tuple
-convert_osgb36_en_to_etrs89.errcheck = _void_array_to_list
-
-convert_epsg3857_en_to_wgs84 = lib.convert_epsg3857_to_wgs84_threaded
-convert_epsg3857_en_to_wgs84.argtypes = (_FFIArray, _FFIArray)
-convert_epsg3857_en_to_wgs84.restype = _Result_Tuple
-convert_epsg3857_en_to_wgs84.errcheck = _void_array_to_list
-
-# Free FFI-allocated memory
-drop_array = lib.drop_float_array
-drop_array.argtypes = (_FFIArray, _FFIArray)
-drop_array.restype = None
-
-# The type checks are not exhaustive. I know.
-def convertbng(lons, lats):
-    """
+convert_bng.__doc__ = """
     Multi-threaded lon, lat --> BNG conversion
     Returns a list of two lists containing Easting and Northing floats,
     respectively
     Uses the Helmert transform
     """
-    if isinstance(lons, float):
-        lons = [lons]
-        lats = [lats]
-    return convert_bng(lons, lats)
 
-def convertlonlat(eastings, northings):
-    """
+convert_lonlat = lib.convert_to_lonlat_threaded
+convert_lonlat.argtypes = (_FFIArray, _FFIArray)
+convert_lonlat.restype = _Result_Tuple
+convert_lonlat.errcheck = _void_array_to_list
+convert_lonlat.__doc__ =  """
     Multi-threaded BNG --> lon, lat conversion
     Returns a list of two lists containing Longitude and Latitude floats,
     respectively
     Uses the Helmert transform
     """
-    if isinstance(eastings, (int, long)):
-        eastings = [eastings]
-        northings = [northings]
-    return convert_lonlat(eastings, northings)
 
-def convert_osgb36(lons, lats):
-    """
+convert_to_osgb36 = lib.convert_to_osgb36_threaded
+convert_to_osgb36.argtypes = (_FFIArray, _FFIArray)
+convert_to_osgb36.restype = _Result_Tuple
+convert_to_osgb36.errcheck = _void_array_to_list
+convert_to_osgb36.__doc__ = """
     Multi-threaded lon, lat --> OSGB36 conversion, using OSTN02 data
     Returns a list of two lists containing Easting and Northing floats,
     respectively
     """
-    if isinstance(lons, float):
-        lons = [lons]
-        lats = [lats]
-    return convert_to_osgb36_threaded(lons, lats)
 
-def convert_osgb36_to_lonlat(eastings, northings):
-    """
+convert_osgb36_to_lonlat = lib.convert_osgb36_to_ll_threaded
+convert_osgb36_to_lonlat.argtypes = (_FFIArray, _FFIArray)
+convert_osgb36_to_lonlat.restype = _Result_Tuple
+convert_osgb36_to_lonlat.errcheck = _void_array_to_list
+convert_osgb36_to_lonlat.__doc__ = """
     Multi-threaded OSGB36 --> Lon, Lat conversion, using OSTN02 data
     Returns a list of two lists containing Easting and Northing floats,
     respectively
     """
-    if isinstance(eastings, float):
-        eastings = [eastings]
-        northings = [northings]
-    return convert_osgb36_to_ll(eastings, northings)
 
-def convert_etrs89_to_osgb36(eastings, northings):
-    """
+convert_etrs89_to_lonlat = lib.convert_etrs89_to_ll_threaded
+convert_etrs89_to_lonlat.argtypes = (_FFIArray, _FFIArray)
+convert_etrs89_to_lonlat.restype = _Result_Tuple
+convert_etrs89_to_lonlat.errcheck = _void_array_to_list
+convert_etrs89_to_lonlat.__doc__ = """
     Multi-threaded ETRS89 Eastings and Northings --> OSGB36 conversion, using OSTN02 data
     Returns a list of two lists containing Easting and Northing floats,
     respectively
     """
-    if isinstance(eastings, float):
-        eastings = [eastings]
-        northings = [northings]
-    return convert_etrs89_en_to_osgb36(eastings, northings)
 
-def convert_osgb36_to_etrs89(eastings, northings):
-    """
+convert_etrs89_to_osgb36 = lib.convert_etrs89_to_osgb36_threaded
+convert_etrs89_to_osgb36.argtypes = (_FFIArray, _FFIArray)
+convert_etrs89_to_osgb36.restype = _Result_Tuple
+convert_etrs89_to_osgb36.errcheck = _void_array_to_list
+convert_etrs89_to_osgb36.__doc__ = """
     Multi-threaded OSGB36 Eastings and Northings --> ETRS89 Eastings and Northings conversion,
     using OSTN02 data
     Returns a list of two lists containing Easting and Northing floats,
     respectively
     """
-    if isinstance(eastings, float):
-        eastings = [eastings]
-        northings = [northings]
-    return convert_osgb36_en_to_etrs89(eastings, northings)
 
-def convert_etrs89_to_lonlat(eastings, northings):
-    """
+convert_osgb36_to_etrs89 = lib.convert_osgb36_to_etrs89_threaded
+convert_osgb36_to_etrs89.argtypes = (_FFIArray, _FFIArray)
+convert_osgb36_to_etrs89.restype = _Result_Tuple
+convert_osgb36_to_etrs89.errcheck = _void_array_to_list
+convert_osgb36_to_etrs89.__doc__ = """
     Multi-threaded ETRS89 Eastings and Northings --> Lon, Lat conversion,
     Returns a list of two lists containing Longitude and Latitude floats,
     respectively
     """
-    if isinstance(eastings, float):
-        eastings = [eastings]
-        northings = [northings]
-    return convert_etrs89_to_ll(eastings, northings)
 
-def convert_epsg3857_to_wgs84(x, y):
-    """
+convert_epsg3857_to_wgs84 = lib.convert_epsg3857_to_wgs84_threaded
+convert_epsg3857_to_wgs84.argtypes = (_FFIArray, _FFIArray)
+convert_epsg3857_to_wgs84.restype = _Result_Tuple
+convert_epsg3857_to_wgs84.errcheck = _void_array_to_list
+convert_epsg3857_to_wgs84.__doc__ = """
     Convert Google Web Mercator (EPSG3857) coordinates to WGS84
     Latitude and Longitude
     Returns a list of two lists containing latitudes and longitudes,
     respectively
     """
-    if isinstance(x, float):
-        x = [x]
-        y = [y]
-    return convert_epsg3857_en_to_wgs84(x, y)
+
+# Free FFI-allocated memory
+drop_array = lib.drop_float_array
+drop_array.argtypes = (_FFIArray, _FFIArray)
+drop_array.restype = None
