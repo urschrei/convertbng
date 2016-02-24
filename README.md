@@ -19,11 +19,11 @@ The functions accept either a sequence (such as a list or numpy array) of longit
 `[[nan], [nan]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
 
 **Latitude**:  
-East: 1.768960  
-West: -6.379880  
+East: 1.7800  
+West: -7.5600  
 **Longitude**:  
-North: 55.811741  
-South: 49.871159  
+North: 60.8400  
+South: 49.9600  
 
 All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
 
