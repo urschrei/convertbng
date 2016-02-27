@@ -56,7 +56,7 @@ res_list_np = convert_bng(lons_np, lats_np)
     - use `convert_lonlat()`
 - transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN02 corrections):
     - use `convert_etrs89()`
-- transform OSGB36 Eastings and Northings to ETRS89 latitude and longitude, **very quickly** (without OSTN02 corrections):
+- transform ETRS89 Eastings and Northings to ETRS89 latitude and longitude, **very quickly** (the transformation does not use OSTN02):
     - use `convert_etrs89_to_lonlat()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN02 corrections:
     - use `convert_etrs89_to_osgb36()`
@@ -85,7 +85,7 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
     - they're probably in [Web Mercator](http://spatialreference.org/ref/sr-org/6864/). You **must** convert them to WGS84 first. Use `convert_epsg3857_to_wgs84([x_coordinates], [y_coordinates])` to do so.
 
 #Accuracy
-`convert_bng` and `convert_lonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS ) probably exceed this level of error in any case. In order to adjust for this, `convert_bng` then retrieves the OSTN02 adjustments for the kilometer-grid the point falls in, and then performs a linear interpolation. This process happens in reverse for `convert_lonlat`.
+`convert_bng` and `convert_lonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS) probably exceed this level of error in any case. In order to adjust for this, `convert_bng` then retrieves the OSTN02 adjustments for the kilometer-grid the point falls in, and performs a linear interpolation to give final, accurate coordinates. This process happens in reverse for `convert_lonlat`.
 
 ##OSTN02
 [OSTN02](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html) data are used for highly accurate conversions from ETRS89 latitude and longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [National GPS Network](https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html):
@@ -96,6 +96,9 @@ Conversion of your coordinates using OSTN02 transformations will be accurate, bu
 ###Accuracy of the OSTN02 transformation used in this library
 - ETRS89 longitude and latitude / Eastings and Northings to OSGB36 conversion agrees with the provided Ordnance Survey test data in 31 of the 42 test coordinates (excluding two coordinates designed to return no data). The 11 discrepancies are of **1mm** in each case.
 - OSGB36 to ETRS89 longitude and latitude conversion is accurate to within 8 decimal places, or 1.1mm.
+
+### A Note on Ellipsoids
+WGS84 and ETRS89 coordinates use the GRS80 ellipsoid, whereas OSGB36 uses the Airy 1830 ellipsoid, which provides a regional best fit for Britain. Positions for coordinates in Great Britain can differ by over 100m as a result. It is thus inadvisable to attempt calculations using mixed ETRS89 and OSGB36 coordinates.
 
 [![OSTN02](ostn002_s.gif)]( "OSTN02")
 
