@@ -12,7 +12,7 @@ dist/convertbng/*.whl: convertbng/liblonlat_bng.dylib \
 # changing util.py will also trigger a rebuild
 convertbng/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs convertbng/util.py
 	@echo "Running rust tests and rebuilding binary"
-	@cd $(RUSTDIR) && cargo test && cargo build --release
+	@cd $(RUSTDIR) && cargo test && cargo build --release && strip -ur target/release/liblonlat_bng.dylib
 	-@rm convertbng/liblonlat_bng.dylib
 	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/
 	@echo "Copied OSX .dylib"
@@ -30,7 +30,7 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 		'cd /vagrant && cargo update && cargo test && cargo build --release \
 		&& ar -x /vagrant/target/release/liblonlat_bng.a \
 		&& gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt \
-		'
+		&& strip -s /vagrant/target/release/liblonlat_bng.so'
 	# copy python source to VM
 	@mkdir -p $(LINUXHOST)/pysrc
 	@cp setup.* $(LINUXHOST)/pysrc
