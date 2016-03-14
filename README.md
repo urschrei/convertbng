@@ -94,7 +94,8 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
 Conversion of your coordinates using OSTN02 transformations will be accurate, but if you're using consumer equipment, or got your data off the web, be aware that you're converting coordinates which probably weren't accurately recorded in the first place. That's because [accurate surveying is difficult](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html). If you work in surveying or geodesy, you already know all this – sorry! 
 
 ###Accuracy of the OSTN02 transformation used in this library
-- ETRS89 longitude and latitude / Eastings and Northings to OSGB36 conversion agrees with the provided Ordnance Survey test data in 31 of the 42 test coordinates (excluding two coordinates designed to return no data). The 11 discrepancies are of **1mm** in each case.
+- ETRS89 longitude and latitude / Eastings and Northings to OSGB36 conversion agrees with the provided Ordnance Survey test data in **31 of the 42** test coordinates (excluding two coordinates designed to return no data; these correctly fail).
+- The 11 discrepancies are of **1mm** in each case.
 - OSGB36 to ETRS89 longitude and latitude conversion is accurate to within 8 decimal places, or 1.1mm.
 
 ### A Note on Ellipsoids
