@@ -1,4 +1,4 @@
-|Build Status| |MIT licensed| |PyPI Version|
+|Build Status| |Coverage Status| |MIT licensed| |PyPI Version|
 
 Description
 ===========
@@ -209,9 +209,10 @@ Accuracy of the OSTN02 transformation used in this library
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  ETRS89 longitude and latitude / Eastings and Northings to OSGB36
-   conversion agrees with the provided Ordnance Survey test data in 31
-   of the 42 test coordinates (excluding two coordinates designed to
-   return no data). The 11 discrepancies are of **1mm** in each case.
+   conversion agrees with the provided Ordnance Survey test data in **31
+   of the 42** test coordinates (excluding two coordinates designed to
+   return no data; these correctly fail).
+-  The 11 discrepancies are of **1mm** in each case.
 -  OSGB36 to ETRS89 longitude and latitude conversion is accurate to
    within 8 decimal places, or 1.1mm.
 
@@ -265,6 +266,8 @@ License
 
 .. |Build Status| image:: https://travis-ci.org/urschrei/convertbng.png?branch=master
    :target: https://travis-ci.org/urschrei/convertbng
+.. |Coverage Status| image:: https://coveralls.io/repos/github/urschrei/convertbng/badge.svg?branch=master
+   :target: https://coveralls.io/github/urschrei/convertbng?branch=master
 .. |MIT licensed| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: license.txt
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/convertbng.svg
