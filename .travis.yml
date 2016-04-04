@@ -4,11 +4,15 @@ python:
 install:
   - pip install .
   - pip install numpy
+  - pip install python-coveralls
+  - pip install nosexcover
 cache: pip
-script: nosetests -v
+script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 branches:
   only:
     - master
+after_success:
+  - coveralls
 notifications:
   email:
     - urschrei@gmail.com
