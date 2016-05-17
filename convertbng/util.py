@@ -41,7 +41,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join(file_path, 'liblonlat_bng.' + ext))
@@ -94,8 +94,6 @@ class _Result_Tuple(Structure):
 
 def _void_array_to_list(restuple, _func, _args):
     """ Convert the FFI result to Python data structures """
-    # eastings = POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0]
-    # northings = POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0]
     res_list = [
         list(POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0]),
         list(POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0])
