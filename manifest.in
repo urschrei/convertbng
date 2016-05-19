@@ -1,5 +1,7 @@
 include convertbng/liblonlat_bng.dylib
 include convertbng/liblonlat_bng.so
+include convertbng/cutil/*
+include convertbng/cutil/libs/*
 include license.txt
 include README.md
 include README.rst

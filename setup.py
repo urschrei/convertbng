@@ -5,11 +5,13 @@ setup.py
 
 Created by Stephan Hügel on 2015-06-21
 """
-from __future__ import unicode_literals
+# from __future__ import unicode_literals
 import os
 import re
 import io
-from setuptools import setup, find_packages, Distribution
+from setuptools import setup, find_packages, Distribution, Extension
+from Cython.Build import cythonize
+from Cython.Distutils import build_ext
 
 def read(*names, **kwargs):
     with io.open(
@@ -36,6 +38,13 @@ version=find_version("convertbng/util.py")
 with open('README.rst') as f:
     readme = f.read()
 
+extensions = Extension("convertbng.cutil",
+                    sources=["convertbng/cutil/cutil.pyx"],
+                    libraries=["lonlat_bng"],
+                    library_dirs=['convertbng',],
+                    include_dirs=['.',' convertbng',]
+)
+extensions = [extensions,]
 
 setup(
     name='convertbng',
@@ -65,5 +74,7 @@ setup(
     ],
     packages=find_packages(),
     install_requires=['numpy >= 1.9.0'],
+    ext_modules = cythonize(extensions),
+    cmdclass={'build_ext': build_ext},
     long_description=readme
 )

@@ -12,7 +12,7 @@ from convertbng.convertbng.util import (
     convert_etrs89_to_lonlat,
     convert_epsg3857_to_wgs84
 )
-
+from convertbng.convertbng.cutil import convert_bng as cconvert_bng
 from ctypes import ArgumentError
 
 
@@ -37,6 +37,21 @@ class ConvertbngTests(unittest.TestCase):
             [51.44533267, 54.589097162646141]
         )
         self.assertEqual(expected, result)
+
+    def testCConvertLonLat(self):
+        """ Test Cythonised multithreaded lon, lat --> BNG function """
+        expected = [
+            [516274.449, 398915.542],
+            [173141.09800000003, 521544.088]
+        ]
+   
+        result = cconvert_bng(
+            np.array([-0.32824866, -2.0183041005533306]),
+            np.array([51.44533267, 54.589097162646141])
+        )
+        # dump array result into list 
+        a, b = list(result[0]), list(result[1])
+        self.assertEqual(expected, [a, b])
 
     def testConvertBNG(self):
         """ Test multithreaded BNG --> lon, lat function """
