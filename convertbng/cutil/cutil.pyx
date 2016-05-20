@@ -30,10 +30,23 @@ THE SOFTWARE.
 """
 __author__ = u"Stephan Hügel"
 
-
 import cython
 import numpy as np
-from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
+from convertbng.cutil.convertbng_p cimport (
+    _FFIArray,
+    _Result_Tuple,
+    convert_to_bng_threaded,
+    convert_to_lonlat_threaded,
+    convert_to_osgb36_threaded,
+    convert_to_etrs89_threaded,
+    convert_etrs89_to_osgb36_threaded,
+    convert_etrs89_to_ll_threaded,
+    convert_osgb36_to_ll_threaded,
+    convert_osgb36_to_etrs89_threaded,
+    convert_osgb36_to_etrs89_threaded,
+    convert_epsg3857_to_wgs84_threaded,
+    drop_float_array
+    )
 
 def convert_bng(double[::1] lons, double[::1] lats):
     """A Cython wrapper around the Rust threaded conversion function

@@ -42,7 +42,7 @@ extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil/cutil.pyx"],
                     libraries=["lonlat_bng"],
                     library_dirs=['convertbng',],
-                    include_dirs=['.',' convertbng',]
+                    include_dirs=['.',' convertbng', 'convertbng/cutil']
 )
 extensions = [extensions,]
 

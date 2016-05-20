@@ -3,9 +3,13 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "depends": [
+            "convertbng/cutil/rlib.h"
+        ], 
         "include_dirs": [
             ".", 
-            " convertbng"
+            " convertbng", 
+            "convertbng/cutil"
         ], 
         "libraries": [
             "lonlat_bng"
@@ -275,8 +279,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__cutil
-#define __PYX_HAVE_API__cutil
+#define __PYX_HAVE__convertbng__cutil__cutil
+#define __PYX_HAVE_API__convertbng__cutil__cutil
 #include "rlib.h"
 #include "pythread.h"
 #include "string.h"
@@ -1238,9 +1242,9 @@ static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, c
 
 /* Module declarations from 'cython' */
 
-/* Module declarations from 'convertbng_p' */
+/* Module declarations from 'convertbng.cutil.convertbng_p' */
 
-/* Module declarations from 'cutil' */
+/* Module declarations from 'convertbng.cutil.cutil' */
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
@@ -1286,10 +1290,10 @@ static void __pyx_memoryview_slice_assign_scalar(__Pyx_memviewslice *, int, size
 static void __pyx_memoryview__slice_assign_scalar(char *, Py_ssize_t *, Py_ssize_t *, int, size_t, void *); /*proto*/
 static PyObject *__pyx_format_from_typeinfo(__Pyx_TypeInfo *); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "cutil"
-int __pyx_module_is_main_cutil = 0;
+#define __Pyx_MODULE_NAME "convertbng.cutil.cutil"
+int __pyx_module_is_main_convertbng__cutil__cutil = 0;
 
-/* Implementation of 'cutil' */
+/* Implementation of 'convertbng.cutil.cutil' */
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_MemoryError;
 static PyObject *__pyx_builtin_enumerate;
@@ -1328,7 +1332,6 @@ static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_class[] = "__class__";
-static const char __pyx_k_cutil[] = "cutil";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_flags[] = "flags";
 static const char __pyx_k_numpy[] = "numpy";
@@ -1368,6 +1371,7 @@ static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
+static const char __pyx_k_convertbng_cutil_cutil[] = "convertbng.cutil.cutil";
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '%s'";
@@ -1421,8 +1425,8 @@ static PyObject *__pyx_n_s_class;
 static PyObject *__pyx_kp_s_contiguous_and_direct;
 static PyObject *__pyx_kp_s_contiguous_and_indirect;
 static PyObject *__pyx_n_s_convert_bng;
+static PyObject *__pyx_n_s_convertbng_cutil_cutil;
 static PyObject *__pyx_n_s_copy;
-static PyObject *__pyx_n_s_cutil;
 static PyObject *__pyx_n_s_dtype_is_object;
 static PyObject *__pyx_n_s_e;
 static PyObject *__pyx_n_s_e_numpy;
@@ -1475,7 +1479,7 @@ static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_x_ffi;
 static PyObject *__pyx_n_s_y_ffi;
-static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_lons, __Pyx_memviewslice __pyx_v_lats); /* proto */
+static PyObject *__pyx_pf_10convertbng_5cutil_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_lons, __Pyx_memviewslice __pyx_v_lats); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -1536,8 +1540,8 @@ static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
 static PyObject *__pyx_codeobj__20;
 
-/* "cutil.pyx":38
- * from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
+/* "convertbng/cutil/cutil.pyx":51
+ *     )
  * 
  * def convert_bng(double[::1] lons, double[::1] lats):             # <<<<<<<<<<<<<<
  *     """A Cython wrapper around the Rust threaded conversion function
@@ -1545,10 +1549,10 @@ static PyObject *__pyx_codeobj__20;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5cutil_convert_bng[] = "A Cython wrapper around the Rust threaded conversion function\n\n    Pass 2 arrays: longitudes and latitudes\n    Get back a tuple of arrays (eastings and northings)\n\n    ";
-static PyMethodDef __pyx_mdef_5cutil_1convert_bng = {"convert_bng", (PyCFunction)__pyx_pw_5cutil_1convert_bng, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5cutil_convert_bng};
-static PyObject *__pyx_pw_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_10convertbng_5cutil_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_10convertbng_5cutil_5cutil_convert_bng[] = "A Cython wrapper around the Rust threaded conversion function\n\n    Pass 2 arrays: longitudes and latitudes\n    Get back a tuple of arrays (eastings and northings)\n\n    ";
+static PyMethodDef __pyx_mdef_10convertbng_5cutil_5cutil_1convert_bng = {"convert_bng", (PyCFunction)__pyx_pw_10convertbng_5cutil_5cutil_1convert_bng, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10convertbng_5cutil_5cutil_convert_bng};
+static PyObject *__pyx_pw_10convertbng_5cutil_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_lons = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_lats = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_r = 0;
@@ -1574,11 +1578,11 @@ static PyObject *__pyx_pw_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_lats)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("convert_bng", 1, 2, 2, 1); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("convert_bng", 1, 2, 2, 1); __PYX_ERR(0, 51, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "convert_bng") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "convert_bng") < 0)) __PYX_ERR(0, 51, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1586,25 +1590,25 @@ static PyObject *__pyx_pw_5cutil_1convert_bng(PyObject *__pyx_self, PyObject *__
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_lons = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[0]); if (unlikely(!__pyx_v_lons.memview)) __PYX_ERR(0, 38, __pyx_L3_error)
-    __pyx_v_lats = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[1]); if (unlikely(!__pyx_v_lats.memview)) __PYX_ERR(0, 38, __pyx_L3_error)
+    __pyx_v_lons = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[0]); if (unlikely(!__pyx_v_lons.memview)) __PYX_ERR(0, 51, __pyx_L3_error)
+    __pyx_v_lats = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[1]); if (unlikely(!__pyx_v_lats.memview)) __PYX_ERR(0, 51, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("convert_bng", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("convert_bng", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 51, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cutil.convert_bng", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("convertbng.cutil.cutil.convert_bng", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5cutil_convert_bng(__pyx_self, __pyx_v_lons, __pyx_v_lats);
+  __pyx_r = __pyx_pf_10convertbng_5cutil_5cutil_convert_bng(__pyx_self, __pyx_v_lons, __pyx_v_lats);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_lons, __Pyx_memviewslice __pyx_v_lats) {
+static PyObject *__pyx_pf_10convertbng_5cutil_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_lons, __Pyx_memviewslice __pyx_v_lats) {
   struct _FFIArray __pyx_v_x_ffi;
   struct _FFIArray __pyx_v_y_ffi;
   struct _Result_Tuple __pyx_v_result;
@@ -1628,7 +1632,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_10 = NULL;
   __Pyx_RefNannySetupContext("convert_bng", 0);
 
-  /* "cutil.pyx":49
+  /* "convertbng/cutil/cutil.pyx":62
  *     cdef _FFIArray x_ffi, y_ffi
  *     # get a pointer to the data, and cast it to void*
  *     x_ffi.data = <void*>&lons[0]             # <<<<<<<<<<<<<<
@@ -1643,11 +1647,11 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   } else if (unlikely(__pyx_t_1 >= __pyx_v_lons.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 49, __pyx_L1_error)
+    __PYX_ERR(0, 62, __pyx_L1_error)
   }
   __pyx_v_x_ffi.data = ((void *)(&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_lons.data) + __pyx_t_1)) )))));
 
-  /* "cutil.pyx":51
+  /* "convertbng/cutil/cutil.pyx":64
  *     x_ffi.data = <void*>&lons[0]
  *     # This may be ... * sizeof(double) - it depends on the C api
  *     x_ffi.len = lons.shape[0]             # <<<<<<<<<<<<<<
@@ -1656,7 +1660,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_x_ffi.len = (__pyx_v_lons.shape[0]);
 
-  /* "cutil.pyx":53
+  /* "convertbng/cutil/cutil.pyx":66
  *     x_ffi.len = lons.shape[0]
  *     # Repeat
  *     y_ffi.data = <void*>&lats[0]             # <<<<<<<<<<<<<<
@@ -1671,11 +1675,11 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   } else if (unlikely(__pyx_t_3 >= __pyx_v_lats.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 53, __pyx_L1_error)
+    __PYX_ERR(0, 66, __pyx_L1_error)
   }
   __pyx_v_y_ffi.data = ((void *)(&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_lats.data) + __pyx_t_3)) )))));
 
-  /* "cutil.pyx":54
+  /* "convertbng/cutil/cutil.pyx":67
  *     # Repeat
  *     y_ffi.data = <void*>&lats[0]
  *     y_ffi.len = lats.shape[0]             # <<<<<<<<<<<<<<
@@ -1684,7 +1688,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_y_ffi.len = (__pyx_v_lats.shape[0]);
 
-  /* "cutil.pyx":56
+  /* "convertbng/cutil/cutil.pyx":69
  *     y_ffi.len = lats.shape[0]
  * 
  *     cdef _Result_Tuple result = convert_to_bng_threaded(x_ffi, y_ffi)             # <<<<<<<<<<<<<<
@@ -1693,7 +1697,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_result = convert_to_bng_threaded(__pyx_v_x_ffi, __pyx_v_y_ffi);
 
-  /* "cutil.pyx":59
+  /* "convertbng/cutil/cutil.pyx":72
  * 
  *     # Get data pointers for the two result arrays
  *     cdef double* eastings_ptr = <double*>(result.e.data)             # <<<<<<<<<<<<<<
@@ -1702,7 +1706,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_eastings_ptr = ((double *)__pyx_v_result.e.data);
 
-  /* "cutil.pyx":60
+  /* "convertbng/cutil/cutil.pyx":73
  *     # Get data pointers for the two result arrays
  *     cdef double* eastings_ptr = <double*>(result.e.data)
  *     cdef double* northings_ptr = <double*>(result.n.data)             # <<<<<<<<<<<<<<
@@ -1711,7 +1715,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_northings_ptr = ((double *)__pyx_v_result.n.data);
 
-  /* "cutil.pyx":63
+  /* "convertbng/cutil/cutil.pyx":76
  *     # Now view the output arrays using memoryviews
  *     # Their length must be specified
  *     cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr             # <<<<<<<<<<<<<<
@@ -1720,26 +1724,26 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   if (!__pyx_v_eastings_ptr) {
     PyErr_SetString(PyExc_ValueError,"Cannot create cython.array from NULL pointer");
-    __PYX_ERR(0, 63, __pyx_L1_error)
+    __PYX_ERR(0, 76, __pyx_L1_error)
   }
   __pyx_t_6 = __pyx_format_from_typeinfo(&__Pyx_TypeInfo_double);
   __pyx_t_5 = Py_BuildValue((char*) "("  __PYX_BUILD_PY_SSIZE_T  ")", ((Py_ssize_t)__pyx_v_result.e.len));
-  if (unlikely(!__pyx_t_6 || !__pyx_t_5 || !PyBytes_AsString(__pyx_t_6))) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (unlikely(!__pyx_t_6 || !__pyx_t_5 || !PyBytes_AsString(__pyx_t_6))) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_4 = __pyx_array_new(__pyx_t_5, sizeof(double), PyBytes_AS_STRING(__pyx_t_6), (char *) "fortran", (char *) __pyx_v_eastings_ptr);
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_4));
-  if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_DECREF(((PyObject *)__pyx_t_4)); __pyx_t_4 = 0;
   __pyx_v_e = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "cutil.pyx":64
+  /* "convertbng/cutil/cutil.pyx":77
  *     # Their length must be specified
  *     cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr
  *     cdef double[::1] n = <double[:result.n.len:1]>northings_ptr             # <<<<<<<<<<<<<<
@@ -1748,38 +1752,38 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   if (!__pyx_v_northings_ptr) {
     PyErr_SetString(PyExc_ValueError,"Cannot create cython.array from NULL pointer");
-    __PYX_ERR(0, 64, __pyx_L1_error)
+    __PYX_ERR(0, 77, __pyx_L1_error)
   }
   __pyx_t_5 = __pyx_format_from_typeinfo(&__Pyx_TypeInfo_double);
   __pyx_t_6 = Py_BuildValue((char*) "("  __PYX_BUILD_PY_SSIZE_T  ")", ((Py_ssize_t)__pyx_v_result.n.len));
-  if (unlikely(!__pyx_t_5 || !__pyx_t_6 || !PyBytes_AsString(__pyx_t_5))) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5 || !__pyx_t_6 || !PyBytes_AsString(__pyx_t_5))) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_4 = __pyx_array_new(__pyx_t_6, sizeof(double), PyBytes_AS_STRING(__pyx_t_5), (char *) "fortran", (char *) __pyx_v_northings_ptr);
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_4));
-  if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_DECREF(((PyObject *)__pyx_t_4)); __pyx_t_4 = 0;
   __pyx_v_n = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "cutil.pyx":67
+  /* "convertbng/cutil/cutil.pyx":80
  * 
  *     # Create numpy copies of the two arrays
  *     e_numpy = np.copy(e)             # <<<<<<<<<<<<<<
  *     n_numpy = np.copy(n)
  * 
  */
-  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_copy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_copy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_e, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_e, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_9 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -1792,17 +1796,17 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
     }
   }
   if (!__pyx_t_9) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_5);
   } else {
-    __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9); __pyx_t_9 = NULL;
     __Pyx_GIVEREF(__pyx_t_6);
     PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_t_6);
     __pyx_t_6 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   }
@@ -1810,19 +1814,19 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_v_e_numpy = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "cutil.pyx":68
+  /* "convertbng/cutil/cutil.pyx":81
  *     # Create numpy copies of the two arrays
  *     e_numpy = np.copy(e)
  *     n_numpy = np.copy(n)             # <<<<<<<<<<<<<<
  * 
  *     # Free the returned arrays
  */
-  __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_copy); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_copy); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_n, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_n, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_6 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_10))) {
@@ -1835,17 +1839,17 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
     }
   }
   if (!__pyx_t_6) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_GOTREF(__pyx_t_5);
   } else {
-    __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_6); __pyx_t_6 = NULL;
     __Pyx_GIVEREF(__pyx_t_8);
     PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_9, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_9, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
@@ -1853,7 +1857,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_v_n_numpy = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "cutil.pyx":71
+  /* "convertbng/cutil/cutil.pyx":84
  * 
  *     # Free the returned arrays
  *     drop_float_array(result.e, result.n)             # <<<<<<<<<<<<<<
@@ -1862,14 +1866,14 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
  */
   drop_float_array(__pyx_v_result.e, __pyx_v_result.n);
 
-  /* "cutil.pyx":74
+  /* "convertbng/cutil/cutil.pyx":87
  * 
  *     # Return tuple containing two arrays to python
  *     return e_numpy, n_numpy             # <<<<<<<<<<<<<<
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_e_numpy);
   __Pyx_GIVEREF(__pyx_v_e_numpy);
@@ -1881,8 +1885,8 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "cutil.pyx":38
- * from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
+  /* "convertbng/cutil/cutil.pyx":51
+ *     )
  * 
  * def convert_bng(double[::1] lons, double[::1] lats):             # <<<<<<<<<<<<<<
  *     """A Cython wrapper around the Rust threaded conversion function
@@ -1898,7 +1902,7 @@ static PyObject *__pyx_pf_5cutil_convert_bng(CYTHON_UNUSED PyObject *__pyx_self,
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("cutil.convert_bng", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("convertbng.cutil.cutil.convert_bng", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_e, 1);
@@ -13956,7 +13960,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cutil.array", /*tp_name*/
+  "convertbng.cutil.cutil.array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -14062,7 +14066,7 @@ static PyMethodDef __pyx_methods_Enum[] = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cutil.Enum", /*tp_name*/
+  "convertbng.cutil.cutil.Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -14309,7 +14313,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cutil.memoryview", /*tp_name*/
+  "convertbng.cutil.cutil.memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -14434,7 +14438,7 @@ static struct PyGetSetDef __pyx_getsets__memoryviewslice[] = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cutil._memoryviewslice", /*tp_name*/
+  "convertbng.cutil.cutil._memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -14556,8 +14560,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_contiguous_and_direct, __pyx_k_contiguous_and_direct, sizeof(__pyx_k_contiguous_and_direct), 0, 0, 1, 0},
   {&__pyx_kp_s_contiguous_and_indirect, __pyx_k_contiguous_and_indirect, sizeof(__pyx_k_contiguous_and_indirect), 0, 0, 1, 0},
   {&__pyx_n_s_convert_bng, __pyx_k_convert_bng, sizeof(__pyx_k_convert_bng), 0, 0, 1, 1},
+  {&__pyx_n_s_convertbng_cutil_cutil, __pyx_k_convertbng_cutil_cutil, sizeof(__pyx_k_convertbng_cutil_cutil), 0, 0, 1, 1},
   {&__pyx_n_s_copy, __pyx_k_copy, sizeof(__pyx_k_copy), 0, 0, 1, 1},
-  {&__pyx_n_s_cutil, __pyx_k_cutil, sizeof(__pyx_k_cutil), 0, 0, 1, 1},
   {&__pyx_n_s_dtype_is_object, __pyx_k_dtype_is_object, sizeof(__pyx_k_dtype_is_object), 0, 0, 1, 1},
   {&__pyx_n_s_e, __pyx_k_e, sizeof(__pyx_k_e), 0, 0, 1, 1},
   {&__pyx_n_s_e_numpy, __pyx_k_e_numpy, sizeof(__pyx_k_e_numpy), 0, 0, 1, 1},
@@ -14776,17 +14780,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "cutil.pyx":38
- * from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
+  /* "convertbng/cutil/cutil.pyx":51
+ *     )
  * 
  * def convert_bng(double[::1] lons, double[::1] lats):             # <<<<<<<<<<<<<<
  *     """A Cython wrapper around the Rust threaded conversion function
  * 
  */
-  __pyx_tuple__19 = PyTuple_Pack(11, __pyx_n_s_lons, __pyx_n_s_lats, __pyx_n_s_x_ffi, __pyx_n_s_y_ffi, __pyx_n_s_result, __pyx_n_s_eastings_ptr, __pyx_n_s_northings_ptr, __pyx_n_s_e, __pyx_n_s_n, __pyx_n_s_e_numpy, __pyx_n_s_n_numpy); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_tuple__19 = PyTuple_Pack(11, __pyx_n_s_lons, __pyx_n_s_lats, __pyx_n_s_x_ffi, __pyx_n_s_y_ffi, __pyx_n_s_result, __pyx_n_s_eastings_ptr, __pyx_n_s_northings_ptr, __pyx_n_s_e, __pyx_n_s_n, __pyx_n_s_e_numpy, __pyx_n_s_n_numpy); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(2, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_sth_dev_convertbng_conver, __pyx_n_s_convert_bng, 38, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(2, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_sth_dev_convertbng_conver, __pyx_n_s_convert_bng, 51, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 51, __pyx_L1_error)
 
   /* "View.MemoryView":282
  *         return self.name
@@ -14925,14 +14929,14 @@ PyMODINIT_FUNC PyInit_cutil(void)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_cutil) {
+  if (__pyx_module_is_main_convertbng__cutil__cutil) {
     if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "cutil")) {
-      if (unlikely(PyDict_SetItemString(modules, "cutil", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "convertbng.cutil.cutil")) {
+      if (unlikely(PyDict_SetItemString(modules, "convertbng.cutil.cutil", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -14987,40 +14991,40 @@ PyMODINIT_FUNC PyInit_cutil(void)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "cutil.pyx":31
+  /* "convertbng/cutil/cutil.pyx":31
  * THE SOFTWARE.
  * """
  * __author__ = u"Stephan Hgel"             # <<<<<<<<<<<<<<
  * 
- * 
+ * import cython
  */
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_author, __pyx_kp_u_Stephan_Hgel) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
 
-  /* "cutil.pyx":35
+  /* "convertbng/cutil/cutil.pyx":34
  * 
  * import cython
  * import numpy as np             # <<<<<<<<<<<<<<
- * from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
- * 
+ * from convertbng.cutil.convertbng_p cimport (
+ *     _FFIArray,
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cutil.pyx":38
- * from convertbng_p cimport _FFIArray, _Result_Tuple, convert_to_bng_threaded, drop_float_array
+  /* "convertbng/cutil/cutil.pyx":51
+ *     )
  * 
  * def convert_bng(double[::1] lons, double[::1] lats):             # <<<<<<<<<<<<<<
  *     """A Cython wrapper around the Rust threaded conversion function
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5cutil_1convert_bng, NULL, __pyx_n_s_cutil); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10convertbng_5cutil_5cutil_1convert_bng, NULL, __pyx_n_s_convertbng_cutil_cutil); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_bng, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_bng, __pyx_t_1) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cutil.pyx":1
+  /* "convertbng/cutil/cutil.pyx":1
  * # -*- coding: utf-8 -*-             # <<<<<<<<<<<<<<
  * """
  * cutil.pyx
@@ -15180,11 +15184,11 @@ PyMODINIT_FUNC PyInit_cutil(void)
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init cutil", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init convertbng.cutil.cutil", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init cutil");
+    PyErr_SetString(PyExc_ImportError, "init convertbng.cutil.cutil");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

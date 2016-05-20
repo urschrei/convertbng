@@ -94,12 +94,10 @@ class _Result_Tuple(Structure):
 
 def _void_array_to_list(restuple, _func, _args):
     """ Convert the FFI result to Python data structures """
-    res_list = [
-        list(POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0]),
-        list(POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0])
-    ]
+    res_a = list(POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0])
+    res_b = list(POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0])
     drop_array(restuple.e, restuple.n)
-    return res_list
+    return res_a, res_b
 
 
 # Multi-threaded FFI functions
