@@ -32,7 +32,7 @@ __author__ = u"Stephan Hügel"
 
 import cython
 import numpy as np
-from convertbng.cutil.convertbng_p cimport (
+from convertbng_p cimport (
     _FFIArray,
     _Result_Tuple,
     convert_to_bng_threaded,
@@ -43,46 +43,52 @@ from convertbng.cutil.convertbng_p cimport (
     convert_etrs89_to_ll_threaded,
     convert_osgb36_to_ll_threaded,
     convert_osgb36_to_etrs89_threaded,
-    convert_osgb36_to_etrs89_threaded,
     convert_epsg3857_to_wgs84_threaded,
     drop_float_array
     )
 
-def convert_bng(double[::1] lons, double[::1] lats):
-    """A Cython wrapper around the Rust threaded conversion function
-
-    Pass 2 arrays: longitudes and latitudes
-    Get back a tuple of arrays (eastings and northings)
-
+# should catch a ValueError here, in case something non-double is passed
+cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
+    """ Accepts a function pointer and two arguments
+            longitudes
+            latitudes
+    These must be memory-contiguous Python arrays
+    The function pointer must map to an external FFI Rust function
     """
-    # Assumes that the data is double, not float. This is easily changed
-    # The [::1] promises it's contiguous in memory
-    cdef _FFIArray x_ffi, y_ffi
-    # get a pointer to the data, and cast it to void*
-    x_ffi.data = <void*>&lons[0]
-    # This may be ... * sizeof(double) - it depends on the C api
-    x_ffi.len = lons.shape[0]
-    # Repeat
-    y_ffi.data = <void*>&lats[0]
-    y_ffi.len = lats.shape[0]
+    def wrapped(double[::1] wlon, double[::1] wlat):
+        # Assumes that the data is double, not float. This is easily changed
+        # The [::1] promises it's contiguous in memory
+        cdef _FFIArray x_ffi, y_ffi
+        # get a pointer to the data, and cast it to void*
+        x_ffi.data = <void*>&wlon[0]
+        # This may be ... * sizeof(double) - it depends on the C api
+        x_ffi.len = wlon.shape[0]
+        # repeat for lats
+        y_ffi.data = <void*>&wlat[0]
+        y_ffi.len = wlat.shape[0]
+        # call across the FFI boundary
+        cdef _Result_Tuple result = func(x_ffi, y_ffi)
+        # get data pointers for the two result arrays
+        cdef double* eastings_ptr = <double*>(result.e.data)
+        cdef double* northings_ptr = <double*>(result.n.data)
+        # now view the output arrays using memoryviews
+        # their length must be specified
+        cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr
+        cdef double[::1] n = <double[:result.n.len:1]>northings_ptr
+        # create numpy copies of the two arrays
+        e_numpy = np.copy(e)
+        n_numpy = np.copy(n)
+        # free the returned arrays by passing them back across the FFI boundary
+        drop_float_array(result.e, result.n)
+        return e_numpy, n_numpy
+    return wrapped
 
-    cdef _Result_Tuple result = convert_to_bng_threaded(x_ffi, y_ffi)
-
-    # Get data pointers for the two result arrays
-    cdef double* eastings_ptr = <double*>(result.e.data)
-    cdef double* northings_ptr = <double*>(result.n.data)
-    # Now view the output arrays using memoryviews
-    # Their length must be specified
-    cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr
-    cdef double[::1] n = <double[:result.n.len:1]>northings_ptr
-
-    # Create numpy copies of the two arrays
-    e_numpy = np.copy(e)
-    n_numpy = np.copy(n)
-
-    # Free the returned arrays
-    drop_float_array(result.e, result.n)
-
-    # Return tuple containing two arrays to python
-    return e_numpy, n_numpy
-    
+convert_bng = ffi_wrapper(&convert_to_bng_threaded)
+convert_lonlat = ffi_wrapper(&convert_to_lonlat_threaded)
+convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)
+convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)
+convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)
+convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)
+convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)
+convert_osgb36_to_etrs89 = ffi_wrapper(&convert_osgb36_to_etrs89_threaded)
+convert_epsg3857_to_wgs84 = ffi_wrapper(&convert_epsg3857_to_wgs84_threaded)
