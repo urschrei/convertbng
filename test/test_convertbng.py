@@ -137,6 +137,19 @@ class ConvertbngTests(unittest.TestCase):
         lat_ls = list(np.random.uniform(S, N, [num_coords]))
         convert_bng(lon_ls, lat_ls)
 
+    def testLargeArrayConversionCython(self):
+        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays """
+        # UK bounding box
+        N = 55.811741
+        E = 1.768960
+        S = 49.871159
+        W = -6.379880
+
+        num_coords = 1000000
+        lon_ls = np.random.uniform(W, E, [num_coords])
+        lat_ls = np.random.uniform(S, N, [num_coords])
+        cconvert_bng(lon_ls, lat_ls)
+
     def testBadValues(self):
         """ Test that values outside the bounding box return -1, -1 """
         bad_coords = [
