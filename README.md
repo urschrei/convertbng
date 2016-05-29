@@ -9,7 +9,7 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 `pip install convertbng`  
 
 ##Note
-`convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**.
+`convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**. Windows support is…forthcoming.
 
 #Usage
 The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  
@@ -48,6 +48,14 @@ lons_np = np.array(lons)
 lats_np = np.array(lats)
 res_list_np = convert_bng(lons_np, lats_np)
 ```
+
+#Experimental Cython Module Usage
+If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement from **`from convertbng.util import`** to from **`from convertbng.cutil import`**.  
+
+This module is currently experimental, and should not be used in production unless you're comfortable verifying the results by comparing them to the existing functions.
+
+##Speed
+The Cython functions are more than an order of magnitude faster in [initial testing](https://github.com/urschrei/lonlat_bng/blob/master/remote_bench.py) (1.2s versus 64s, or a 53x speedup over `ctypes` code).
 
 ## I Want To…
 - transform longitudes and latitudes to OSGB36 Eastings and Northings **very accurately**:
