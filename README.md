@@ -49,7 +49,7 @@ lats_np = np.array(lats)
 res_list_np = convert_bng(lons_np, lats_np)
 ```
 
-#Experimental Cython Module Usage
+#Experimental Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement from **`from convertbng.util import`** to from **`from convertbng.cutil import`**.  
 
 This module is currently experimental, and should not be used in production unless you're comfortable verifying the results by comparing them to the existing functions.
@@ -57,7 +57,7 @@ This module is currently experimental, and should not be used in production unle
 ##Speed
 The Cython functions are more than an order of magnitude faster in [initial testing](https://github.com/urschrei/lonlat_bng/blob/master/remote_bench.py) (1.2s versus 64s, or a 53x speedup over `ctypes` code).
 
-## I Want To…
+#I Want To…
 - transform longitudes and latitudes to OSGB36 Eastings and Northings **very accurately**:
     - use `convert_bng()`
 - transform OSGB36 Eastings and Northings to latitude and longitude, **very accurately**:
@@ -93,7 +93,7 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
     - they're probably in [Web Mercator](http://spatialreference.org/ref/sr-org/6864/). You **must** convert them to WGS84 first. Use `convert_epsg3857_to_wgs84([x_coordinates], [y_coordinates])` to do so.
 
 #Accuracy
-`convert_bng` and `convert_lonlat` use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS) probably exceed this level of error in any case. In order to adjust for this, `convert_bng` then retrieves the OSTN02 adjustments for the kilometer-grid the point falls in, and performs a linear interpolation to give final, accurate coordinates. This process happens in reverse for `convert_lonlat`.
+`convert_bng` and `convert_lonlat` first use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS) probably exceed this level of error in any case. In order to adjust for this, the OSTN02 adjustments for the kilometer-grid the ETRS89 point falls in are retrieved, and a linear interpolation to give final, accurate coordinates is carried out. This process happens in reverse for `convert_lonlat`.
 
 ##OSTN02
 [OSTN02](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html) data are used for highly accurate conversions from ETRS89 latitude and longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [National GPS Network](https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html):
