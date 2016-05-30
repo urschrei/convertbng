@@ -4,6 +4,7 @@ python:
 install:
   - pip install .
   - pip install numpy
+  - pip install cython
   - pip install python-coveralls
   - pip install nosexcover
 cache: pip
