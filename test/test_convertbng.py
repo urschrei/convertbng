@@ -14,6 +14,7 @@ from convertbng.util import (
 )
 from convertbng.cutil import convert_bng as cconvert_bng
 from ctypes import ArgumentError
+from random import randrange
 
 
 class ConvertbngTests(unittest.TestCase):
@@ -38,7 +39,7 @@ class ConvertbngTests(unittest.TestCase):
         )
         self.assertEqual(expected, result)
 
-    def testCConvertLonLat(self):
+    def testCythonConvertLonLat(self):
         """ Test Cythonised multithreaded lon, lat --> BNG function """
         expected = (
             [516274.449, 398915.542],
@@ -52,6 +53,19 @@ class ConvertbngTests(unittest.TestCase):
         # dump array result into list 
         a, b = list(result[0]), list(result[1])
         self.assertEqual(expected, (a, b))
+
+    def testCythonConvertList(self):
+        """ Test Cythonised multithreaded lon, lat --> BNG function with lists """
+        expected = (
+            np.array([516274.449, 398915.542]),
+            np.array([173141.09800000003, 521544.088])
+        )
+   
+        result = cconvert_bng(
+            [-0.32824866, -2.0183041005533306],
+            [51.44533267, 54.589097162646141]
+        )
+        self.assertEqual(expected[0][0], result[0][0])
 
     def testConvertBNG(self):
         """ Test multithreaded BNG --> lon, lat function """
@@ -125,7 +139,7 @@ class ConvertbngTests(unittest.TestCase):
         convert_bng(lon_arr, lat_arr)
         
     def testLargeArrayConversion(self):
-        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays """
+        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays using Ctypes """
         # UK bounding box
         N = 55.811741
         E = 1.768960
@@ -138,17 +152,35 @@ class ConvertbngTests(unittest.TestCase):
         convert_bng(lon_ls, lat_ls)
 
     def testLargeArrayConversionCython(self):
-        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays """
-        # UK bounding box
-        N = 55.811741
-        E = 1.768960
-        S = 49.871159
-        W = -6.379880
+        """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays using Cython """
+        # London bounding box
+        N = 51.691874116909894
+        E = 0.3340155643740321
+        S = 51.28676016315085
+        W = -0.5103750689005356
 
         num_coords = 1000000
         lon_ls = np.random.uniform(W, E, [num_coords])
         lat_ls = np.random.uniform(S, N, [num_coords])
         cconvert_bng(lon_ls, lat_ls)
+
+    def testCythonConsistency(self):
+        """ Ensure Ctypes and Cython give same results """
+        # London bounding box
+        N = 51.691874116909894
+        E = 0.3340155643740321
+        S = 51.28676016315085
+        W = -0.5103750689005356
+        num_coords = 100
+
+        rand = randrange(0, 100)
+        lon_ls = np.random.uniform(W, E, [num_coords])
+        lat_ls = np.random.uniform(S, N, [num_coords])
+        # result is a list, so convert to an array. Ugh.
+        res_ctypes = np.array(convert_bng(lon_ls, lat_ls)[0][rand])
+        res_cython = cconvert_bng(lon_ls, lat_ls)[0][rand]
+
+        self.assertEqual(res_ctypes, res_cython)
 
     def testBadValues(self):
         """ Test that values outside the bounding box return -1, -1 """

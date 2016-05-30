@@ -55,9 +55,11 @@ cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
     These must be memory-contiguous Python arrays
     The function pointer must map to an external FFI Rust function
     """
-    def wrapped(double[::1] wlon, double[::1] wlat):
+    def wrapped(inlon, inlat):
         # Assumes that the data is double, not float. This is easily changed
         # The [::1] promises it's contiguous in memory
+        cdef double[::1] wlon = np.array(inlon, dtype=np.float64)
+        cdef double [::1] wlat = np.array(inlat, dtype=np.float64)
         cdef _FFIArray x_ffi, y_ffi
         # get a pointer to the data, and cast it to void*
         x_ffi.data = <void*>&wlon[0]
