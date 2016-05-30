@@ -56,10 +56,7 @@ The conversion functions will accept most sequences which implement `__iter__`, 
 
 This module is currently experimental, and should not be used in production unless you're comfortable verifying the results by comparing them to the existing functions.
 
-##Speed
-The Cython functions are more than an order of magnitude faster in [initial testing](https://github.com/urschrei/lonlat_bng/blob/master/remote_bench.py) (1.2s versus 64s, or a 53x speedup over `ctypes` code).
-
-#I Want To…
+#Available Conversions (AKA I Want To…)
 - transform longitudes and latitudes to OSGB36 Eastings and Northings **very accurately**:
     - use `convert_bng()`
 - transform OSGB36 Eastings and Northings to latitude and longitude, **very accurately**:
