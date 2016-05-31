@@ -41,7 +41,7 @@ with open('README.rst') as f:
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil/__init__.pyx"],
                     libraries=["lonlat_bng"],
-                    library_dirs=['convertbng',],
+                    library_dirs=['convertbng/util',],
                     include_dirs=['.',' convertbng', 'convertbng/cutil']
 )
 extensions = [extensions,]
