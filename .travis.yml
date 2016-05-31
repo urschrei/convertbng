@@ -5,9 +5,9 @@ install:
   - pip install pgen
   - pip install cython
   - pip install numpy
-  - pip install .
   - pip install python-coveralls
   - pip install nosexcover
+  - python setup.py build_ext --inplace
 cache: pip
 script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 branches:
