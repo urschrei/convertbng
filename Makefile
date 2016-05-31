@@ -10,11 +10,11 @@ dist/convertbng/*.whl: convertbng/liblonlat_bng.dylib \
 
 # here's how to build an up-to-date OSX binary
 # changing util.py will also trigger a rebuild
-convertbng/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs convertbng/util.py
+convertbng/util/liblonlat_bng.dylib: $(RUSTDIR)/src/lib.rs convertbng/util/util.py
 	@echo "Running rust tests and rebuilding binary"
 	@cd $(RUSTDIR) && cargo test && cargo build --release && strip -ur target/release/liblonlat_bng.dylib
-	-@rm convertbng/liblonlat_bng.dylib
-	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/
+	-@rm convertbng/util/liblonlat_bng.dylib
+	@cp $(RUSTDIR)/target/release/liblonlat_bng.dylib convertbng/util
 	@echo "Copied OSX .dylib"
 
 # here's how to build an up-to-date Linux binary
@@ -38,10 +38,10 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	@cp README.rst $(LINUXHOST)/pysrc
 	@cp manifest.in $(LINUXHOST)/pysrc
 	@cp -r convertbng/ $(LINUXHOST)/pysrc/convertbng
-	-@rm convertbng/liblonlat_bng.so
+	-@rm convertbng/util/liblonlat_bng.so
 	# copy linux binary to OSX and VM
-	@cp $(LINUXHOST)/target/release/liblonlat_bng.so convertbng/
-	@cp $(LINUXHOST)/target/release/liblonlat_bng.so $(LINUXHOST)/pysrc/convertbng
+	@cp $(LINUXHOST)/target/release/liblonlat_bng.so convertbng/util
+	@cp $(LINUXHOST)/target/release/liblonlat_bng.so $(LINUXHOST)/pysrc/convertbng/util
 	# clean up
 	-@rm $(LINUXHOST)/*.o
 	@echo "Copied Linux .so"
@@ -87,11 +87,14 @@ clean:
 	-@rm *.pyc
 	-@rm *.rst
 	-@rm convertbng/*.pyc
+	-@rm convertbng/util/*pyc
 	-@rm convertbng/*.dylib
+	-@rm convertbng/util/*.so
+	-@rm convertbng/cutil/*.c
 	-@rm convertbng/*.so
 
 # rebuild OSX binary if it's out of date, then run Python module tests 
 .PHONY: test
-test: convertbng/liblonlat_bng.dylib
+test: convertbng/util/liblonlat_bng.dylib
 	@echo "Running Python module tests"
 	@nosetests -v

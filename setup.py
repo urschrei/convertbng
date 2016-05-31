@@ -34,12 +34,12 @@ class BinaryDistribution(Distribution):
     def is_pure(self):
         return False
 
-version=find_version("convertbng/util.py")
+version=find_version("convertbng/util/__init__.py")
 with open('README.rst') as f:
     readme = f.read()
 
 extensions = Extension("convertbng.cutil",
-                    sources=["convertbng/cutil/cutil.pyx"],
+                    sources=["convertbng/cutil/__init__.pyx"],
                     libraries=["lonlat_bng"],
                     library_dirs=['convertbng',],
                     include_dirs=['.',' convertbng', 'convertbng/cutil']
