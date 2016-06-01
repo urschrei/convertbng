@@ -7,7 +7,7 @@ install:
   - pip install numpy
   - pip install python-coveralls
   - pip install nosexcover
-  - python setup.py build_ext --inplace
+  - pip install .
 cache: pip
 script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 branches:
