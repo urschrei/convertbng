@@ -41,8 +41,12 @@ with open('README.rst') as f:
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil.pyx"],
                     libraries=["lonlat_bng"],
+                    include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
-                    include_dirs=['.',' convertbng']
+                    # from http://stackoverflow.com/a/10252190/416626
+                    # the $ORIGIN trick is not perfect, though
+                    runtime_library_dirs=['$ORIGIN'],
+                    extra_compile_args=["-O3"],
 )
 extensions = [extensions,]
 
@@ -73,7 +77,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=find_packages(),
-    install_requires=['numpy >= 1.9.0'],
+    install_requires=['numpy >= 1.9.0', 'cython'],
     ext_modules = cythonize(extensions),
     cmdclass={'build_ext': build_ext},
     long_description=readme

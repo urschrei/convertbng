@@ -6,15 +6,23 @@
         "depends": [
             "convertbng/rlib.h"
         ], 
+        "extra_compile_args": [
+            "-O3"
+        ], 
+        "extra_link_args": [
+            "-R", 
+            "$ORIGIN/"
+        ], 
         "include_dirs": [
             ".", 
-            " convertbng"
+            "convertbng"
         ], 
         "libraries": [
             "lonlat_bng"
         ], 
         "library_dirs": [
-            "."
+            ".", 
+            "convertbng"
         ]
     }
 }
@@ -607,7 +615,7 @@ struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 
-/* "convertbng/cutil.pyx":51
+/* "convertbng/cutil.pyx":52
  * 
  * # should catch a ValueError here, in case something non-double is passed
  * cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):             # <<<<<<<<<<<<<<
@@ -849,9 +857,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 #else
 #define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
 #endif
-
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
 
 /* PyObjectCallMethO.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -1643,7 +1648,7 @@ static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
 static PyObject *__pyx_codeobj__2;
 
-/* "convertbng/cutil.pyx":58
+/* "convertbng/cutil.pyx":59
  *     The function pointer must map to an external FFI Rust function
  *     """
  *     def wrapped(inlon, inlat):             # <<<<<<<<<<<<<<
@@ -1680,11 +1685,11 @@ static PyObject *__pyx_pw_10convertbng_5cutil_11ffi_wrapper_1wrapped(PyObject *_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_inlat)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wrapped", 1, 2, 2, 1); __PYX_ERR(0, 58, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wrapped", 1, 2, 2, 1); __PYX_ERR(0, 59, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wrapped") < 0)) __PYX_ERR(0, 58, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wrapped") < 0)) __PYX_ERR(0, 59, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1697,7 +1702,7 @@ static PyObject *__pyx_pw_10convertbng_5cutil_11ffi_wrapper_1wrapped(PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wrapped", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 58, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wrapped", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 59, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("convertbng.cutil.ffi_wrapper.wrapped", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1733,90 +1738,89 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   PyObject *__pyx_t_5 = NULL;
   __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
   Py_ssize_t __pyx_t_7;
-  int __pyx_t_8;
-  Py_ssize_t __pyx_t_9;
-  struct __pyx_array_obj *__pyx_t_10 = NULL;
+  Py_ssize_t __pyx_t_8;
+  struct __pyx_array_obj *__pyx_t_9 = NULL;
   __Pyx_RefNannySetupContext("wrapped", 0);
   __pyx_outer_scope = (struct __pyx_obj_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper *) __Pyx_CyFunction_GetClosure(__pyx_self);
   __pyx_cur_scope = __pyx_outer_scope;
 
-  /* "convertbng/cutil.pyx":61
+  /* "convertbng/cutil.pyx":62
  *         # Assumes that the data is double, not float. This is easily changed
  *         # The [::1] promises it's contiguous in memory
  *         cdef double[::1] wlon = np.array(inlon, dtype=np.float64)             # <<<<<<<<<<<<<<
  *         cdef double [::1] wlat = np.array(inlat, dtype=np.float64)
  *         cdef _FFIArray x_ffi, y_ffi
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_inlon);
   __Pyx_GIVEREF(__pyx_v_inlon);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_inlon);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_5);
-  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_v_wlon = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "convertbng/cutil.pyx":62
+  /* "convertbng/cutil.pyx":63
  *         # The [::1] promises it's contiguous in memory
  *         cdef double[::1] wlon = np.array(inlon, dtype=np.float64)
  *         cdef double [::1] wlat = np.array(inlat, dtype=np.float64)             # <<<<<<<<<<<<<<
  *         cdef _FFIArray x_ffi, y_ffi
  *         # get a pointer to the data, and cast it to void*
  */
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_inlat);
   __Pyx_GIVEREF(__pyx_v_inlat);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_inlat);
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_4);
-  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_wlat = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "convertbng/cutil.pyx":65
+  /* "convertbng/cutil.pyx":66
  *         cdef _FFIArray x_ffi, y_ffi
  *         # get a pointer to the data, and cast it to void*
  *         x_ffi.data = <void*>&wlon[0]             # <<<<<<<<<<<<<<
@@ -1824,18 +1828,10 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  *         x_ffi.len = wlon.shape[0]
  */
   __pyx_t_7 = 0;
-  __pyx_t_8 = -1;
-  if (__pyx_t_7 < 0) {
-    __pyx_t_7 += __pyx_v_wlon.shape[0];
-    if (unlikely(__pyx_t_7 < 0)) __pyx_t_8 = 0;
-  } else if (unlikely(__pyx_t_7 >= __pyx_v_wlon.shape[0])) __pyx_t_8 = 0;
-  if (unlikely(__pyx_t_8 != -1)) {
-    __Pyx_RaiseBufferIndexError(__pyx_t_8);
-    __PYX_ERR(0, 65, __pyx_L1_error)
-  }
+  if (__pyx_t_7 < 0) __pyx_t_7 += __pyx_v_wlon.shape[0];
   __pyx_v_x_ffi.data = ((void *)(&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_wlon.data) + __pyx_t_7)) )))));
 
-  /* "convertbng/cutil.pyx":67
+  /* "convertbng/cutil.pyx":68
  *         x_ffi.data = <void*>&wlon[0]
  *         # This may be ... * sizeof(double) - it depends on the C api
  *         x_ffi.len = wlon.shape[0]             # <<<<<<<<<<<<<<
@@ -1844,26 +1840,18 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   __pyx_v_x_ffi.len = (__pyx_v_wlon.shape[0]);
 
-  /* "convertbng/cutil.pyx":69
+  /* "convertbng/cutil.pyx":70
  *         x_ffi.len = wlon.shape[0]
  *         # repeat for lats
  *         y_ffi.data = <void*>&wlat[0]             # <<<<<<<<<<<<<<
  *         y_ffi.len = wlat.shape[0]
  *         # call across the FFI boundary
  */
-  __pyx_t_9 = 0;
-  __pyx_t_8 = -1;
-  if (__pyx_t_9 < 0) {
-    __pyx_t_9 += __pyx_v_wlat.shape[0];
-    if (unlikely(__pyx_t_9 < 0)) __pyx_t_8 = 0;
-  } else if (unlikely(__pyx_t_9 >= __pyx_v_wlat.shape[0])) __pyx_t_8 = 0;
-  if (unlikely(__pyx_t_8 != -1)) {
-    __Pyx_RaiseBufferIndexError(__pyx_t_8);
-    __PYX_ERR(0, 69, __pyx_L1_error)
-  }
-  __pyx_v_y_ffi.data = ((void *)(&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_wlat.data) + __pyx_t_9)) )))));
+  __pyx_t_8 = 0;
+  if (__pyx_t_8 < 0) __pyx_t_8 += __pyx_v_wlat.shape[0];
+  __pyx_v_y_ffi.data = ((void *)(&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_wlat.data) + __pyx_t_8)) )))));
 
-  /* "convertbng/cutil.pyx":70
+  /* "convertbng/cutil.pyx":71
  *         # repeat for lats
  *         y_ffi.data = <void*>&wlat[0]
  *         y_ffi.len = wlat.shape[0]             # <<<<<<<<<<<<<<
@@ -1872,7 +1860,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   __pyx_v_y_ffi.len = (__pyx_v_wlat.shape[0]);
 
-  /* "convertbng/cutil.pyx":72
+  /* "convertbng/cutil.pyx":73
  *         y_ffi.len = wlat.shape[0]
  *         # call across the FFI boundary
  *         cdef _Result_Tuple result = func(x_ffi, y_ffi)             # <<<<<<<<<<<<<<
@@ -1881,7 +1869,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   __pyx_v_result = __pyx_cur_scope->__pyx_v_func(__pyx_v_x_ffi, __pyx_v_y_ffi);
 
-  /* "convertbng/cutil.pyx":74
+  /* "convertbng/cutil.pyx":75
  *         cdef _Result_Tuple result = func(x_ffi, y_ffi)
  *         # get data pointers for the two result arrays
  *         cdef double* eastings_ptr = <double*>(result.e.data)             # <<<<<<<<<<<<<<
@@ -1890,7 +1878,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   __pyx_v_eastings_ptr = ((double *)__pyx_v_result.e.data);
 
-  /* "convertbng/cutil.pyx":75
+  /* "convertbng/cutil.pyx":76
  *         # get data pointers for the two result arrays
  *         cdef double* eastings_ptr = <double*>(result.e.data)
  *         cdef double* northings_ptr = <double*>(result.n.data)             # <<<<<<<<<<<<<<
@@ -1899,7 +1887,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   __pyx_v_northings_ptr = ((double *)__pyx_v_result.n.data);
 
-  /* "convertbng/cutil.pyx":78
+  /* "convertbng/cutil.pyx":79
  *         # now view the output arrays using memoryviews
  *         # their length must be specified
  *         cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr             # <<<<<<<<<<<<<<
@@ -1908,26 +1896,26 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   if (!__pyx_v_eastings_ptr) {
     PyErr_SetString(PyExc_ValueError,"Cannot create cython.array from NULL pointer");
-    __PYX_ERR(0, 78, __pyx_L1_error)
+    __PYX_ERR(0, 79, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_format_from_typeinfo(&__Pyx_TypeInfo_double);
   __pyx_t_4 = Py_BuildValue((char*) "("  __PYX_BUILD_PY_SSIZE_T  ")", ((Py_ssize_t)__pyx_v_result.e.len));
-  if (unlikely(!__pyx_t_1 || !__pyx_t_4 || !PyBytes_AsString(__pyx_t_1))) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1 || !__pyx_t_4 || !PyBytes_AsString(__pyx_t_1))) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_10 = __pyx_array_new(__pyx_t_4, sizeof(double), PyBytes_AS_STRING(__pyx_t_1), (char *) "fortran", (char *) __pyx_v_eastings_ptr);
-  if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 78, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_9 = __pyx_array_new(__pyx_t_4, sizeof(double), PyBytes_AS_STRING(__pyx_t_1), (char *) "fortran", (char *) __pyx_v_eastings_ptr);
+  if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_10));
-  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 78, __pyx_L1_error)
-  __Pyx_DECREF(((PyObject *)__pyx_t_10)); __pyx_t_10 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_9));
+  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_DECREF(((PyObject *)__pyx_t_9)); __pyx_t_9 = 0;
   __pyx_v_e = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "convertbng/cutil.pyx":79
+  /* "convertbng/cutil.pyx":80
  *         # their length must be specified
  *         cdef double[::1] e = <double[:result.e.len:1]>eastings_ptr
  *         cdef double[::1] n = <double[:result.n.len:1]>northings_ptr             # <<<<<<<<<<<<<<
@@ -1936,38 +1924,38 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   if (!__pyx_v_northings_ptr) {
     PyErr_SetString(PyExc_ValueError,"Cannot create cython.array from NULL pointer");
-    __PYX_ERR(0, 79, __pyx_L1_error)
+    __PYX_ERR(0, 80, __pyx_L1_error)
   }
   __pyx_t_4 = __pyx_format_from_typeinfo(&__Pyx_TypeInfo_double);
   __pyx_t_1 = Py_BuildValue((char*) "("  __PYX_BUILD_PY_SSIZE_T  ")", ((Py_ssize_t)__pyx_v_result.n.len));
-  if (unlikely(!__pyx_t_4 || !__pyx_t_1 || !PyBytes_AsString(__pyx_t_4))) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4 || !__pyx_t_1 || !PyBytes_AsString(__pyx_t_4))) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_10 = __pyx_array_new(__pyx_t_1, sizeof(double), PyBytes_AS_STRING(__pyx_t_4), (char *) "fortran", (char *) __pyx_v_northings_ptr);
-  if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_9 = __pyx_array_new(__pyx_t_1, sizeof(double), PyBytes_AS_STRING(__pyx_t_4), (char *) "fortran", (char *) __pyx_v_northings_ptr);
+  if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_10));
-  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 79, __pyx_L1_error)
-  __Pyx_DECREF(((PyObject *)__pyx_t_10)); __pyx_t_10 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(((PyObject *)__pyx_t_9));
+  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_DECREF(((PyObject *)__pyx_t_9)); __pyx_t_9 = 0;
   __pyx_v_n = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "convertbng/cutil.pyx":81
+  /* "convertbng/cutil.pyx":82
  *         cdef double[::1] n = <double[:result.n.len:1]>northings_ptr
  *         # create numpy copies of the two arrays
  *         e_numpy = np.copy(e)             # <<<<<<<<<<<<<<
  *         n_numpy = np.copy(n)
  *         # free the returned arrays by passing them back across the FFI boundary
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_copy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_copy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_e, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_e, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -1980,17 +1968,17 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else {
-    __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3); __pyx_t_3 = NULL;
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_t_1);
     __pyx_t_1 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -1998,19 +1986,19 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   __pyx_v_e_numpy = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "convertbng/cutil.pyx":82
+  /* "convertbng/cutil.pyx":83
  *         # create numpy copies of the two arrays
  *         e_numpy = np.copy(e)
  *         n_numpy = np.copy(n)             # <<<<<<<<<<<<<<
  *         # free the returned arrays by passing them back across the FFI boundary
  *         drop_float_array(result.e, result.n)
  */
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_n, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_n, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_1 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -2023,17 +2011,17 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
     }
   }
   if (!__pyx_t_1) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else {
-    __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
     __Pyx_GIVEREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -2041,7 +2029,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   __pyx_v_n_numpy = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "convertbng/cutil.pyx":84
+  /* "convertbng/cutil.pyx":85
  *         n_numpy = np.copy(n)
  *         # free the returned arrays by passing them back across the FFI boundary
  *         drop_float_array(result.e, result.n)             # <<<<<<<<<<<<<<
@@ -2050,7 +2038,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  */
   drop_float_array(__pyx_v_result.e, __pyx_v_result.n);
 
-  /* "convertbng/cutil.pyx":85
+  /* "convertbng/cutil.pyx":86
  *         # free the returned arrays by passing them back across the FFI boundary
  *         drop_float_array(result.e, result.n)
  *         return e_numpy, n_numpy             # <<<<<<<<<<<<<<
@@ -2058,7 +2046,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_e_numpy);
   __Pyx_GIVEREF(__pyx_v_e_numpy);
@@ -2070,7 +2058,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "convertbng/cutil.pyx":58
+  /* "convertbng/cutil.pyx":59
  *     The function pointer must map to an external FFI Rust function
  *     """
  *     def wrapped(inlon, inlat):             # <<<<<<<<<<<<<<
@@ -2086,7 +2074,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __PYX_XDEC_MEMVIEW(&__pyx_t_6, 1);
-  __Pyx_XDECREF(((PyObject *)__pyx_t_10));
+  __Pyx_XDECREF(((PyObject *)__pyx_t_9));
   __Pyx_AddTraceback("convertbng.cutil.ffi_wrapper.wrapped", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -2101,7 +2089,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   return __pyx_r;
 }
 
-/* "convertbng/cutil.pyx":51
+/* "convertbng/cutil.pyx":52
  * 
  * # should catch a ValueError here, in case something non-double is passed
  * cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):             # <<<<<<<<<<<<<<
@@ -2124,19 +2112,19 @@ static PyObject *__pyx_f_10convertbng_5cutil_ffi_wrapper(struct _Result_Tuple (*
   __Pyx_GOTREF(__pyx_cur_scope);
   __pyx_cur_scope->__pyx_v_func = __pyx_v_func;
 
-  /* "convertbng/cutil.pyx":58
+  /* "convertbng/cutil.pyx":59
  *     The function pointer must map to an external FFI Rust function
  *     """
  *     def wrapped(inlon, inlat):             # <<<<<<<<<<<<<<
  *         # Assumes that the data is double, not float. This is easily changed
  *         # The [::1] promises it's contiguous in memory
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10convertbng_5cutil_11ffi_wrapper_1wrapped, 0, __pyx_n_s_ffi_wrapper_locals_wrapped, ((PyObject*)__pyx_cur_scope), __pyx_n_s_convertbng_cutil, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10convertbng_5cutil_11ffi_wrapper_1wrapped, 0, __pyx_n_s_ffi_wrapper_locals_wrapped, ((PyObject*)__pyx_cur_scope), __pyx_n_s_convertbng_cutil, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_wrapped = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":86
+  /* "convertbng/cutil.pyx":87
  *         drop_float_array(result.e, result.n)
  *         return e_numpy, n_numpy
  *     return wrapped             # <<<<<<<<<<<<<<
@@ -2148,7 +2136,7 @@ static PyObject *__pyx_f_10convertbng_5cutil_ffi_wrapper(struct _Result_Tuple (*
   __pyx_r = __pyx_v_wrapped;
   goto __pyx_L0;
 
-  /* "convertbng/cutil.pyx":51
+  /* "convertbng/cutil.pyx":52
  * 
  * # should catch a ValueError here, in case something non-double is passed
  * cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):             # <<<<<<<<<<<<<<
@@ -5906,7 +5894,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  * 
  */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_result, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 487, __pyx_L5_except_error)
+        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_result, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 487, __pyx_L5_except_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_r = __pyx_t_1;
         __pyx_t_1 = 0;
@@ -14984,17 +14972,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "convertbng/cutil.pyx":58
+  /* "convertbng/cutil.pyx":59
  *     The function pointer must map to an external FFI Rust function
  *     """
  *     def wrapped(inlon, inlat):             # <<<<<<<<<<<<<<
  *         # Assumes that the data is double, not float. This is easily changed
  *         # The [::1] promises it's contiguous in memory
  */
-  __pyx_tuple_ = PyTuple_Pack(13, __pyx_n_s_inlon, __pyx_n_s_inlat, __pyx_n_s_wlon, __pyx_n_s_wlat, __pyx_n_s_x_ffi, __pyx_n_s_y_ffi, __pyx_n_s_result, __pyx_n_s_eastings_ptr, __pyx_n_s_northings_ptr, __pyx_n_s_e, __pyx_n_s_n, __pyx_n_s_e_numpy, __pyx_n_s_n_numpy); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(13, __pyx_n_s_inlon, __pyx_n_s_inlat, __pyx_n_s_wlon, __pyx_n_s_wlat, __pyx_n_s_x_ffi, __pyx_n_s_y_ffi, __pyx_n_s_result, __pyx_n_s_eastings_ptr, __pyx_n_s_northings_ptr, __pyx_n_s_e, __pyx_n_s_n, __pyx_n_s_e_numpy, __pyx_n_s_n_numpy); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(2, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_sth_dev_convertbng_conver, __pyx_n_s_wrapped, 58, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(2, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_sth_dev_convertbng_conver, __pyx_n_s_wrapped, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 59, __pyx_L1_error)
 
   /* "View.MemoryView":131
  * 
@@ -15303,7 +15291,7 @@ PyMODINIT_FUNC PyInit_cutil(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper) < 0) __PYX_ERR(0, 52, __pyx_L1_error)
   __pyx_type_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper.tp_print = 0;
   __pyx_ptype_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper = &__pyx_type_10convertbng_5cutil___pyx_scope_struct____pyx_f_10convertbng_5cutil_ffi_wrapper;
   __pyx_vtabptr_array = &__pyx_vtable_array;
@@ -15344,136 +15332,136 @@ PyMODINIT_FUNC PyInit_cutil(void)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "convertbng/cutil.pyx":31
+  /* "convertbng/cutil.pyx":32
  * THE SOFTWARE.
  * """
  * __author__ = u"Stephan Hgel"             # <<<<<<<<<<<<<<
  * 
  * import cython
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_author, __pyx_kp_u_Stephan_Hgel) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_author, __pyx_kp_u_Stephan_Hgel) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
 
-  /* "convertbng/cutil.pyx":34
+  /* "convertbng/cutil.pyx":35
  * 
  * import cython
  * import numpy as np             # <<<<<<<<<<<<<<
  * from convertbng_p cimport (
  *     _FFIArray,
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":88
+  /* "convertbng/cutil.pyx":89
  *     return wrapped
  * 
  * convert_bng = ffi_wrapper(&convert_to_bng_threaded)             # <<<<<<<<<<<<<<
  * convert_lonlat = ffi_wrapper(&convert_to_lonlat_threaded)
  * convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_bng_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_bng_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_bng, __pyx_t_1) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_bng, __pyx_t_1) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":89
+  /* "convertbng/cutil.pyx":90
  * 
  * convert_bng = ffi_wrapper(&convert_to_bng_threaded)
  * convert_lonlat = ffi_wrapper(&convert_to_lonlat_threaded)             # <<<<<<<<<<<<<<
  * convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)
  * convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_lonlat_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_lonlat_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_lonlat, __pyx_t_1) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_lonlat, __pyx_t_1) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":90
+  /* "convertbng/cutil.pyx":91
  * convert_bng = ffi_wrapper(&convert_to_bng_threaded)
  * convert_lonlat = ffi_wrapper(&convert_to_lonlat_threaded)
  * convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)             # <<<<<<<<<<<<<<
  * convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)
  * convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_osgb36_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_osgb36_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_to_osgb36, __pyx_t_1) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_to_osgb36, __pyx_t_1) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":91
+  /* "convertbng/cutil.pyx":92
  * convert_lonlat = ffi_wrapper(&convert_to_lonlat_threaded)
  * convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)
  * convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)             # <<<<<<<<<<<<<<
  * convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)
  * convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_etrs89_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_to_etrs89_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_to_etrs89, __pyx_t_1) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_to_etrs89, __pyx_t_1) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":92
+  /* "convertbng/cutil.pyx":93
  * convert_to_osgb36 = ffi_wrapper(&convert_to_osgb36_threaded)
  * convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)
  * convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)             # <<<<<<<<<<<<<<
  * convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)
  * convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_etrs89_to_osgb36_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_etrs89_to_osgb36_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_etrs89_to_osgb36, __pyx_t_1) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_etrs89_to_osgb36, __pyx_t_1) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":93
+  /* "convertbng/cutil.pyx":94
  * convert_to_etrs89 = ffi_wrapper(&convert_to_etrs89_threaded)
  * convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)
  * convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)             # <<<<<<<<<<<<<<
  * convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)
  * convert_osgb36_to_etrs89 = ffi_wrapper(&convert_osgb36_to_etrs89_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_etrs89_to_ll_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_etrs89_to_ll_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_etrs89_to_ll, __pyx_t_1) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_etrs89_to_ll, __pyx_t_1) < 0) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":94
+  /* "convertbng/cutil.pyx":95
  * convert_etrs89_to_osgb36 = ffi_wrapper(&convert_etrs89_to_osgb36_threaded)
  * convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)
  * convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)             # <<<<<<<<<<<<<<
  * convert_osgb36_to_etrs89 = ffi_wrapper(&convert_osgb36_to_etrs89_threaded)
  * convert_epsg3857_to_wgs84 = ffi_wrapper(&convert_epsg3857_to_wgs84_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_osgb36_to_ll_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_osgb36_to_ll_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_osgb36_to_ll, __pyx_t_1) < 0) __PYX_ERR(0, 94, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_osgb36_to_ll, __pyx_t_1) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":95
+  /* "convertbng/cutil.pyx":96
  * convert_etrs89_to_ll = ffi_wrapper(&convert_etrs89_to_ll_threaded)
  * convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)
  * convert_osgb36_to_etrs89 = ffi_wrapper(&convert_osgb36_to_etrs89_threaded)             # <<<<<<<<<<<<<<
  * convert_epsg3857_to_wgs84 = ffi_wrapper(&convert_epsg3857_to_wgs84_threaded)
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_osgb36_to_etrs89_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_osgb36_to_etrs89_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_osgb36_to_etrs89, __pyx_t_1) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_osgb36_to_etrs89, __pyx_t_1) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "convertbng/cutil.pyx":96
+  /* "convertbng/cutil.pyx":97
  * convert_osgb36_to_ll = ffi_wrapper(&convert_osgb36_to_ll_threaded)
  * convert_osgb36_to_etrs89 = ffi_wrapper(&convert_osgb36_to_etrs89_threaded)
  * convert_epsg3857_to_wgs84 = ffi_wrapper(&convert_epsg3857_to_wgs84_threaded)             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_epsg3857_to_wgs84_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10convertbng_5cutil_ffi_wrapper((&convert_epsg3857_to_wgs84_threaded)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_epsg3857_to_wgs84, __pyx_t_1) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_convert_epsg3857_to_wgs84, __pyx_t_1) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "convertbng/cutil.pyx":1
- * # -*- coding: utf-8 -*-             # <<<<<<<<<<<<<<
+ * #cython: boundscheck=False             # <<<<<<<<<<<<<<
+ * # -*- coding: utf-8 -*-
  * """
- * cutil.pyx
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -15856,12 +15844,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
     return result;
 }
 #endif
-
-/* BufferIndexError */
-  static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
-}
 
 /* PyObjectCallMethO */
   #if CYTHON_COMPILING_IN_CPYTHON

@@ -1,3 +1,4 @@
+#cython: boundscheck=False
 # -*- coding: utf-8 -*-
 """
 cutil.pyx
