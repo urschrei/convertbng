@@ -41,7 +41,7 @@ else:
     ext = "so"
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.4.13"
+__version__ = "0.4.14"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join('..', file_path, 'liblonlat_bng.' + ext))
