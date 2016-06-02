@@ -10,8 +10,7 @@ import os
 import re
 import io
 from setuptools import setup, find_packages, Distribution, Extension
-from Cython.Build import cythonize
-from Cython.Distutils import build_ext
+# from Cython.Build import cythonize
 
 def read(*names, **kwargs):
     with io.open(
@@ -38,8 +37,20 @@ version=find_version("convertbng/util.py")
 with open('README.rst') as f:
     readme = f.read()
 
+try:
+    from Cython.Build import cythonize
+    has_cython = True
+except ImportError:
+    has_cython = False
+
+# If Cython is installed, use it. Otherwise, build from source
+if has_cython:
+    suffix = '.pyx'
+else:
+    suffix = '.c'
+
 extensions = Extension("convertbng.cutil",
-                    sources=["convertbng/cutil.c"],
+                    sources=["convertbng/cutil" + suffix],
                     libraries=["lonlat_bng"],
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
@@ -48,7 +59,11 @@ extensions = Extension("convertbng.cutil",
                     runtime_library_dirs=['$ORIGIN'],
                     extra_compile_args=["-O3"],
 )
-extensions = [extensions,]
+
+if has_cython:
+    extensions = cythonize([extensions,])
+else:
+    extensions = [extensions,]
 
 setup(
     name='convertbng',
@@ -77,8 +92,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=find_packages(),
-    install_requires=['numpy >= 1.9.0', 'cython'],
-    ext_modules = cythonize(extensions),
-    cmdclass={'build_ext': build_ext},
+    install_requires=['numpy >= 1.9.0'],
+    ext_modules = extensions,
     long_description=readme
 )
