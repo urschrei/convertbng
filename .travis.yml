@@ -2,12 +2,10 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install pgen
-  - pip install cython
   - pip install numpy
   - pip install python-coveralls
   - pip install nosexcover
-  - pip install . --no-binary :all:
+  - pip install .
 cache: pip
 script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 branches:
