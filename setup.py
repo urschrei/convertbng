@@ -39,7 +39,7 @@ with open('README.rst') as f:
     readme = f.read()
 
 extensions = Extension("convertbng.cutil",
-                    sources=["convertbng/cutil.pyx"],
+                    sources=["convertbng/cutil.c"],
                     libraries=["lonlat_bng"],
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
