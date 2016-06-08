@@ -11,8 +11,10 @@ matrix:
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+      sudo: true
     - os: osx
       env: TARGET=x86_64-apple-darwin
+      sudo: true
 
 install:
   - docker pull $DOCKER_IMAGE
