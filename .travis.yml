@@ -1,30 +1,22 @@
-# language: python
-# python:
-#   - "2.7"
-notifications:
-  email: false
+language: python
+
+env:
+  global:
+    - secure: R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0=
+
+services: docker
 
 matrix:
   include:
-    - sudo: required
-      services:
-        - docker
+      sudo: required
+      services: docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
-      - secure: R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0=
-      sudo: true
     - os: osx
       env: TARGET=x86_64-apple-darwin
-      - secure: R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0=
-      sudo: true
+      sudo: required
 
 install:
   - docker pull $DOCKER_IMAGE
-
-script:
-  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
-  - ls wheelhouse/
-
-install:
   - sudo pip install pip --upgrade
   - sudo pip install --install-option="--no-cython-compile" cython
   - sudo pip install requests[security]
@@ -33,7 +25,10 @@ install:
   - sudo pip install nosexcover
   - sudo pip install -e .
 cache: pip
-script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
+script:
+  - nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
+  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
+  - ls wheelhouse/
 branches:
   only:
     - master
