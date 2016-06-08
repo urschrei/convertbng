@@ -24,12 +24,13 @@ script:
   - ls wheelhouse/
 
 install:
-  - pip install --install-option="--no-cython-compile" cython
-  - pip install requests[security]
-  - pip install numpy
-  - pip install python-coveralls
-  - pip install nosexcover
-  - pip install -e .
+  - sudo pip install pip --upgrade
+  - sudo pip install --install-option="--no-cython-compile" cython
+  - sudo pip install requests[security]
+  - sudo pip install numpy
+  - sudo pip install python-coveralls
+  - sudo pip install nosexcover
+  - sudo pip install -e .
 cache: pip
 script: nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 branches:
