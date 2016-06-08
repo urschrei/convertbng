@@ -20,7 +20,7 @@ install:
   - sudo pip install numpy
   - sudo pip install python-coveralls
   - sudo pip install nosexcover
-  - sudo export LATEST_TAG=$LATEST_TAG && sudo pip install -e .
+  - export LATEST_TAG=$LATEST_TAG && sudo pip install -e .
 
 cache: pip
 
