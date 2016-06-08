@@ -15,7 +15,7 @@ matrix:
 before_install:
   - sudo pip install requests[security]
   - echo $LATEST_TAG > key.txt
-  - python pre_install.py
+  - sudo python pre_install.py
 
 install:
   - docker pull $DOCKER_IMAGE
