@@ -3,7 +3,7 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
-yum install -y python-requests
+yum install -y libffi-dev
 # yum groupinstall -y “Development Tools”
 
 # Compile wheels
