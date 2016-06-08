@@ -6,13 +6,15 @@ notifications:
   email: false
 
 matrix:
-  exclude:
-    python: "2.7"
   include:
     - sudo: required
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+      allow_failures:
+        language: python
+        python:
+          - "2.7"
     - os: osx
       env: TARGET=x86_64-apple-darwin
 
