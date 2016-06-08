@@ -59,6 +59,7 @@ else:
 
 # Get latest Binary from Github
 # get GH access token from Travis
+print os.environ
 ghkey = os.environ['LATEST_TAG']
 project = 'lonlat_bng'
 latest_release = requests.get(
