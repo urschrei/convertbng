@@ -62,7 +62,7 @@ project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
 ).json()
-
+print latest_release
 # Extract tag name
 tagname = latest_release['tag_name']
 # what platform are we on?
