@@ -10,8 +10,8 @@
             "-O3"
         ], 
         "extra_link_args": [
-            "-R", 
-            "$ORIGIN/"
+            "-Wl,-rpath", 
+            "-Wl,@loader_path/"
         ], 
         "include_dirs": [
             ".", 

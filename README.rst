@@ -16,10 +16,8 @@ Eastings and Northings, and vice versa.
 
 Conversion is handled by a
 `Rust binary <https://github.com/urschrei/rust_bng>`_ using FFI,
-and is quite fast. Some not-very-thorough speed tests can be found
-`here <https://github.com/urschrei/lonlat_bng/blob/master/rust_BNG.ipynb>`_.
-Generally speaking, conversion of one million coordinate pairs
-takes just over half a second.
+and is quite fast. Some benchmarks can be found
+`here <https://github.com/urschrei/lonlat_bng#benchmark>`_.
 
 Installation
 ============
@@ -31,8 +29,8 @@ Note
 
 ``convertbng`` is currently only available in Wheel format for OSX,
 though standard installation for ``*nix`` using pip from PyPI
-works, and **doesn't require a Rust installation**. Windows support
-is…forthcoming.
+works, and **doesn't require a Rust installation**, though it
+you'll need ``gcc``. Windows support is…forthcoming.
 
 Usage
 =====

@@ -9,8 +9,8 @@ Created by Stephan Hügel on 2015-06-21
 import os
 import re
 import io
+import sys
 from setuptools import setup, find_packages, Distribution, Extension
-# from Cython.Build import cythonize
 
 def read(*names, **kwargs):
     with io.open(
@@ -49,15 +49,26 @@ if has_cython:
 else:
     suffix = '.c'
 
+# Set dynamic RPATH differently, depending on platform
+rdirs = []
+ldirs = []
+if "linux" in sys.platform:
+    # from http://stackoverflow.com/a/10252190/416626
+    # the $ORIGIN trick is not perfect, though
+    ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN"]
+if sys.platform == 'darwin':
+    # You must compile your binary with rpath support for this to work
+    # RUSTFLAGS="-C rpath" cargo build --release
+    ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
+
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil" + suffix],
                     libraries=["lonlat_bng"],
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
-                    # from http://stackoverflow.com/a/10252190/416626
-                    # the $ORIGIN trick is not perfect, though
-                    runtime_library_dirs=['$ORIGIN'],
+                    runtime_library_dirs=rdirs,
                     extra_compile_args=["-O3"],
+                    extra_link_args=ldirs
 )
 
 if has_cython:
@@ -92,7 +103,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=find_packages(),
-    install_requires=['numpy >= 1.9.0'],
+    install_requires=['numpy >= 1.11.0'],
     ext_modules = extensions,
     long_description=readme
 )

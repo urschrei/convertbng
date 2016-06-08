@@ -31,7 +31,6 @@ THE SOFTWARE.
 """
 __author__ = u"Stephan Hügel"
 
-import cython
 import numpy as np
 from convertbng_p cimport (
     _FFIArray,
