@@ -5,7 +5,7 @@ env:
 
 matrix:
   include:
-      sudo: required  
+    - sudo: required  
       services:
         - docker
     - os: osx
