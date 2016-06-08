@@ -3,7 +3,7 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
-yum groupinstall -y “Development Tools”
+# yum groupinstall -y “Development Tools”
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
