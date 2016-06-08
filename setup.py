@@ -10,7 +10,7 @@ import os
 import re
 import io
 from setuptools import setup, find_packages, Distribution, Extension
-# from Cython.Build import cythonize
+from Cython.Build import cythonize
 
 def read(*names, **kwargs):
     with io.open(
