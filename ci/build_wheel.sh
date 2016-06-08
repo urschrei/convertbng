@@ -2,23 +2,18 @@
 set -e -x
 # Install a system package required by our library
 yum install -y atlas-devel
-# yum install -y libffi-devel
-# yum install -y openssl-devel
-# yum groupinstall -y “Development Tools”
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
-    ${PYBIN}/pip install -r /io/dev-requirements.txt
-    ${PYBIN}/pip wheel /io/ -w wheelhouse/
-done
+/opt/python/cp27-cp27m/bin/pip install -r /io/dev-requirements.txt
+/opt/python/cp27-cp27m/bin/pip wheel /io/ -w wheelhouse/
 
 # Bundle external shared libraries into the wheels
-# for whl in wheelhouse/*.whl; do
-#     auditwheel repair $whl -w /io/wheelhouse/
-# done
+for whl in wheelhouse/*.whl; do
+    auditwheel repair $whl -w /io/wheelhouse/
+done
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
-#     ${PYBIN}/pip install python-manylinux-demo --no-index -f /io/wheelhouse
-#     (cd $HOME; ${PYBIN}/nosetests pymanylinuxdemo)
+/opt/python/cp27-cp27m/bin/pip install convertbng --no-index -f /io/wheelhouse
+(cd $HOME; /opt/python/cp27-cp27m/bin/nosetests convertbng)
 # done
