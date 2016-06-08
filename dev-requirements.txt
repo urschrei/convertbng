@@ -1,3 +1,1 @@
 nose
-cython
-requests[security]
