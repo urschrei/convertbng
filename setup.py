@@ -58,9 +58,12 @@ else:
 # This logic tries to grab it from GitHub, based on the platform
 
 # Get latest Binary from Github
+# get GH access token from Travis
+ghkey = os.environ['LATEST_TAG']
 project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
+    headers={'Authorization':'access_token %s' % ghkey}
 ).json()
 print latest_release
 # Extract tag name
@@ -81,7 +84,7 @@ fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
 
 # Get compressed archive and extract binary
-release = requests.get(built, stream=True)     
+release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
 if fname[1] == '.zip':
