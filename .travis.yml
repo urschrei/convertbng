@@ -16,9 +16,6 @@ before_install:
   - echo $LATEST_TAG > key.txt
 
 install:
-  - sudo apt-get -y update
-  - sudo apt-get -y install apparmor-utils
-  - sudo aa-complain /etc/apparmor.d/docker
   - docker pull $DOCKER_IMAGE
   - sudo pip install pip --upgrade
   - sudo pip install --install-option="--no-cython-compile" cython
