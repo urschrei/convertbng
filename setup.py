@@ -64,7 +64,7 @@ with open('key.txt', 'r') as f:
 project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
-    headers={'Authorization':'access_token %s' % ghkey}
+    headers={'Authorization':'token %s' % ghkey}
 ).json()
 print latest_release
 # Extract tag name
