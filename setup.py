@@ -10,7 +10,6 @@ import os
 import re
 import io
 from setuptools import setup, find_packages, Distribution, Extension
-from Cython.Build import cythonize
 
 def read(*names, **kwargs):
     with io.open(
@@ -42,8 +41,7 @@ try:
     has_cython = True
 except ImportError:
     has_cython = False
-# temporary, to see what's up with ManyLinux
-has_cython = True
+
 # If Cython is installed, use it. Otherwise, build from source
 if has_cython:
     suffix = '.pyx'
