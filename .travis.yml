@@ -12,6 +12,9 @@ matrix:
       env: TARGET=x86_64-apple-darwin
       sudo: required
 
+before_install:
+  - export LATEST_TAG=$LATEST_TAG
+
 install:
   - docker pull $DOCKER_IMAGE
   - sudo pip install pip --upgrade
@@ -20,7 +23,7 @@ install:
   - sudo pip install numpy
   - sudo pip install python-coveralls
   - sudo pip install nosexcover
-  - export LATEST_TAG=$LATEST_TAG && sudo pip install -e .
+  - sudo pip install -e .
 
 cache: pip
 
