@@ -32,7 +32,7 @@ cache: pip
 
 script:
   - nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
-  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
+  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE /io/ci/build_wheel.sh
   - ls wheelhouse/
 
 branches:
