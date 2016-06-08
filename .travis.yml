@@ -1,10 +1,6 @@
 # language: python
 # python:
 #   - "2.7"
-env:
-  global:
-    - LATEST_TAG:
-      - secure: "R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0="
 notifications:
   email: false
 
@@ -14,9 +10,13 @@ matrix:
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+      env: LATEST_TAG
+        - secure: "R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0="
       sudo: true
     - os: osx
       env: TARGET=x86_64-apple-darwin
+      env: LATEST_TAG
+        - secure: "R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0="
       sudo: true
 
 install:
