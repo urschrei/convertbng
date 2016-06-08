@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e -x
-
+ls io
 # Install a system package required by our library
 yum install -y atlas-devel
 # yum install -y libffi-devel
