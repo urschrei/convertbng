@@ -13,13 +13,14 @@ matrix:
       sudo: required
 
 before_install:
+  - sudo pip install requests[security]
   - echo $LATEST_TAG > key.txt
+  - python pre_install.py
 
 install:
   - docker pull $DOCKER_IMAGE
   - sudo pip install pip --upgrade
   - sudo pip install --install-option="--no-cython-compile" cython
-  - sudo pip install requests[security]
   - sudo pip install numpy
   - sudo pip install python-coveralls
   - sudo pip install nosexcover
