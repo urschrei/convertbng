@@ -14,6 +14,7 @@ matrix:
       sudo: required
 
 install:
+  - export LATEST_TAG=$LATEST_TAG
   - docker pull $DOCKER_IMAGE
   - sudo pip install pip --upgrade
   - sudo pip install --install-option="--no-cython-compile" cython
