@@ -3,8 +3,8 @@ set -e -x
 
 # Install a system package required by our library
 yum install -y atlas-devel
-yum install -y libffi-devel
-yum install -y openssl-devel
+# yum install -y libffi-devel
+# yum install -y openssl-devel
 # yum groupinstall -y “Development Tools”
 
 # Compile wheels
