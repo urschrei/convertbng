@@ -13,7 +13,7 @@ matrix:
       sudo: required
 
 before_install:
-  - export LATEST_TAG=$LATEST_TAG
+  - echo $LATEST_TAG > key.txt
 
 install:
   - docker pull $DOCKER_IMAGE

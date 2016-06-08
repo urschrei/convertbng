@@ -59,8 +59,8 @@ else:
 
 # Get latest Binary from Github
 # get GH access token from Travis
-print os.environ
-ghkey = os.environ['LATEST_TAG']
+with open('key.txt', 'r') as f:
+    ghkey = f.read().strip()
 project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
