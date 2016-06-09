@@ -10,7 +10,8 @@ sudo pip install python-coveralls
 sudo pip install nosexcover
 
 if [[ "$OSX_BUILD" == "TRUE" ]]; then
-    system_profiler SPSoftwareDataType | grep "System Version" | awk '{print $6}'
+    ls $HOME/build/urschrei/
+    ls $HOME/build/urschrei/convertbng
     otool -L $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib
     # mkdir -p $HOME/build/urschrei/lonlat_bng/target/x86_64-apple-darwin/release/
     # cp $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib $HOME/build/urschrei/lonlat_bng/target/x86_64-apple-darwin/release/ 
