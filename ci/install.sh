@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e -x
+pwd
 ls
+ls convertbng
 if [[ "$DOCKER_BUILD" == "TRUE" ]]; then
     docker pull $DOCKER_IMAGE
 fi
