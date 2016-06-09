@@ -15,9 +15,15 @@ matrix:
       env: OSX_BUILD=TRUE
 
 before_install:
-  - sudo pip install requests[security]
   - echo $LATEST_TAG > key.txt
-  - sudo python ci/pre_install.py
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p python; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install requests[security]; fi
+  - if ! [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install requests[security]; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python ci/pre_install.py; fi
+  - if ! [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo python ci/pre_install.py; fi
 
 install:
   - bash ci/install.sh
