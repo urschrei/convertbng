@@ -10,7 +10,7 @@ yum install -y atlas-devel
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
     auditwheel show $whl
-    auditwheel repair $whl -w /io/wheelhouse/
+    # auditwheel repair $whl -w /io/wheelhouse/
 done
 
 # Install packages and test
