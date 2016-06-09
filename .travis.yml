@@ -16,7 +16,7 @@ matrix:
 before_install:
   - sudo pip install requests[security]
   - echo $LATEST_TAG > key.txt
-  - sudo python pre_install.py
+  - sudo ci/python pre_install.py
 
 install:
   - bash ci/install.sh
