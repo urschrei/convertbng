@@ -6,7 +6,7 @@ env:
 matrix:
   include:
     - sudo: required
-    env: DOCKER_BUILD=TRUE
+      env: DOCKER_BUILD=TRUE
       services:
         - docker
     - os: osx
