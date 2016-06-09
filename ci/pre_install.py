@@ -42,6 +42,7 @@ built = url.format(**fdict)
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
+print lib
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
