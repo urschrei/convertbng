@@ -9,9 +9,9 @@ matrix:
       env: DOCKER_BUILD=TRUE
       services:
         - docker
-      env: OSXX_BUILD=TRUE
     - os: osx
       sudo: required
+      env: OSX_BUILD=TRUE
 
 before_install:
   - sudo pip install requests[security]
