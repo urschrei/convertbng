@@ -25,6 +25,7 @@ cache: pip
 
 script:
   - bash ci/script.sh
+  - nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 
 
 branches:
