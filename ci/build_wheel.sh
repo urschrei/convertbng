@@ -15,6 +15,6 @@ done
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
-/opt/python/cp27-cp27m/bin/pip install convertbng --no-index -f /wheelhouse
+/opt/python/cp27-cp27m/bin/pip install convertbng --no-index -f wheelhouse
 (cd $HOME; /opt/python/cp27-cp27m/bin/nosetests convertbng)
 # done
