@@ -46,8 +46,8 @@ content = release.content
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
-    raw_zip.extractall('io/convertbng/convertbng')
+    raw_zip.extractall('../io/convertbng/convertbng')
 else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
-    tar.extractall('io/convertbng/convertbng')
+    tar.extractall('../io/convertbng/convertbng')
