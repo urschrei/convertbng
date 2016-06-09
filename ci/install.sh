@@ -10,8 +10,8 @@ sudo pip install numpy
 sudo pip install python-coveralls
 sudo pip install nosexcover
 if [[ "$DOCKER_BUILD" != "TRUE" ]]; then
+    otool -L $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib
     mkdir -p $HOME/build/urschrei/lonlat_bng/target/x86_64-apple-darwin/release/
     cp $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib $HOME/build/urschrei/lonlat_bng/target/x86_64-apple-darwin/release/ 
 fi
-/Users/travis/build/urschrei/lonlat_bng/target/x86_64-apple-darwin/release/liblonlat_bng.dylib
 cd $HOME/build/urschrei/convertbng && sudo pip install -e .
