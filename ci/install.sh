@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e -x
-pwd
-ls
-ls convertbng
 if [[ "$DOCKER_BUILD" == "TRUE" ]]; then
     docker pull $DOCKER_IMAGE
 fi
@@ -11,4 +8,4 @@ sudo pip install --install-option="--no-cython-compile" cython
 sudo pip install numpy
 sudo pip install python-coveralls
 sudo pip install nosexcover
-cd /home/travis/build/urschrei/convertbng && sudo pip install .
+cd $PTH && sudo pip install .

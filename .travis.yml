@@ -7,10 +7,12 @@ matrix:
   include:
     - sudo: required
       env: DOCKER_BUILD=TRUE
+      env: PTH=/home/travis/build/urschrei/convertbng
       services:
         - docker
     - os: osx
       env: TARGET=x86_64-apple-darwin
+      env: PTH=/Users/travis/build/urschrei/convertbng
       sudo: required
 
 before_install:
