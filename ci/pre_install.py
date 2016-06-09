@@ -46,8 +46,8 @@ print lib
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
-    raw_zip.extractall('/Users/travis/build/urschrei/convertbng/convertbng/')
+    raw_zip.extractall('../convertbng/convertbng/')
 else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
-    tar.extractall('/Users/travis/build/urschrei/convertbng/convertbng/')
+    tar.extractall('../convertbng/convertbng/')
