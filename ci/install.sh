@@ -11,4 +11,4 @@ sudo pip install --install-option="--no-cython-compile" cython
 sudo pip install numpy
 sudo pip install python-coveralls
 sudo pip install nosexcover
-cd convertbng && sudo pip install .
+cd /home/travis/build/urschrei/convertbng && sudo pip install .
