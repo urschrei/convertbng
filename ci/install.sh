@@ -8,4 +8,4 @@ sudo pip install --install-option="--no-cython-compile" cython
 sudo pip install numpy
 sudo pip install python-coveralls
 sudo pip install nosexcover
-cd $PTH && sudo pip install .
+cd $PTH && sudo pip install -e .
