@@ -38,7 +38,6 @@ else:
 # Construct download URL
 fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
-
 # Get compressed archive and extract binary
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
@@ -46,8 +45,8 @@ content = release.content
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
-    raw_zip.extractall('../io/convertbng/convertbng')
+    raw_zip.extractall('/Users/travis/build/urschrei/convertbng/convertbng/')
 else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
-    tar.extractall('../io/convertbng/convertbng')
+    tar.extractall('/Users/travis/build/urschrei/convertbng/convertbng/')
