@@ -57,7 +57,7 @@ extensions = Extension("convertbng.cutil",
                     library_dirs=['.', 'convertbng'],
                     # from http://stackoverflow.com/a/10252190/416626
                     # the $ORIGIN trick is not perfect, though
-                    runtime_library_dirs=['.'],
+                    runtime_library_dirs=['.', 'convertbng'],
                     extra_compile_args=["-O3"],
 )
 
