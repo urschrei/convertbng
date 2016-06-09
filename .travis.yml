@@ -9,6 +9,7 @@ matrix:
       env: DOCKER_BUILD=TRUE
       services:
         - docker
+      env: OSXX_BUILD=TRUE
     - os: osx
       sudo: required
 
