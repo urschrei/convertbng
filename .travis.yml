@@ -5,7 +5,8 @@ env:
 
 matrix:
   include:
-    - sudo: required  
+    - sudo: required
+    env: DOCKER_BUILD=TRUE
       services:
         - docker
     - os: osx
@@ -18,20 +19,13 @@ before_install:
   - sudo python pre_install.py
 
 install:
-  - docker pull $DOCKER_IMAGE
-  - sudo pip install pip --upgrade
-  - sudo pip install --install-option="--no-cython-compile" cython
-  - sudo pip install numpy
-  - sudo pip install python-coveralls
-  - sudo pip install nosexcover
-  - sudo pip install -e .
+  - bash ci/install.sh
 
 cache: pip
 
 script:
-  - nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
-  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
-  - ls wheelhouse/
+  - bash ci/script.sh
+
 
 branches:
   only:
