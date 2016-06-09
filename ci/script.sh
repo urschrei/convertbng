@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e -x
-os.chdir('..')
 nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 
 
