@@ -11,7 +11,7 @@ import tarfile
 
 # We need to build the module using a Rust binary
 # This logic tries to grab it from GitHub, based on the platform
-print os.path.dirname(os.path.realpath(__file__))
+
 # Get latest Binary from Github
 # get GH access token from Travis
 with open('key.txt', 'r') as f:
@@ -42,7 +42,7 @@ built = url.format(**fdict)
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
-print lib
+
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
