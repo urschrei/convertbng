@@ -11,6 +11,8 @@ yum install -y atlas-devel
 for whl in wheelhouse/*.whl; do
     auditwheel show $whl
     # auditwheel repair $whl -w /io/wheelhouse/
+    mkdir -p /io/wheelhouse
+    cp $whl /io/wheelhouse/
 done
 
 # Install packages and test
