@@ -5,6 +5,7 @@
     virtualenv venv -p python
     source venv/bin/activate
     pip install pip --upgrade
+    pip install nose
     pip install requests[security]
     python ci/pre_install.py
 fi
