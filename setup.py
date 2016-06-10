@@ -51,18 +51,24 @@ else:
 
 # only append the runtime dir on Linux
 rdirs = []
+ldirs = []
 if sys.platform != 'darwin':
+    # from http://stackoverflow.com/a/10252190/416626
+    # the $ORIGIN trick is not perfect, though
     rdirs = ['$ORIGIN']
+if sys.platform == 'darwin':
+    # You must compile your binary with rpath support for this to work
+    # RUSTFLAGS="-C rpath" cargo build --release
+    ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil" + suffix],
                     libraries=["lonlat_bng"],
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
-                    # from http://stackoverflow.com/a/10252190/416626
-                    # the $ORIGIN trick is not perfect, though
                     runtime_library_dirs=rdirs,
                     extra_compile_args=["-O3"],
+                    extra_link_args=ldirs
 )
 
 if has_cython:
