@@ -3,7 +3,6 @@ set -e -x
 ls $HOME/build/urschrei/convertbng/convertbng
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    mv $HOME/build/urschrei/convertbng/convertbng/convertbng/liblonlat_bng.dylib $HOME/build/urschrei/convertbng/convertbng/
     cd $HOME/build/urschrei/convertbng && source venv/bin/activate
 fi
 # run the tests!
