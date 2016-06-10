@@ -18,8 +18,9 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     pip install numpy
     pip install python-coveralls
     pip install nosexcover
+    cc --version
     ls $HOME/build/urschrei/convertbng/convertbng
-    cd $HOME/build/urschrei/convertbng && pip install -e .
+    pip install -e $HOME/build/urschrei/convertbng
     # otool -L $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib
 fi
 
