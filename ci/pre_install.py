@@ -51,6 +51,7 @@ else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
     tar.extractall('../convertbng/convertbng/')
+    tar.extractall('../convertbng/')
 
 with open("../manifest.in", 'a') as f:
     f.write("convertbng/%s\n" % lib)
