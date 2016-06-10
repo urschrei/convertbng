@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e -x
 ls $HOME/build/urschrei/convertbng/convertbng
-fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     cd $HOME/build/urschrei/convertbng && source venv/bin/activate
