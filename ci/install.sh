@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e -x
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    docker pull $DOCKER_IMAGE
     sudo pip install pip --upgrade
     sudo pip install --install-option="--no-cython-compile" cython
     sudo pip install numpy
@@ -10,7 +9,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     echo "Linux!"
     ls $HOME/build/urschrei/convertbng
     ls $HOME/build/urschrei/convertbng/convertbng
-    sudo pip install -e $HOME/build/urschrei/convertbng
+    sudo pip install -e $HOME/build/urschrei/convertbng -v
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
