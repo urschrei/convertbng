@@ -8,6 +8,8 @@
     pip install nose
     pip install requests[security]
     python ci/pre_install.py
+    # extractall works differently on OSX, apparently
+    mv $HOME/build/urschrei/convertbng/convertbng/convertbng/liblonlat_bng.dylib $HOME/build/urschrei/convertbng/convertbng/
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
