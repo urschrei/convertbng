@@ -13,7 +13,7 @@ fi
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     echo "OSX!"
     cc --version
-    source venv/bin/activate
+    source $HOME/build/urschrei/convertbng/venv/bin/activate
     pip install pip --upgrade
     pip install --install-option="--no-cython-compile" cython
     pip install numpy

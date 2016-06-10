@@ -6,13 +6,11 @@ env:
 matrix:
   include:
     - sudo: required
-      env: DOCKER_BUILD=TRUE
       services:
         - docker
     - os: osx
       osx_image: xcode7.3
       sudo: required
-      env: OSX_BUILD=TRUE
 
 before_install:
   - echo $LATEST_TAG > key.txt
