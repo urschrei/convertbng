@@ -23,9 +23,6 @@ cache: pip
 
 script:
   - bash ci/script.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
-  - nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
-
 
 branches:
   only:
