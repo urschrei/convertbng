@@ -54,3 +54,5 @@ else:
 
 with open("../manifest.in", 'a') as f:
     f.write("convertbng/%s\n" % lib)
+
+print os.environ
