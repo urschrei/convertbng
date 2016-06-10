@@ -11,3 +11,4 @@ cd $HOME/build/urschrei/convertbng && nosetests -v --with-xcoverage --cover-pack
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
     ls wheelhouse/
+fi
