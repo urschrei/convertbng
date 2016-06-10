@@ -7,21 +7,22 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     sudo pip install numpy
     sudo pip install python-coveralls
     sudo pip install nosexcover
-    cd $HOME/build/urschrei/convertbng && sudo pip install -e .
+    echo "Linux!"
+    ls $HOME/build/urschrei/convertbng
+    ls $HOME/build/urschrei/convertbng/convertbng
+    sudo pip install -e $HOME/build/urschrei/convertbng
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    echo "OSX!"
     source $HOME/build/urschrei/convertbng/venv/bin/activate
     pip install pip --upgrade
     # pip install --install-option="--no-cython-compile" cython
     pip install numpy
     pip install python-coveralls
     pip install nosexcover
-    cc --version
-    echo $PATH
+    echo "OSX!"
+    ls $HOME/build/urschrei/convertbng
     ls $HOME/build/urschrei/convertbng/convertbng
     pip install -e $HOME/build/urschrei/convertbng
     # otool -L $HOME/build/urschrei/convertbng/convertbng/liblonlat_bng.dylib
 fi
-

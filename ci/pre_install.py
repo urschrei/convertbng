@@ -43,14 +43,16 @@ release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey
 fname = os.path.splitext(built)
 content = release.content
 
+path = os.path.join(os.environ['HOME'], "build/urschrei/convertbng/convertbng")
+
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
-    raw_zip.extractall('../convertbng/')
+    raw_zip.extractall(path)
 else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
-    tar.extractall('../convertbng/')
+    tar.extractall(path)
 
 with open("../manifest.in", 'a') as f:
     f.write("convertbng/%s\n" % lib)
