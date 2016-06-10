@@ -46,11 +46,10 @@ content = release.content
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
-    raw_zip.extractall('../convertbng/convertbng/')
+    raw_zip.extractall('../convertbng/')
 else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
-    tar.extractall('../convertbng/convertbng/')
     tar.extractall('../convertbng/')
 
 with open("../manifest.in", 'a') as f:
