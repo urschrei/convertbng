@@ -8,7 +8,6 @@
     pip install nose
     pip install requests[security]
     python ci/pre_install.py
-    # extractall works differently on OSX, apparently
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
