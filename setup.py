@@ -9,6 +9,7 @@ Created by Stephan Hügel on 2015-06-21
 import os
 import re
 import io
+import sys
 from setuptools import setup, find_packages, Distribution, Extension
 
 def read(*names, **kwargs):
@@ -48,7 +49,10 @@ if has_cython:
 else:
     suffix = '.c'
 
-
+# only append the runtime dir on Linux
+rdirs = []
+if sys.platform != 'darwin':
+    rdirs = ['$ORIGIN']
 
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil" + suffix],
@@ -57,13 +61,9 @@ extensions = Extension("convertbng.cutil",
                     library_dirs=['.', 'convertbng'],
                     # from http://stackoverflow.com/a/10252190/416626
                     # the $ORIGIN trick is not perfect, though
-                    runtime_library_dirs=['$ORIGIN'],
+                    runtime_library_dirs=rdirs,
                     extra_compile_args=["-O3"],
 )
-
-# Append correct binary to manifest.in
-# with open('manifest.in', 'a') as f:
-    # f.write('include convertbng/%s\n' % lib)
 
 if has_cython:
     extensions = cythonize([extensions,])
