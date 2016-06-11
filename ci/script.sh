@@ -5,9 +5,9 @@ ls $HOME/build/urschrei/convertbng/convertbng
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     cd $HOME/build/urschrei/convertbng && source venv/bin/activate
 fi
-# run the tests!
 
-cd $HOME/build/urschrei/convertbng && pip freeze && which python && nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
+# run the tests!
+cd $HOME/build/urschrei/convertbng && nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker pull $DOCKER_IMAGE
