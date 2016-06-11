@@ -54,5 +54,5 @@ else:
     tar = tarfile.open(mode="r:gz", fileobj=fo)
     tar.extractall(path)
 
-with open("../manifest.in", 'a') as f:
-    f.write("convertbng/%s\n" % lib)
+with open("manifest.in", 'a') as f:
+    f.write("include convertbng/%s\n" % lib)
