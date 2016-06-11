@@ -19,7 +19,6 @@ before_install:
   - less manifest.in
   - echo $LATEST_TAG > key.txt
   - bash ci/pre_install.sh
-  - ls manifest.in
 
 install:
   - bash ci/install.sh
@@ -28,6 +27,7 @@ cache: pip
 
 script:
   - bash ci/script.sh
+  - ls manifest.in
 
 branches:
   only:
