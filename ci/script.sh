@@ -4,7 +4,6 @@ set -e -x
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     source venv/bin/activate
 fi
-less manifest.in
 # run the tests!
 nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 
