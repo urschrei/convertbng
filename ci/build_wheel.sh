@@ -13,6 +13,7 @@ for whl in wheelhouse/*.whl; do
     # auditwheel repair $whl -w /io/wheelhouse/
     mkdir -p /io/wheelhouse
     cp $whl /io/wheelhouse/
+    sudo rm /io/wheelhouse/numpy*
 done
 
 # Install packages and test
