@@ -32,7 +32,7 @@ if 'darwin' in platform:
 elif 'win32' in platform:
     lib = "lonlat_bng.dll"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-msvc.zip'
-else:
+elif 'linux' in platform:
     lib = "liblonlat_bng.so"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-unknown-linux-gnu.tar.gz'
 # Construct download URL
