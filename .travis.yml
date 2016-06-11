@@ -7,10 +7,12 @@ env:
 matrix:
   include:
     - sudo: required
+      env: TARGET=x86_64-unknown-linux-gnu
       services:
         - docker
     - os: osx
       osx_image: xcode7.3
+      env: TARGET=x86_64-apple-darwin
       sudo: required
 
 before_install:
