@@ -26,7 +26,6 @@ cache: pip
 
 script:
   - bash ci/script.sh
-  - ls manifest.in
 
 branches:
   only:
