@@ -15,6 +15,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    mkdir wheelhouse
     python setup.py bdist_wheel
     cp dist/*.whl wheelhouse
     ls wheelhouse/
