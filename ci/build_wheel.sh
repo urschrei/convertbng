@@ -10,7 +10,7 @@ cd /io && /opt/python/cp27-cp27m/bin/python setup.py bdist_wheel
 cp /io/dist/* /io/wheelhouse
 
 # Bundle external shared libraries into the wheels
-for whl in io/wheelhouse/*.whl; do
+for whl in /io/wheelhouse/*.whl; do
     auditwheel show $whl
     # auditwheel repair $whl -w /io/wheelhouse/
     # mkdir -p /io/wheelhouse
