@@ -6,10 +6,8 @@ yum install -y atlas-devel
 # Compile wheels
 /opt/python/cp27-cp27m/bin/pip install -r /io/dev-requirements.txt
 # /opt/python/cp27-cp27m/bin/pip wheel /io/ -w wheelhouse/
-cd io && /opt/python/cp27-cp27m/bin/python setup.py bdist_wheel
-ls io
-ls io/dist
-# cp io/dist/* io/wheelhouse
+cd /io && /opt/python/cp27-cp27m/bin/python setup.py bdist_wheel
+cp /io/dist/* /io/wheelhouse
 
 # Bundle external shared libraries into the wheels
 for whl in io/wheelhouse/*.whl; do
