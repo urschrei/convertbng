@@ -12,7 +12,6 @@ mk_tarball() {
         TARGET="x86_64-apple-darwin"
     fi
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        sudo rm $HOME/build/urschrei/convertbng/wheelhouse/numpy*
         TARGET="x86_64-unknown-linux-gnu"
     fi
     pushd $td
