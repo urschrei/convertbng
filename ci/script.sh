@@ -8,6 +8,7 @@ fi
 nosetests -v --with-xcoverage --cover-package=convertbng --cover-tests
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    mkdir -p $HOME/build/urschrei/convertbng/wheelhouse
     docker pull $DOCKER_IMAGE
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
 fi
