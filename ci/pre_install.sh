@@ -6,6 +6,7 @@
     source venv/bin/activate
     pip install pip --upgrade
     pip install nose
+    pip install wheel
     pip install requests[security]
     python ci/pre_install.py
 fi
