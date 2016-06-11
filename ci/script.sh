@@ -14,3 +14,10 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
     ls wheelhouse/
 fi
+
+if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    pwd
+    python setup.py bdist_wheel
+    cp $HOME/build/urschrei/convertbng/dist/*.whl wheelhouse
+fi
+ls wheelhouse
