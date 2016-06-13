@@ -9,7 +9,7 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 `pip install convertbng`  
 
 ##Note
-`convertbng` is currently only available in Wheel format for OSX, though standard installation for `*nix` using pip from PyPI works, and **doesn't require a Rust installation**, though it you'll need `gcc`. Windows support is…forthcoming.
+`convertbng` is currently available as a [manylinux](https://www.python.org/dev/peps/pep-0513/) wheel, and an OS X wheel. Windows support is forthcoming.
 
 #Usage
 The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  
