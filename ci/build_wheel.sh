@@ -20,16 +20,14 @@ cp /io/convertbng/liblonlat_bng.so /usr/local/lib
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install -r /io/dev-requirements.txt
-    ${PYBIN}/pip wheel -v /io/ -w wheelhouse/
+    ${PYBIN}/pip wheel /io/ -w wheelhouse/
 done
 
 ls -l --block-size=K wheelhouse
 
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
-    auditwheel show $whl
     auditwheel repair $whl -w /io/wheelhouse/
-    # cp $whl /io/wheelhouse/
     # rm /io/wheelhouse/numpy-1.11.0-cp27-cp27mu-manylinux1_x86_64.whl
 done
 
