@@ -27,10 +27,9 @@ Installation
 Note
 ----
 
-``convertbng`` is currently only available in Wheel format for OSX,
-though standard installation for ``*nix`` using pip from PyPI
-works, and **doesn't require a Rust installation**, though it
-you'll need ``gcc``. Windows support is…forthcoming.
+``convertbng`` is currently available as a
+`manylinux <https://www.python.org/dev/peps/pep-0513/>`_ wheel, and
+an OS X wheel. Windows support is forthcoming.
 
 Usage
 =====
@@ -60,32 +59,27 @@ All functions try to be liberal about what containers they accept:
 much anything that has the ``__iter__`` attribute should work,
 including generators.
 
-\`\`\`python from convertbng.util import convert\_bng,
-convert\_lonlat
+::
 
-convert a single value
-======================
-
-res = convert\_bng(lon, lat)
-
-convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN02 corrections
-=========================================================================================================
-
-lons = [lon1, lon2, lon3] lats = [lat1, lat2, lat3] res\_list =
-convert\_bng(lons, lats)
-
-convert lists of BNG Eastings and Northings to longitude, latitude
-==================================================================
-
-eastings = [easting1, easting2, easting3] northings = [northing1,
-northing2, northing3] res\_list\_en = convert\_lonlat(eastings,
-northings)
-
-assumes numpy imported as np
-============================
-
-lons\_np = np.array(lons) lats\_np = np.array(lats) res\_list\_np =
-convert\_bng(lons\_np, lats\_np) \`\`\`
+    from convertbng.util import convert_bng, convert_lonlat
+    
+    # convert a single value
+    res = convert_bng(lon, lat)
+    
+    # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN02 corrections
+    lons = [lon1, lon2, lon3]
+    lats = [lat1, lat2, lat3]
+    res_list = convert_bng(lons, lats)
+    
+    # convert lists of BNG Eastings and Northings to longitude, latitude
+    eastings = [easting1, easting2, easting3]
+    northings = [northing1, northing2, northing3]
+    res_list_en = convert_lonlat(eastings, northings)
+    
+    # assumes numpy imported as np
+    lons_np = np.array(lons)
+    lats_np = np.array(lats)
+    res_list_np = convert_bng(lons_np, lats_np)
 
 Experimental Cython Module
 ==========================
@@ -155,21 +149,18 @@ Provided for completeness:
 Relationship between ETRS89 and WGS84
 =====================================
 
-From
-*`Transformations and OSGM02™, User guide <https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/formats-for-developers.html>`_*,
-p7. Emphasis mine. >[…] In Europe, ETRS89 is a precise version of
-the better known WGS84 reference system optimised for use in
-Europe;
-**however, for most purposes it can be considered equivalent to WGS84**.
-Specifically, the motion of the European continental plate is not
-apparent in ETRS89, which allows a fixed relationship to be
-established between this system and Ordnance Survey mapping
-coordinate systems. Additional precise versions of WGS84 are
-currently in use, notably ITRS; these are not equivalent to ETRS89.
-The difference between ITRS and ETRS89 is in the order of 0.25 m
-(in 1999), and growing by 0.025 m per year in UK and Ireland. This
-effect is only relevant in international scientific applications.
-**For all navigation, mapping, GIS, and engineering applications within the tectonically stable parts of Europe (including UK and Ireland), the term ETRS89 should be taken as synonymous with WGS84**.
+   […] In Europe, ETRS89 is a precise version of the better known WGS84 reference system optimised for use in Europe; **however, for most purposes it can be considered equivalent to WGS84**. Specifically, the motion of the European continental plate is not
+   apparent in ETRS89, which allows a fixed relationship to be
+   established between this system and Ordnance Survey mapping
+   coordinate systems. Additional precise versions of WGS84 are
+   currently in use, notably ITRS; these are not equivalent to ETRS89.
+   The difference between ITRS and ETRS89 is in the order of 0.25 m
+   (in 1999), and growing by 0.025 m per year in UK and Ireland. This
+   effect is only relevant in international scientific applications.
+   **For all navigation, mapping, GIS, and engineering applications within the tectonically stable parts of Europe (including UK and Ireland), the term ETRS89 should be taken as synonymous with WGS84**.
+
+   -- `Transformations and OSGM02™, User guide <https://www.ordnancesurvey.co.uk/business-and-government/help-and support/navigation-technology/os-net/formats-for-developers.html>`_, p7. Emphasis mine.
+
 
 In essence, this means that anywhere you see ETRS89 in this README,
 you can substitute WGS84.
@@ -265,17 +256,16 @@ Implementation
 --------------
 
 The main detail of interest is the FFI interface between Python and
-Rust, the Python side of which can be found
-`here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L50-L99>`_,
-and the Rust side of which can be found
-`here <https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L158-L180>`_.
+Rust, the Python side of which can be found in
+`util.py <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L50-L99>`_,
+and the Rust side of which can be found in
+`lib.rs <https://github.com/urschrei/rust_bng/blob/master/src/lib.rs#L158-L180>`_.
 The `ctypes <https://docs.python.org/2/library/ctypes.html>`_
 library expects C-compatible data structures, which we define in
 Rust (see above). We then define methods which allow us to receive,
 safely access, return, and free data across the FFI boundary.
-Finally, we link the Rust conversion functions from the Python
-library
-`here <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126>`_.
+Finally, we link the Rust conversion functions from util
+`again <https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126>`_.
 Note the ``errcheck`` assignments, which convert the FFI-compatible
 ctypes data structures to tuple lists.
 

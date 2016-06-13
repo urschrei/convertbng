@@ -23,16 +23,13 @@ for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip wheel /io/ -w wheelhouse/
 done
 
-ls -l --block-size=K wheelhouse
-
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
     auditwheel repair $whl -w /io/wheelhouse/
-    # rm /io/wheelhouse/numpy-1.11.0-cp27-cp27mu-manylinux1_x86_64.whl
 done
 
 # Install packages and test
 # for PYBIN in /opt/python/*/bin/; do
-# /opt/python/cp27-cp27m/bin/pip install convertbng --no-index -f wheelhouse
-# (cd $HOME; /opt/python/cp27-cp27m/bin/nosetests convertbng)
+#     ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
+#     (cd $HOME; ${PYBIN}/nosetests convertbng)
 # done
