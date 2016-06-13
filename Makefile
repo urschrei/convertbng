@@ -28,8 +28,6 @@ convertbng/liblonlat_bng.so: $(RUSTDIR)/src/lib.rs
 	# build library
 	@cd $(LINUXHOST) && vagrant ssh -c \
 		'cd /vagrant && cargo update && cargo test && cargo build --release \
-		&& ar -x /vagrant/target/release/liblonlat_bng.a \
-		&& gcc -shared *.o -o /vagrant/target/release/liblonlat_bng.so -lrt \
 		&& strip -s /vagrant/target/release/liblonlat_bng.so'
 
 # build alone won't upload, but upload will first call build
@@ -58,15 +56,13 @@ upload: build
 	@cp manifest.in $(LINUXHOST)/pysrc
 	@cp -r convertbng/ $(LINUXHOST)/pysrc/convertbng
 	-@rm convertbng/liblonlat_bng.so
-	# copy linux binary to OSX and VM
-	@cp $(LINUXHOST)/target/release/liblonlat_bng.so convertbng/
+	# we don't need the linux binary in an OSX wheel
+	# @cp $(LINUXHOST)/target/release/liblonlat_bng.so convertbng/
 	@cp $(LINUXHOST)/target/release/liblonlat_bng.so $(LINUXHOST)/pysrc/convertbng/
-	# we don't want to package the dylib for Linux hosts
-	# @rm $(LINUXHOST)/pysrc/convertbng/liblonlat_bng.dylib
 	# clean up
 	-@rm $(LINUXHOST)/*.o
 	@echo "Copied Linux .so"
-	@echo "Packaging linux binary"
+	@echo "Packaging Linux binary"
 	@cd $(LINUXHOST) && vagrant ssh -c \
 		'cd /vagrant/pysrc && rm -rf build && rm -rf dist \
 		&& /vagrant/venv/bin/python setup.py bdist_wheel sdist \
