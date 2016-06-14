@@ -52,6 +52,7 @@ else:
 # Set dynamic RPATH differently, depending on platform
 rdirs = []
 ldirs = []
+ddirs = []
 if "linux" in sys.platform:
     # from http://stackoverflow.com/a/10252190/416626
     # the $ORIGIN trick is not perfect, though
@@ -60,10 +61,13 @@ if sys.platform == 'darwin':
     # You must compile your binary with rpath support for this to work
     # RUSTFLAGS="-C rpath" cargo build --release
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
+if sys.platform == "win32":
+    ddirs = ['convertbng/rlib.h']
 
 extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil" + suffix],
                     libraries=["lonlat_bng"],
+                    depends=ddirs,
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
                     runtime_library_dirs=rdirs,
