@@ -11,11 +11,17 @@ import tarfile
 
 # We need to build the module using a Rust binary
 # This logic tries to grab it from GitHub, based on the platform
+platform = sys.platform
+print platform
 
 # Get latest Binary from Github
-# get GH access token from Travis
-with open('key.txt', 'r') as f:
-    ghkey = f.read().strip()
+if not 'win32' in platform:
+    # get GH access token from Travis
+    with open('key.txt', 'r') as f:
+        ghkey = f.read().strip()
+elif 'win32' in platform:
+    ghkey = os.environ['TARBALL_KEY']
+
 project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
@@ -25,7 +31,6 @@ latest_release = requests.get(
 # Extract tag name
 tagname = latest_release['tag_name']
 # what platform are we on?
-platform = sys.platform
 if 'darwin' in platform:
     lib = "liblonlat_bng.dylib"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-apple-darwin.tar.gz'
