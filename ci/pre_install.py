@@ -19,8 +19,10 @@ if not 'win32' in platform:
     # get GH access token from Travis
     with open('key.txt', 'r') as f:
         ghkey = f.read().strip()
+        path = os.path.join(os.environ['HOME'], "build/urschrei/convertbng/convertbng")
 elif 'win32' in platform:
     ghkey = os.environ['TARBALL_KEY']
+    path = "C:\projects\convertbng\convertbng"
 
 project = 'lonlat_bng'
 latest_release = requests.get(
@@ -49,8 +51,6 @@ print "URL:", built
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
-
-path = os.path.join(os.environ['HOME'], "build/urschrei/convertbng/convertbng")
 
 if fname[1] == '.zip':
     so = cStringIO.StringIO(content)
