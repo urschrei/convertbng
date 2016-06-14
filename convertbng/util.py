@@ -36,15 +36,20 @@ import numpy as np
 import os
 
 if platform == "darwin":
+    prefix = 'lib'
     ext = "dylib"
-else:
+elif "linux" in platform:
+    prefix = 'lib'
     ext = "so"
+elif "win32" in platform:
+    prefix = ''
+    ext = 'dll'
 
 __author__ = u"Stephan Hügel"
 __version__ = "0.4.18"
 
 file_path = os.path.dirname(__file__)
-lib = cdll.LoadLibrary(os.path.join('..', file_path, 'liblonlat_bng.' + ext))
+lib = cdll.LoadLibrary(os.path.join('..', file_path, '%slonlat_bng.%s' % (prefix, ext)))
 
 
 class _FFIArray(Structure):
