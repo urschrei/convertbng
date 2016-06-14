@@ -14,7 +14,7 @@ import tarfile
 platform = sys.platform
 print platform
 
-# Get latest Binary from Github
+# If we sign our requests, GH doesn't aggressively rate-limit us
 if not 'win32' in platform:
     # get GH access token from Travis
     with open('key.txt', 'r') as f:
@@ -24,15 +24,14 @@ elif 'win32' in platform:
     ghkey = os.environ['TARBALL_KEY']
     path = "C:\projects\convertbng\convertbng"
 
+# Get the latest release details for the binary
 project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
-    headers={'Authorization':'token %s' % ghkey}
-).json()
+    headers={'Authorization':'token %s' % ghkey}).json()
 
-# Extract tag name
 tagname = latest_release['tag_name']
-# what platform are we on?
+# What platform are we on?
 if 'darwin' in platform:
     lib = "liblonlat_bng.dylib"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-apple-darwin.tar.gz'
@@ -47,7 +46,7 @@ elif 'linux' in platform:
 fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
 print "URL:", built
-# Get compressed archive and extract binary
+# Get compressed archive and extract binary (and lib, on Windows)
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
@@ -60,6 +59,3 @@ else:
     fo = io.BytesIO(content)
     tar = tarfile.open(mode="r:gz", fileobj=fo)
     tar.extractall(path)
-
-# with open("manifest.in", 'a') as f:
-#     f.write("include convertbng/%s\n" % lib)
