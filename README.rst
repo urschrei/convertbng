@@ -27,9 +27,9 @@ Installation
 Note
 ----
 
-``convertbng`` is currently available as a
-`manylinux <https://www.python.org/dev/peps/pep-0513/>`_ wheel, and
-an OS X wheel. Windows support is forthcoming.
+``convertbng`` is currently available for 64-bit architectures as a
+`manylinux <https://www.python.org/dev/peps/pep-0513/>`_ wheel, an OS X wheel, 
+and a Windows wheel.
 
 Usage
 =====
