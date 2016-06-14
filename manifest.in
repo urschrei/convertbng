@@ -7,4 +7,4 @@ include license.txt
 include README.md
 include README.rst
 include ostn002_s.gif
-recursive-include convertbng *.so *.dylib
+recursive-include convertbng *.so *.dylib *.dll
