@@ -62,7 +62,6 @@ if sys.platform == 'darwin':
     # RUSTFLAGS="-C rpath" cargo build --release
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 if sys.platform == "win32":
-    ldirs = ['/LIBDIR:convertbng']
     ddirs = ['convertbng/rlib.h']
 
 extensions = Extension("convertbng.cutil",
