@@ -79,6 +79,8 @@ install:
 build_script:
   # Build the compiled extension
   - "%CMD_IN_ENV% python ci/pre_install.py"
+  # rename lib to what the linker expects
+  - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
   - "%CMD_IN_ENV% python setup.py build"
 
 test_script:
