@@ -5,6 +5,8 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\run_with_env.cmd"
     PROJECT_NAME: convertbng
+    TARBALL_KEY:
+      secure: LxJrI1Zs9Y6K/d5EB5PIA7/eNS9K5OBuNXFvtYvWmA5NbPN5ugR3CjNmcjD+Oid3
 
   matrix:
 
