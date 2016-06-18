@@ -87,8 +87,7 @@ Experimental Cython Module
 If you're comfortable with restricting yourself to ``NumPy f64``
 arrays, you may use the Cython functions instead. These are
 identical to those listed below, and are selected by changing the
-import statement ``from convertbng.util import`` to from
-**``from convertbng.cutil import``**.
+import statement ``from convertbng.util import`` to **``from convertbng.cutil import``**.
 
 The conversion functions will accept most sequences which implement
 ``__iter__``, as above (``list``, ``tuple``, ``float``,
