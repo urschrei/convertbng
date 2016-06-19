@@ -30,7 +30,7 @@ class ConvertbngTests(unittest.TestCase):
         """ Test multithreaded lon, lat --> BNG function """
         expected = (
             [516274.449, 398915.542],
-            [173141.09800000003, 521544.088]
+            [173141.098, 521544.088]
         )
    
         result = convert_bng(
@@ -43,7 +43,7 @@ class ConvertbngTests(unittest.TestCase):
         """ Test Cythonised multithreaded lon, lat --> BNG function """
         expected = (
             [516274.449, 398915.542],
-            [173141.09800000003, 521544.088]
+            [173141.098, 521544.088]
         )
    
         result = cconvert_bng(
@@ -58,7 +58,7 @@ class ConvertbngTests(unittest.TestCase):
         """ Test Cythonised multithreaded lon, lat --> BNG function with lists """
         expected = (
             np.array([516274.449, 398915.542]),
-            np.array([173141.09800000003, 521544.088])
+            np.array([173141.098, 521544.088])
         )
    
         result = cconvert_bng(
@@ -112,7 +112,7 @@ class ConvertbngTests(unittest.TestCase):
         """ Test that the lon, lat -> BNG function can consume generators """
         expected = (
             [516274.449, 398915.542],
-            [173141.09800000003, 521544.088]
+            [173141.098, 521544.088]
         )
         inp = [
             [-0.32824866,
