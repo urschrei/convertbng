@@ -114,9 +114,9 @@ The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-co
 Finally, we link the Rust conversion functions from util [again](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
 
 #Building the binary for local development
-- ensure you have Rust 1.x and Cargo installed
+- ensure you have Rust 1.x and Cargo [installed](https://www.rustup.rs)
 - clone https://github.com/urschrei/lonlat_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/rust_bng`)
-- in this dir, run `make clean` then `make build`
+- in this dir, run `make clean` then `make`
 
 #Tests
 You can run the Python module tests by running "make test".  

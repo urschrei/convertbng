@@ -2,7 +2,7 @@ RUSTDIR = ../lonlat_bng
 
 convertbng/cutil.so: convertbng/cutil.pyx convertbng/cutil.c setup.py convertbng/liblonlat_bng.dylib
 	@echo "Rebuilding Cython extension"
-	-@python setup.py build_ext --inplace
+	@python setup.py build_ext --inplace
 
 # here's how to build an up-to-date OSX binary
 # changing util.{py, pyx} will also trigger a rebuild
@@ -32,3 +32,12 @@ clean:
 test: convertbng/liblonlat_bng.dylib convertbng/cutil.so
 	@echo "Running Python module tests"
 	@nosetests -v
+
+.PHONY: release
+release:
+	@rm dist/*
+	@echo "Getting latest release from GitHub"
+	@python release.py
+	@echo "Successfully retrieved release. Uploading to PyPI"
+	@twine upload dist/* --sign --identity 39C1ED9A -w pypi
+	@echo "Successfully uploaded wheels to PyPI"
