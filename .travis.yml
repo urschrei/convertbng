@@ -66,4 +66,4 @@ branches:
 
 notifications:
   email:
-    - urschrei@gmail.com
+    on_success: never
