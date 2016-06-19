@@ -50,7 +50,6 @@ else:
     suffix = '.c'
 
 # Set dynamic RPATH differently, depending on platform
-rdirs = []
 ldirs = []
 ddirs = []
 if "linux" in sys.platform:
@@ -70,7 +69,6 @@ extensions = Extension("convertbng.cutil",
                     depends=ddirs,
                     include_dirs=['.', 'convertbng'],
                     library_dirs=['.', 'convertbng'],
-                    runtime_library_dirs=rdirs,
                     extra_compile_args=["-O3"],
                     extra_link_args=ldirs
 )
