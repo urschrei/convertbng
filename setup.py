@@ -5,7 +5,7 @@ setup.py
 
 Created by Stephan Hügel on 2015-06-21
 """
-# from __future__ import unicode_literals
+
 import os
 import re
 import io
