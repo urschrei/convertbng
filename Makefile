@@ -39,5 +39,5 @@ release:
 	@echo "Getting latest release from GitHub"
 	@python release.py
 	@echo "Successfully retrieved release. Uploading to PyPI"
-	@twine upload dist/* --sign --identity 39C1ED9A -w pypi
+	@twine upload dist/* --sign --identity 39C1ED9A -r pypi
 	@echo "Successfully uploaded wheels to PyPI"
