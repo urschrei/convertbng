@@ -46,7 +46,7 @@ elif "win32" in platform:
     ext = 'dll'
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.4.22"
+__version__ = "0.4.23"
 
 file_path = os.path.dirname(__file__)
 lib = cdll.LoadLibrary(os.path.join('..', file_path, '%slonlat_bng.%s' % (prefix, ext)))
