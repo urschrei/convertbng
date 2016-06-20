@@ -57,11 +57,7 @@ try:
 except OSError:
     # the Rust lib's been grafted by manylinux1
     fpath = os.path.join(file_path, ".libs")
-    try:
-        fname = check_output(["ls", fpath]).split()[0]
-    except CalledProcessError:
-        ls = check_output(["ls", file_path])
-        print(ls)
+    fname = check_output(["ls", fpath]).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
