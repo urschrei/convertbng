@@ -32,4 +32,4 @@ done
 for PYBIN in /opt/python/*/bin/; do
     ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
     (cd $HOME; ${PYBIN}/nosetests convertbng)
-# done
+done
