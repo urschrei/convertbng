@@ -4,7 +4,6 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\run_with_env.cmd"
-    os: Visual Studio 2015
     PROJECT_NAME: convertbng
     TARBALL_KEY:
       secure: LxJrI1Zs9Y6K/d5EB5PIA7/eNS9K5OBuNXFvtYvWmA5NbPN5ugR3CjNmcjD+Oid3
@@ -14,6 +13,7 @@ environment:
     # Python 2.7.10 is the latest version and is not pre-installed.
 
     - PYTHON: "C:\\Python27.10-x64"
+      os: Visual Studio 2015
       PYTHON_VERSION: "2.7.10"
       PYTHON_ARCH: "64"
       TARGET: x86_64-pc-windows-msvc
@@ -24,6 +24,7 @@ environment:
     # See: http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27-x64"
+      os: Visual Studio 2015
       PYTHON_VERSION: "2.7.x" # currently 2.7.11
       TARGET: x86_64-pc-windows-msvc
       PYTHON_ARCH: "64"
