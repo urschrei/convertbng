@@ -1,3 +1,4 @@
+os: Visual Studio 2015
 environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -13,7 +14,6 @@ environment:
     # Python 2.7.10 is the latest version and is not pre-installed.
 
     - PYTHON: "C:\\Python27.10-x64"
-      os: Visual Studio 2015
       PYTHON_VERSION: "2.7.10"
       PYTHON_ARCH: "64"
       TARGET: x86_64-pc-windows-msvc
@@ -24,7 +24,6 @@ environment:
     # See: http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27-x64"
-      os: Visual Studio 2015
       PYTHON_VERSION: "2.7.x" # currently 2.7.11
       TARGET: x86_64-pc-windows-msvc
       PYTHON_ARCH: "64"
