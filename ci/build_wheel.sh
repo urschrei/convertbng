@@ -10,8 +10,8 @@ PYBINS=(
   )
 
 mkdir -p /io/wheelhouse
-ls -la /io
-ls -la /io/convertbng
+# ls -la /io
+# ls -la /io/convertbng
 echo $LD_LIBRARY_PATH
 mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
@@ -29,7 +29,7 @@ for whl in wheelhouse/*.whl; do
 done
 
 # Install packages and test
-# for PYBIN in /opt/python/*/bin/; do
-#     ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
-#     (cd $HOME; ${PYBIN}/nosetests convertbng)
+for PYBIN in /opt/python/*/bin/; do
+    ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
+    (cd $HOME; ${PYBIN}/nosetests convertbng)
 # done
