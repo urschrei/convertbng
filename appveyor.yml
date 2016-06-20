@@ -84,7 +84,7 @@ after_test:
   - "%CMD_IN_ENV% pip wheel . -w dist"
   # - "%CMD_IN_ENV% python setup.py bdist_wininst"
   # - "%CMD_IN_ENV% python setup.py bdist_msi"
-  - "del dist\num*"
+  - "del dist/num*"
   - ps: "ls dist"
 
 artifacts:
