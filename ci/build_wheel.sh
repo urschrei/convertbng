@@ -29,7 +29,7 @@ for whl in wheelhouse/*.whl; do
 done
 
 # Install packages and test
-for PYBIN in /opt/python/*/bin/; do
+for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
     (cd $HOME; ${PYBIN}/nosetests convertbng)
 done
