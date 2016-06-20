@@ -34,7 +34,7 @@ from sys import platform
 from array import array
 import numpy as np
 import os
-from subprocess import check_output
+from subprocess import check_output, CalledProcessError
 
 if platform == "darwin":
     prefix = 'lib'
@@ -56,7 +56,12 @@ try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
-    fname = check_output(["ls", ".libs"]).split()[0]
+    fpath = os.path.join(file_path, ".libs")
+    try:
+        fname = check_output(["ls", fpath]).split()[0]
+    except CalledProcessError:
+        ls = check_output(["ls", file_path])
+        print(ls)
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
