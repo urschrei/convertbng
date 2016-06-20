@@ -34,6 +34,7 @@ from sys import platform
 from array import array
 import numpy as np
 import os
+from subprocess import check_output
 
 if platform == "darwin":
     prefix = 'lib'
@@ -51,7 +52,12 @@ __version__ = "0.4.24"
 file_path = os.path.dirname(__file__)
 prefix = {'win32': ''}.get(platform, 'lib')
 extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
-lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
+try:
+    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
+except OSError:
+    # the Rust lib's been grafted by manylinux1
+    fname = check_output(["ls", ".libs"]).split()[0]
+    lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
 class _FFIArray(Structure):
