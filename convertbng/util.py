@@ -49,7 +49,9 @@ __author__ = u"Stephan Hügel"
 __version__ = "0.4.23"
 
 file_path = os.path.dirname(__file__)
-lib = cdll.LoadLibrary(os.path.join('..', file_path, '%slonlat_bng.%s' % (prefix, ext)))
+prefix = {'win32': ''}.get(platform, 'lib')
+extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
+lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 
 
 class _FFIArray(Structure):
