@@ -54,21 +54,6 @@ class ConvertbngTests(unittest.TestCase):
         a, b = list(result[0]), list(result[1])
         self.assertEqual(expected, (a, b))
 
-    def testCythonConvertLonLat_fail(self):
-        """ This test should fail """
-        expected = (
-            [516274.449, 398915.541],
-            [173141.098, 521544.088]
-        )
-   
-        result = cconvert_bng(
-            np.array([-0.32824866, -2.0183041005533306]),
-            np.array([51.44533267, 54.589097162646141])
-        )
-        # dump array result into list 
-        a, b = list(result[0]), list(result[1])
-        self.assertEqual(expected, (a, b))
-
     def testCythonConvertList(self):
         """ Test Cythonised multithreaded lon, lat --> BNG function with lists """
         expected = (
