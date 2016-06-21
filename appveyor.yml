@@ -68,29 +68,23 @@ install:
   - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
 
 build_script:
-  - ps: "ls C:\\Python27.10-x64"
   # Build the compiled extension
   - "%CMD_IN_ENV% python ci/pre_install.py"
   # rename lib to what the linker expects
   - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
   # - "%CMD_IN_ENV% pip install -e C:/projects/convertbng -v"
-  # - "%CMD_IN_ENV% pip wheel . -w dist"
-  - "%CMD_IN_ENV% python setup.py bdist_wheel"
-  - "%CMD_IN_ENV% C:\\Python27.10-x64\\bin\\pip install convertbng --no-index -f dist -v"
 
 
 test_script:
-  # switch out of the working dir, bc it's always first in sys.path
-  # which means nose is looking for a missing cutil.pyd in ./convertbng
-  - cd dist
   # Run the project tests
-  - "%CMD_IN_ENV% C:\\Python27.10-x64\\bin\\nosetests convertbng -v"
+  - "%CMD_IN_ENV% python setup.py nosetests -v"
 
 after_test:
   # If tests are successful, create binary packages for the project.
   # - "%CMD_IN_ENV% python setup.py bdist_wheel"
   # - "%CMD_IN_ENV% python setup.py bdist_wininst"
   # - "%CMD_IN_ENV% python setup.py bdist_msi"
+  - "%CMD_IN_ENV% pip wheel . -w dist"
   - "del dist\\num*"
   - ps: "ls dist"
 
