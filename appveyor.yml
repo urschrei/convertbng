@@ -74,7 +74,8 @@ build_script:
   - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
   # - "%CMD_IN_ENV% pip install -e C:/projects/convertbng -v"
   - "%CMD_IN_ENV% pip wheel . -w dist"
-  - "%CMD_IN_ENV% pip install convertbng --no-index -f dist"
+  - ps: ls
+  - "%CMD_IN_ENV% pip install convertbng --no-index -f dist -v"
 
 
 test_script:
