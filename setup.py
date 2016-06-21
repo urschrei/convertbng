@@ -67,8 +67,8 @@ extensions = Extension("convertbng.cutil",
                     sources=["convertbng/cutil" + suffix],
                     libraries=["lonlat_bng"],
                     depends=ddirs,
-                    include_dirs=['.', 'convertbng'],
-                    library_dirs=['.', 'convertbng'],
+                    include_dirs=['convertbng'],
+                    library_dirs=['convertbng'],
                     extra_compile_args=["-O3"],
                     extra_link_args=ldirs
 )
