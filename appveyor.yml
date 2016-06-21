@@ -68,6 +68,7 @@ install:
   - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
 
 build_script:
+  - ps: "ls C:\\Python27.10-x64"
   # Build the compiled extension
   - "%CMD_IN_ENV% python ci/pre_install.py"
   # rename lib to what the linker expects
@@ -82,7 +83,6 @@ test_script:
   # switch out of the working dir, bc it's always first in sys.path
   # which means nose is looking for a missing cutil.pyd in ./convertbng
   - cd dist
-  - ps "ls C:\\Python27.10-x64"
   # Run the project tests
   - "%CMD_IN_ENV% C:\\Python27.10-x64\\bin\\nosetests convertbng -v"
 
