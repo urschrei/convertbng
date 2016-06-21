@@ -80,6 +80,9 @@ build_script:
 
 
 test_script:
+  # switch out of the working dir, bc it's always first in sys.path
+  # which means nose is looking for a missing cutil.pyd in ./convertbng
+  - cd dist
   # Run the project tests
   - "%CMD_IN_ENV% nosetests convertbng -v"
 
