@@ -85,6 +85,7 @@ after_test:
   - "%CMD_IN_ENV% pip wheel . -w dist"
   - "del dist\\num*"
   - ps: "ls dist"
+  # avoid working dir PYTHONPATH issue, install wheel, and test again
   - md to_test
   - cd to_test
   - pip install convertbng --no-index -f C:\projects\convertbng\dist
