@@ -90,6 +90,11 @@ after_test:
   - cd to_test
   - pip install convertbng --no-index -f C:\projects\convertbng\dist
   - nosetests convertbng
+  - cd C:\projects\convertbng
+  - "%CMD_IN_ENV% python setup.py build_ext --inplace"
+  - ps: "ls"
+  - ps: "ls convertbng"
+  - ps: "depends.exe /oc:dist/tmp_lonlat.txt convertbng/lonlat_bng.dll; Import-Csv tmp.txt | Format-Table -AutoSize"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
