@@ -35,7 +35,7 @@ test: convertbng/liblonlat_bng.dylib convertbng/cutil.so
 
 .PHONY: release
 release:
-	@rm dist/*
+	@rm -rf dist/*
 	@echo "Getting latest release from GitHub"
 	@python release.py
 	@echo "Successfully retrieved release. Uploading to PyPI"

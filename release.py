@@ -35,6 +35,11 @@ dicts = [
     'tag': tag,
     'target': 'x86_64-pc-windows-gnu',
     'extension': 'zip'
+    },
+{
+    'tag': tag,
+    'target': 'i686-pc-windows-gnu',
+    'extension': 'zip'
     }
 ]
 for dct in dicts:
