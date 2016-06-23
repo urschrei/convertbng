@@ -19,7 +19,7 @@ environment:
     # See: http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27-x64"
-      PYTHON_VERSION: "2.7.x" # currently 2.7.11
+      PYTHON_VERSION: "2.7.11" # currently 2.7.11
       TARGET: x86_64-pc-windows-gnu
       PYTHON_ARCH: "64"
 
