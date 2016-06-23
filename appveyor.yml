@@ -21,7 +21,7 @@ environment:
 
     - PYTHON: "C:\\Python27"
       PYTHON_VERSION: "2.7.11" # currently 2.7.11
-      TARGET: x86_32-pc-windows-gnu
+      TARGET: i686-pc-windows-gnu
       PYTHON_ARCH: "32"
       CHANNEL: stable
 
@@ -59,11 +59,11 @@ test_script:
   - nosetests convertbng
 
 after_test:
-  - cd C:/projects/convertbng
+  # - cd C:/projects/convertbng
   # needlessly generate pyd in-place, so I can peer at its dependencies
-  - python.exe setup.py build_ext --inplace
-  - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
-  - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
+  # - python.exe setup.py build_ext --inplace
+  # - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
+  # - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.

@@ -47,7 +47,7 @@ elif "win32" in platform:
     ext = 'dll'
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.4.26"
+__version__ = "0.4.27"
 
 file_path = os.path.dirname(__file__)
 prefix = {'win32': ''}.get(platform, 'lib')
