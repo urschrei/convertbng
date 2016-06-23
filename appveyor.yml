@@ -32,6 +32,7 @@ install:
   - set PATH=C:\Miniconda\Scripts
   - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts"}
   - set PATH=%PATH%;%OLDPATH%
+  - echo %PATH%
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda create -q --name python%PYTHON_VERSION% python=%PYTHON_VERSION% 
@@ -55,9 +56,9 @@ test_script:
   - nosetests convertbng
 
 after_test:
-  # - cd C:/projects/convertbng
-  # - dumpbin /dependents convertbng/cutil.pyd
-  # - dumpbin /dependents convertbng/lonlat_bng.dll
+  - cd C:/projects/convertbng
+  - dumpbin /dependents convertbng/cutil.pyd
+  - dumpbin /dependents convertbng/lonlat_bng.dll
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
