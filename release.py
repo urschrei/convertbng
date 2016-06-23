@@ -33,7 +33,7 @@ dicts = [
     },
 {
     'tag': tag,
-    'target': 'x86_64-pc-windows-msvc',
+    'target': 'x86_64-pc-windows-gnu',
     'extension': 'zip'
     }
 ]

@@ -37,7 +37,6 @@ if 'darwin' in platform:
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-apple-darwin.tar.gz'
 elif 'win32' in platform:
     lib = "lonlat_bng.dll"
-    # url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-msvc.zip'
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-gnu.zip'
 elif 'linux' in platform:
     lib = "liblonlat_bng.so"
