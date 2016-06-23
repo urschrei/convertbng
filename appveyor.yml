@@ -10,7 +10,7 @@ environment:
     # Python 2.7.10 is the latest version and is not pre-installed.
 
     - PYTHON: "C:\\Python27.10-x64"
-      PYTHON_VERSION: "2.7.10"
+      PYTHON_VERSION: "2.7.11"
       PYTHON_ARCH: "64"
       TARGET: x86_64-pc-windows-gnu
       CHANNEL: stable
@@ -19,10 +19,11 @@ environment:
     # a later point release.
     # See: http://www.appveyor.com/docs/installed-software#python
 
-    - PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python27"
       PYTHON_VERSION: "2.7.11" # currently 2.7.11
-      TARGET: x86_64-pc-windows-gnu
-      PYTHON_ARCH: "64"
+      TARGET: x86_32-pc-windows-gnu
+      PYTHON_ARCH: "32"
+      CHANNEL: stable
 
 install:
   - set OLDPATH=%PATH%
