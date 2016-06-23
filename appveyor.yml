@@ -72,7 +72,7 @@ build_script:
   - "%CMD_IN_ENV% python ci/pre_install.py"
   # rename lib to what the linker expects
   # - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
-  - "%CMD_IN_ENV% lib /def:lonlat_bng.def /OUT:lonlat_bng.lib"
+  - "%CMD_IN_ENV% lib /def:C:\\projects\convertbng\convertbng\lonlat_bng.def /OUT:C:\\projects\convertbng\convertbng\lonlat_bng.lib"
 
 test_script:
   # Run the project tests
