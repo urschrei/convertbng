@@ -52,9 +52,9 @@ install:
 build_script:
   - python.exe ci/pre_install.py"
   # - "%CMD_IN_ENV% lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib"
-  # - python.exe setup.py config --compiler=mingw32
-  # - python.exe setup.py build --compiler=mingw32
-  - python.exe setup.py bdist_wheel --compiler=mingw32
+  - python.exe setup.py config --compiler=mingw32
+  - python.exe setup.py build --compiler=mingw32
+  - python.exe setup.py bdist_wheel
 
 test_script:
   # Run the project tests
