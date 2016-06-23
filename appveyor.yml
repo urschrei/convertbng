@@ -29,55 +29,39 @@ environment:
       PYTHON_ARCH: "64"
 
 install:
-  # If there is a newer build queued for the same PR, cancel this one.
-  # The AppVeyor 'rollout builds' option is supposed to serve the same
-  # purpose but it is problematic because it tends to cancel builds pushed
-  # directly to master instead of just PR builds (or the converse).
-  # credits: JuliaLang developers.
   - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:APPVEYOR_BUILD_NUMBER -ne ((Invoke-RestMethod `
         https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/history?recordsNumber=50).builds | `
         Where-Object pullRequestId -eq $env:APPVEYOR_PULL_REQUEST_NUMBER)[0].buildNumber) { `
           throw "There are newer queued builds for this pull request, failing early." }
   - ECHO "Filesystem root:"
-  - ps: "ls \"C:/\""
-
-  - ECHO "Installed SDKs:"
-  - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
-
-  # Install Python (from the official .msi of http://python.org) and pip when
-  # not already installed.
-  - ps: if (-not(Test-Path($env:PYTHON))) { & ci\install.ps1 }
-
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-
-  # Check that we have the expected version and architecture for Python
-  - "python --version"
-  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "pip install --disable-pip-version-check --user --upgrade pip"
-
+  - set PATH=C:\Miniconda\Scripts
+  - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts"}
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda create -q --name python%PYTHON_VERSION% python=%PYTHON_VERSION% 
+  - activate python%PYTHON_VERSION%
+  - pip install --disable-pip-version-check --user --upgrade pip
+  - pip install -i https://pypi.anaconda.org/carlkl/simple mingwpy
+  - conda install -q --name python%PYTHON_VERSION% setuptools numpy nose wheel
+  - pip install -q mando tstoolbox baker
   # Install the build dependencies of the project. If some dependencies contain
   # compiled extensions and are not provided as pre-built wheel packages,
   # pip will build them from source using the MSVC compiler matching the
   # target Python version and architecture
-  - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
 
 build_script:
-  # Get the correct binary for the platform
-  - "%CMD_IN_ENV% python ci/pre_install.py"
-  - ps: "ls"
-  # rename lib to what the linker expects
-  # - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
+  - python.exe ci/pre_install.py"
   - "%CMD_IN_ENV% lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib"
+  # - python.exe setup.py config --compiler=mingw32
+  # - python.exe setup.py build --compiler=mingw32
+  - python.exe setup.py bdist_wheel --compiler=mingw32
 
 test_script:
   # Run the project tests
-  - "%CMD_IN_ENV% python setup.py nosetests -v"
+  - md to_test
+  - cd to_test
+  - pip install convertbng --no-index -f C:\projects\convertbng\dist
+  - nosetests convertbng
 
 after_test:
   # If tests are successful, create binary packages for the project.
@@ -88,10 +72,6 @@ after_test:
   - "del dist\\num*"
   - ps: "ls dist"
   # avoid working dir PYTHONPATH issue, install wheel, and test again
-  - md to_test
-  - cd to_test
-  - pip install convertbng --no-index -f C:\projects\convertbng\dist
-  - nosetests convertbng
   - cd C:\projects\convertbng
   - "%CMD_IN_ENV% python setup.py build_ext --inplace"
   - ps: "ls"
