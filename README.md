@@ -10,8 +10,8 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 
 ##Note
 `convertbng` is currently available for 64-bit architectures as a [manylinux](https://www.python.org/dev/peps/pep-0513/) wheel, an OS X wheel, and a Windows wheel.  
-### Windows Users
-You'll need the Visual C++ Redistributable for Visual Studio 2015 in order to use this package. It's free. Get it [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
+###Windows binaries
+The Rust DLL and the Cython extension used by this package have been built with a [MinGW](http://www.mingw.org) toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 #Usage
 The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  

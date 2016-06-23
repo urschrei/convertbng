@@ -29,7 +29,7 @@ Note
 
 ``convertbng`` is currently available for 64-bit architectures as a
 `manylinux <https://www.python.org/dev/peps/pep-0513/>`_ wheel, an OS X wheel, 
-and a Windows wheel. Windows users will need to install the Visual C++ Redistributable for Visual Studio 2015 in order to use this package. It's free. Download it `from MS <https://www.microsoft.com/en-us/download/details.aspx?id=48145>`_.
+and a Windows wheel. The Rust DLL and the Cython extension used by this package have been built with a MinGW toolchain for Windows. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 Usage
 =====
