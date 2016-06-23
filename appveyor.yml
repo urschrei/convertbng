@@ -37,7 +37,6 @@ install:
   - activate python%PYTHON_VERSION%
   - pip install --disable-pip-version-check --user --upgrade pip
   - pip install -i https://pypi.anaconda.org/carlkl/simple mingwpy
-  # - conda install -q --name python%PYTHON_VERSION% setuptools numpy nose wheel requests
   - conda install -q --name python%PYTHON_VERSION% --file dev-requirements.txt
 
 build_script:
@@ -55,7 +54,7 @@ test_script:
   - nosetests convertbng
 
 after_test:
-  - ps: "ls dist"
+  # - cd C:/projects/convertbng
   # - dumpbin /dependents convertbng/cutil.pyd
   # - dumpbin /dependents convertbng/lonlat_bng.dll
 
@@ -65,7 +64,7 @@ artifacts:
 
 before_deploy:
   # Generate artifacts for release
-  - cd dist
+  - cd C:/projects/convertbng/dist
     # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-gnu'
   - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
   - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip
