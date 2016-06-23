@@ -34,8 +34,8 @@ install:
         Where-Object pullRequestId -eq $env:APPVEYOR_PULL_REQUEST_NUMBER)[0].buildNumber) { `
           throw "There are newer queued builds for this pull request, failing early." }
   - ECHO "Filesystem root:"
-  - set PATH=C:\Miniconda\Scripts
-  - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts"}
+  - set PATH=C:\Miniconda\Scripts:$PATH
+  - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts:$PATH"}
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda create -q --name python%PYTHON_VERSION% python=%PYTHON_VERSION% 
@@ -51,7 +51,7 @@ install:
 
 build_script:
   - python.exe ci/pre_install.py"
-  - lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib
+  - "%CMD_IN_ENV% lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib"
   # - python.exe setup.py config --compiler=mingw32
   # - python.exe setup.py build --compiler=mingw32
   - python.exe setup.py bdist_wheel --compiler=mingw32
