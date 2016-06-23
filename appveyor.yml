@@ -51,7 +51,7 @@ install:
 
 build_script:
   - python.exe ci/pre_install.py"
-  - "%CMD_IN_ENV% lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib"
+  - lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib
   # - python.exe setup.py config --compiler=mingw32
   # - python.exe setup.py build --compiler=mingw32
   - python.exe setup.py bdist_wheel --compiler=mingw32
@@ -60,24 +60,22 @@ test_script:
   # Run the project tests
   - md to_test
   - cd to_test
-  - pip install convertbng --no-index -f C:\projects\convertbng\dist
-  - nosetests convertbng
+  - "pip install convertbng --no-index -f C:\\projects\\convertbng\\dist
+  - nosetests convertbng"
 
 after_test:
   # If tests are successful, create binary packages for the project.
   # - "%CMD_IN_ENV% python setup.py bdist_wheel"
   # - "%CMD_IN_ENV% python setup.py bdist_wininst"
   # - "%CMD_IN_ENV% python setup.py bdist_msi"
-  - "%CMD_IN_ENV% pip wheel . -w dist"
   - "del dist\\num*"
   - ps: "ls dist"
   # avoid working dir PYTHONPATH issue, install wheel, and test again
   - cd C:\projects\convertbng
-  - "%CMD_IN_ENV% python setup.py build_ext --inplace"
-  - ps: "ls"
+  - python.exe setup.py build_ext --inplace
   - ps: "ls convertbng"
-  - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
-  - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
+  - dumpbin /dependents convertbng/cutil.pyd
+  - dumpbin /dependents convertbng/lonlat_bng.dll
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
