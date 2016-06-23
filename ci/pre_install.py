@@ -37,7 +37,11 @@ if 'darwin' in platform:
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-apple-darwin.tar.gz'
 elif 'win32' in platform:
     lib = "lonlat_bng.dll"
-    url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-gnu.zip'
+    # distinguish between 64-bit and 32-bit Windows Pythons
+    if sys.maxsize > 2**32:
+        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-gnu.zip'
+    else:
+        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-i686-pc-windows-gnu.zip'
 elif 'linux' in platform:
     lib = "liblonlat_bng.so"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-unknown-linux-gnu.tar.gz'
