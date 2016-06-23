@@ -59,6 +59,8 @@ test_script:
 
 after_test:
   - cd C:/projects/convertbng
+  # needlessly generate pyd in-place, so I can peer at its dependencies
+  - python.exe setup.py build_ext --inplace
   - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
   - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
 
