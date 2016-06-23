@@ -29,7 +29,7 @@ Note
 
 ``convertbng`` is currently available for 64-bit architectures as a
 `manylinux <https://www.python.org/dev/peps/pep-0513/>`_ wheel, an OS X wheel, 
-and a Windows wheel. The Rust DLL and the Cython extension used by this package have been built with a MinGW toolchain for Windows. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
+and a Windows wheel. 32-bit Python on 64-bit Windows is also supported. The Rust DLL and the Cython extension used by this package have been built with a MinGW toolchain for Windows. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 Usage
 =====
