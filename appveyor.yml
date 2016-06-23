@@ -71,7 +71,8 @@ build_script:
   # Get the correct binary for the platform
   - "%CMD_IN_ENV% python ci/pre_install.py"
   # rename lib to what the linker expects
-  - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
+  # - rename C:\projects\convertbng\convertbng\lonlat_bng.dll.lib lonlat_bng.lib
+  - "%CMD_IN_ENV% lib /def:lonlat_bng.def /OUT:lonlat_bng.lib"
 
 test_script:
   # Run the project tests
@@ -94,7 +95,6 @@ after_test:
   - "%CMD_IN_ENV% python setup.py build_ext --inplace"
   - ps: "ls"
   - ps: "ls convertbng"
-  - "%CMD_IN_ENV% dumpbin -headers convertbng/lonlat_bng.lib"
   - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
   - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
 
