@@ -1,10 +1,5 @@
-image: Visual Studio 2015
 environment:
   global:
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\run_with_env.cmd"
     PROJECT_NAME: convertbng
     TARBALL_KEY:
       secure: LxJrI1Zs9Y6K/d5EB5PIA7/eNS9K5OBuNXFvtYvWmA5NbPN5ugR3CjNmcjD+Oid3
@@ -16,7 +11,7 @@ environment:
     - PYTHON: "C:\\Python27.10-x64"
       PYTHON_VERSION: "2.7.10"
       PYTHON_ARCH: "64"
-      TARGET: x86_64-pc-windows-msvc
+      TARGET: x86_64-pc-windows-gnu
       CHANNEL: stable
 
     # Pre-installed Python versions, which Appveyor may upgrade to
@@ -25,7 +20,7 @@ environment:
 
     - PYTHON: "C:\\Python27-x64"
       PYTHON_VERSION: "2.7.x" # currently 2.7.11
-      TARGET: x86_64-pc-windows-msvc
+      TARGET: x86_64-pc-windows-gnu
       PYTHON_ARCH: "64"
 
 install:
@@ -42,38 +37,25 @@ install:
   - activate python%PYTHON_VERSION%
   - pip install --disable-pip-version-check --user --upgrade pip
   - pip install -i https://pypi.anaconda.org/carlkl/simple mingwpy
-  - conda install -q --name python%PYTHON_VERSION% setuptools numpy nose wheel requests
-  - pip install -q mando tstoolbox baker
-  # Install the build dependencies of the project. If some dependencies contain
-  # compiled extensions and are not provided as pre-built wheel packages,
-  # pip will build them from source using the MSVC compiler matching the
-  # target Python version and architecture
+  # - conda install -q --name python%PYTHON_VERSION% setuptools numpy nose wheel requests
+  - conda install -q --name python%PYTHON_VERSION% --file dev-requirements.txt
 
 build_script:
+  # get correct Rust DLL
   - python.exe ci/pre_install.py"
-  # - "%CMD_IN_ENV% lib /def:convertbng\\lonlat_bng.def /OUT:convertbng\\lonlat_bng.lib"
   - python.exe setup.py config --compiler=mingw32
   - python.exe setup.py build --compiler=mingw32
   - python.exe setup.py bdist_wheel
 
 test_script:
-  # Run the project tests
+  # Run the project tests outside the project root, because it's on the PYTHONPATH
   - md to_test
   - cd to_test
   - pip install convertbng --no-index -f C:/projects/convertbng/dist
   - nosetests convertbng
 
 after_test:
-  # If tests are successful, create binary packages for the project.
-  # - "%CMD_IN_ENV% python setup.py bdist_wheel"
-  # - "%CMD_IN_ENV% python setup.py bdist_wininst"
-  # - "%CMD_IN_ENV% python setup.py bdist_msi"
-  - "del dist\\num*"
   - ps: "ls dist"
-  # avoid working dir PYTHONPATH issue, install wheel, and test again
-  # - cd C:\projects\convertbng
-  # - python.exe setup.py build_ext --inplace
-  # - ps: "ls convertbng"
   # - dumpbin /dependents convertbng/cutil.pyd
   # - dumpbin /dependents convertbng/lonlat_bng.dll
 
@@ -83,9 +65,8 @@ artifacts:
 
 before_deploy:
   # Generate artifacts for release
-  # TODO update this part to copy the artifacts that make sense for your project
   - cd dist
-    # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-msvc'
+    # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-gnu'
   - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
   - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip
 
