@@ -1,5 +1,6 @@
 environment:
   global:
+    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\run_with_env.cmd"
     PROJECT_NAME: convertbng
     TARBALL_KEY:
       secure: LxJrI1Zs9Y6K/d5EB5PIA7/eNS9K5OBuNXFvtYvWmA5NbPN5ugR3CjNmcjD+Oid3
@@ -32,8 +33,8 @@ install:
   - set PATH=C:\Miniconda\Scripts
   - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts"}
   - set PATH=%PATH%;%OLDPATH%
-  - set %PATH%=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
-  - dumpbin /dependents foo.dll
+  # - set %PATH%=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
+  # - "%CMD_IN_ENV% dumpbin /dependents foo.dll"
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda create -q --name python%PYTHON_VERSION% python=%PYTHON_VERSION% 
@@ -58,8 +59,8 @@ test_script:
 
 after_test:
   - cd C:/projects/convertbng
-  # - dumpbin /dependents convertbng/cutil.pyd
-  # - dumpbin /dependents convertbng/lonlat_bng.dll
+  - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
+  - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
