@@ -32,8 +32,7 @@ install:
   - set PATH=C:\Miniconda\Scripts
   - ps: If ($env:PYTHON_ARCH -Match "64") {$env:PATH="C:\Miniconda-x64\Scripts"}
   - set PATH=%PATH%;%OLDPATH%
-  - ps: "ls C:\Program Files"
-  - set %PATH%=%PATH%;C:\Program Files\Microsoft Visual Studio 15.0\VC\bin
+  - set %PATH%=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
   - dumpbin /dependents foo.dll
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
