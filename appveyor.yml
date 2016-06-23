@@ -60,8 +60,8 @@ test_script:
   # Run the project tests
   - md to_test
   - cd to_test
-  - "pip install convertbng --no-index -f C:\\projects\\convertbng\\dist
-  - nosetests convertbng"
+  - pip install convertbng --no-index -f C:/projects/convertbng/dist
+  - nosetests convertbng
 
 after_test:
   # If tests are successful, create binary packages for the project.
@@ -71,11 +71,11 @@ after_test:
   - "del dist\\num*"
   - ps: "ls dist"
   # avoid working dir PYTHONPATH issue, install wheel, and test again
-  - cd C:\projects\convertbng
-  - python.exe setup.py build_ext --inplace
-  - ps: "ls convertbng"
-  - dumpbin /dependents convertbng/cutil.pyd
-  - dumpbin /dependents convertbng/lonlat_bng.dll
+  # - cd C:\projects\convertbng
+  # - python.exe setup.py build_ext --inplace
+  # - ps: "ls convertbng"
+  # - dumpbin /dependents convertbng/cutil.pyd
+  # - dumpbin /dependents convertbng/lonlat_bng.dll
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
