@@ -18,8 +18,8 @@ LATEST_2p7=2.7.11
 # LATEST_3p5=3.5.1
 
 # Get our own location on this filesystem
-MULTIBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
-source $MULTIBUILD_DIR/common_utils.sh
+# MULTIBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
+source ci/common_utils.sh
 
 function check_python {
     if [ -z "$PYTHON_EXE" ]; then
