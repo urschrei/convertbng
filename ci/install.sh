@@ -1,9 +1,8 @@
 #!/bin/bash
 set -e -x
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    pip install pip --upgrade
+    source venv/bin/activate
     pip install -r dev-requirements.txt
-    pip install nose --upgrade
     python ci/pre_install.py
     pip install --install-option="--no-cython-compile" cython
     pip install python-coveralls
