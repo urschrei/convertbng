@@ -10,10 +10,10 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    pip wheel . -w wheelhouse
+    PIP_CMD wheel . -w wheelhouse
     ls wheelhouse
     mkdir to_test
     cd to_test
-    pip install convertbng --no-index -f $HOME/build/urschrei/convertbng/wheelhouse
-    nosetests convertbng
+    PIP_CMD install convertbng --no-index -f $HOME/build/urschrei/convertbng/wheelhouse
+    $venv_dir/bin/nosetests convertbng
 fi
