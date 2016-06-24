@@ -1,12 +1,5 @@
 #!/bin/bash
 set -e -x
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    sudo pip install pip --upgrade
-    sudo pip install --install-option="--no-cython-compile" cython
-    sudo pip install python-coveralls
-    sudo pip install nosexcover
-fi
-
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     pip install -r dev-requirements.txt
     python ci/pre_install.py
