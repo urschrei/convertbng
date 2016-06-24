@@ -26,11 +26,11 @@ cache: pip
 
 script:
   - bash ci/script.sh
-  # only run coverage reporting on Linux
+  # only run coverage reporting on OS X
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       source venv/bin/activate;
       python setup.py build_ext --inplace;
-      nosetests convertbng --with-coverage;
+      nosetests convertbng.test --with-coverage;
     fi
 
 branches:

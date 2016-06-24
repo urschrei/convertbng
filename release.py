@@ -45,6 +45,8 @@ dicts = [
 for dct in dicts:
     built = url.format(**dct)
     retrieved = requests.get(built, stream=True)
+    # don't continue if something's wrong
+    retrieved.raise_for_status()
     content = retrieved.content
     if dct.get('extension') == 'zip':
         so = cStringIO.StringIO(content)
