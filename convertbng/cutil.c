@@ -14,14 +14,12 @@
             "-Wl,@loader_path/"
         ], 
         "include_dirs": [
-            ".", 
             "convertbng"
         ], 
         "libraries": [
             "lonlat_bng"
         ], 
         "library_dirs": [
-            ".", 
             "convertbng"
         ]
     }
