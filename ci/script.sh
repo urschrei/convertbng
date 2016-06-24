@@ -10,5 +10,10 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    python setup.py nosetests
     pip wheel . -w wheelhouse
+    mkdir to_test
+    cd to_test
+    pip install convertbng --no-index wheelhouse
+    nosetests convertbng
 fi
