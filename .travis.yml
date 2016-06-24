@@ -32,7 +32,7 @@ branches:
     - master
 
 after_success:
-  - coveralls
+  - source venv/bin/activate && coveralls
 
 before_deploy:
   - bash ci/before_deploy.sh
