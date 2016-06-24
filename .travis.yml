@@ -27,8 +27,10 @@ cache: pip
 script:
   - bash ci/script.sh
   # only run coverage reporting on Linux
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      python setup.py build_ext --inplace && nosetests --with-coverage;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      source venv/bin/activate;
+      python setup.py build_ext --inplace;
+      nosetests convertbng --with-coverage;
     fi
 
 branches:
@@ -36,7 +38,8 @@ branches:
     - master
 
 after_success:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      source venv/bin/activate;
       coveralls;
     fi
 
