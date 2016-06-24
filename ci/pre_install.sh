@@ -9,5 +9,5 @@ fi
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     # install OSX
     source ci/travis_osx_steps.sh
-    before_install()
+    before_install
 fi
