@@ -10,7 +10,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    python setup.py nosetests
+    # python setup.py nosetests
     pip wheel . -w wheelhouse
     ls wheelhouse
     mkdir to_test
