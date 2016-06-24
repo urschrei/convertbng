@@ -7,6 +7,7 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 
 #Installation
 `pip install convertbng`  
+Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 
 ##Note
 `convertbng` is currently available for 64-bit architectures as a [manylinux](https://www.python.org/dev/peps/pep-0513/) wheel, an OS X wheel, and a Windows wheel. 32-bit Python on 64-bit Windows is also supported.
