@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e -x
 # run the tests!
-nosetests setup.py
-
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     mkdir -p $HOME/build/urschrei/convertbng/wheelhouse
     docker pull $DOCKER_IMAGE
