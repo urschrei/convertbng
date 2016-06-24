@@ -34,7 +34,7 @@ from sys import platform
 from array import array
 import numpy as np
 import os
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output
 
 if platform == "darwin":
     prefix = 'lib'
@@ -47,7 +47,7 @@ elif "win32" in platform:
     ext = 'dll'
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.4.27"
+__version__ = "0.4.28"
 
 file_path = os.path.dirname(__file__)
 prefix = {'win32': ''}.get(platform, 'lib')
