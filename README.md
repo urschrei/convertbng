@@ -112,7 +112,7 @@ WGS84 and ETRS89 coordinates use the GRS80 ellipsoid, whereas OSGB36 uses the Ai
 [![OSTN02](ostn002_s.gif)]( "OSTN02")
 
 ##Implementation
-The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found in  and [cutil.py](https://github.com/urschrei/convertbng/blob/master/convertbng/cutil.pyx#L51-L86), and the Rust side of which can be found in [ffi.rs](https://github.com/urschrei/rust_bng/blob/master/src/ffi.rs#L48-L271).  
+The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found in [util.py](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L64-L205) (the `ctypes` implementation), [cutil.pyx](https://github.com/urschrei/convertbng/blob/master/convertbng/cutil.pyx#L51-L86) (the `cython` implementation), and the Rust side of which can be found in [ffi.rs](https://github.com/urschrei/rust_bng/blob/master/src/ffi.rs#L48-L271).  
 The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to receive, safely access, return, and free data across the FFI boundary.  
 Finally, we link the Rust conversion functions from util [again](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L102-L126). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
 
