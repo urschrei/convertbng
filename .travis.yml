@@ -11,7 +11,7 @@ matrix:
       services:
         - docker
     - os: osx
-      env: TARGET=x86_64-apple-darwin
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11
       sudo: required
 
 before_install:
