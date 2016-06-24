@@ -17,7 +17,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     mkdir to_test
     cd to_test
     pip install convertbng --no-index -f $HOME/build/urschrei/convertbng/wheelhouse
-    nosetests convertbng --with-coverage
+    nosetests convertbng
     cd $HOME/build/urschrei/convertbng
     rm -rf wheelhouse/numpy*
     repair_wheelhouse wheelhouse
