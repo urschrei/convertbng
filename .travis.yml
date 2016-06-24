@@ -26,11 +26,8 @@ cache: pip
 
 script:
   - bash ci/script.sh
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      source venv/bin/activate && python setup.py nosetests --with-coverage;
-    fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      python setup.py nosetests --with-coverage;
+      python setup.py build_ext --inplace && nosetests --with-coverage;
     fi
 
 branches:
