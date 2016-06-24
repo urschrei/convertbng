@@ -32,7 +32,13 @@ branches:
     - master
 
 after_success:
-  - source venv/bin/activate && coveralls
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      source venv/bin/activate && coveralls;
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      coveralls;
+    fi
+
 
 before_deploy:
   - bash ci/before_deploy.sh
