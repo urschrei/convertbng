@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e -x
 # run the tests!
-python setup.py nosetests
+nosetests setup.py
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     mkdir -p $HOME/build/urschrei/convertbng/wheelhouse
