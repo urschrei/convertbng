@@ -26,6 +26,7 @@ cache: pip
 
 script:
   - bash ci/script.sh
+  # only run coverage reporting on Linux
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       python setup.py build_ext --inplace && nosetests --with-coverage;
     fi
@@ -35,13 +36,9 @@ branches:
     - master
 
 after_success:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      source venv/bin/activate && coveralls;
-    fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       coveralls;
     fi
-
 
 before_deploy:
   - bash ci/before_deploy.sh
