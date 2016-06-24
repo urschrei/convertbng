@@ -30,7 +30,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       source venv/bin/activate;
       python setup.py build_ext --inplace;
-      nosetests convertbng.test --with-coverage;
+      nosetests --with-coverage --cover-package convertbng;
     fi
 
 branches:
