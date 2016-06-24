@@ -5,7 +5,6 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     sudo pip install --install-option="--no-cython-compile" cython
     sudo pip install python-coveralls
     sudo pip install nosexcover
-    sudo pip install -e $HOME/build/urschrei/convertbng -v
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
