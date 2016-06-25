@@ -25,12 +25,13 @@ environment:
       PYTHON_RELEASE_VERSION: "cp27"
       CHANNEL: stable
 
-    - PYTHON: "C:\\Python35-x64"
-      PYTHON_VERSION: "3.5.0"
-      TARGET: x86_64-pc-windows-gnu
-      PYTHON_ARCH: "64"
-      PYTHON_RELEASE_VERSION: "cp35"
-      CHANNEL: stable
+    # MinGWPy isn't yet available for Python 3.5
+    # - PYTHON: "C:\\Python35-x64"
+    #   PYTHON_VERSION: "3.5.0"
+    #   TARGET: x86_64-pc-windows-gnu
+    #   PYTHON_ARCH: "64"
+    #   PYTHON_RELEASE_VERSION: "cp35"
+    #   CHANNEL: stable
 
 install:
   - set OLDPATH=%PATH%
