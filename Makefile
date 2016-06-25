@@ -30,8 +30,10 @@ clean:
 # rebuild OSX binary if it's out of date, then run Python module tests 
 .PHONY: test
 test: convertbng/liblonlat_bng.dylib convertbng/cutil.so
-	@echo "Running Python module tests"
-	@nosetests -v
+	@echo "Running Python 2.7 module tests"
+	@venv/bin/nosetests -v
+	@echo "Running Python 3.5 module tests"
+	@venv3/bin/nosetests -v
 
 .PHONY: release
 release:
