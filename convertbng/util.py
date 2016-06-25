@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 """
 from ctypes import cdll, c_double, Structure, c_void_p, cast, c_size_t, POINTER
-from sys import platform
+from sys import platform, version_info
 from array import array
 import numpy as np
 import os
@@ -45,6 +45,12 @@ elif "win32" in platform:
     prefix = ''
     ext = 'dll'
 
+# Python 3 check
+if (version_info > (3, 0)):
+    from subprocess import getoutput as spop
+else:
+    from subprocess import check_output as spop
+
 __author__ = u"Stephan Hügel"
 __version__ = "0.4.29"
 
@@ -55,9 +61,8 @@ try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
-    from subprocess import getoutput
     fpath = os.path.join(file_path, ".libs")
-    fname = getoutput(["ls", fpath], universal_newlines=True).split()[0]
+    fname = spop(["ls", fpath]).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
