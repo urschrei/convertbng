@@ -6,7 +6,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     docker pull $DOCKER_IMAGE
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
     # clean up numpy
-    sudo rm wheelhouse/numpy-1.11.0-cp27-cp27mu-manylinux1_x86_64.whl
+    sudo rm -rf wheelhouse/numpy*
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
@@ -20,5 +20,6 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     nosetests convertbng
     cd $HOME/build/urschrei/convertbng
     rm -rf wheelhouse/numpy*
+    # run delocate
     repair_wheelhouse wheelhouse
 fi
