@@ -11,10 +11,10 @@ matrix:
       services:
         - docker
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11 RELEASE_PYTHON_VERSION=cp27
       sudo: required
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.5.1
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.5.1 RELEASE_PYTHON_VERSION=cp35
       sudo: required
 
 before_install:
@@ -33,7 +33,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       source venv/bin/activate;
       python setup.py build_ext --inplace;
-      nosetests --with-coverage --cover-package convertbng;
+      nosetests --with-coverage --cover-package $PROJECT_NAME;
     fi
 
 branches:
@@ -60,7 +60,7 @@ deploy:
   api_key:
         - secure: gintTCgG/ZR/aCm+oVoFxxetAtdGf+mPJ6hV03uaM06xW61FUORPXepVaDrOYDN6SAjcvnPUWLqI4cpAMyN0XJo837v/CT/Hy09hgQu30kv+qJeVYyTopdf12QcPtgRsVr891O8NEwOK5DbAkqtbImMek0gPGrkJKLr4WnUY14DVebCpKE7FStQffRNbzigxm5rCATk4bjbQuL8AyUdMWI1m1K0W9xcVnt9NlOIvLSqQbK/pTeuMqKyYloXPgF61inswACw7jwjyeYFZ+DG3o5D+efyCCwSUFPeLYjljrcFE8/4ug6JPFCkyUDnXk6iIYdG4ag45ZLFtA5xz6TSOpMVEhafzQnBIpiebDUq8IpUal7tWiz5n8qUkAErZnSnSkQOhIZdPOMZYPPiLm5mrEmQRiTy5S39axj9A3w/ungIBmnjcijhZheLybphl78ZJtC4MKGenH/wLwZNDN5liQq0DJq5iFNVvdVLBW/M/03zWPsWyGidzdrjwEItTc2PA6D6d0Njkaavr5KmsL7AK/7izhusJnuPB48zH+71AefZyGqt92VjCoQatndiw3DehJeK6BPc7Wpk+zuYihaHs1aV+oPSJpOpP9YnzQye+Tue4DYPWGdzCZ4qKkH7VhjITTMIKZ3iIlGjruSWlh4t/sRplZ4B7UaEm0h//2trZmRg=
   file_glob: true
-  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.*
+  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}-${RELEASE_PYTHON_VERSION}.*
   # don't delete the artifacts from previous phases
   skip_cleanup: true
   # deploy when a new tag is pushed
