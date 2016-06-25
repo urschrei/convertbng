@@ -63,6 +63,7 @@ except OSError:
     # the Rust lib's been grafted by manylinux1
     fpath = os.path.join(file_path, ".libs")
     fname = spop(["ls", fpath]).split()[0]
+    print(spop(["ls", fpath]))
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
