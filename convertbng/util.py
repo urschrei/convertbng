@@ -40,12 +40,6 @@ __version__ = "0.4.29"
 
 file_path = os.path.dirname(__file__)
 
-# Python 3 check
-if (version_info > (3, 0)):
-    from subprocess import getoutput as spop
-else:
-    from subprocess import check_output as spop
-
 if platform == "darwin":
     prefix = 'lib'
     ext = "dylib"
@@ -53,7 +47,6 @@ elif "linux" in platform:
     prefix = 'lib'
     ext = "so"
     fpath = os.path.join(file_path, ".libs")
-    print(spop(["ls", fpath]))
 
 elif "win32" in platform:
     prefix = ''
@@ -61,11 +54,23 @@ elif "win32" in platform:
 
 prefix = {'win32': ''}.get(platform, 'lib')
 extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
+
+# Python 3 check
+if (version_info > (3, 0)):
+    from subprocess import getoutput as spop
+    py3 = True
+else:
+    from subprocess import check_output as spop
+    py3 = False
+
 try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
-    fname = spop(["ls", fpath]).split()[0]
+    if not py3:
+        fname = spop(["ls", fpath]).split()[0]
+    else:
+        fname = spop(["ls %s" % fpath]).split[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
