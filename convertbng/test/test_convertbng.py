@@ -74,8 +74,8 @@ class ConvertbngTests(unittest.TestCase):
             [51.44533146, 54.58910536]
         )
         result = convert_lonlat(
-            [516276L, 398915L],
-            [173141L, 521545L]
+            [516276, 398915],
+            [173141, 521545]
         )
         self.assertEqual(expected, result)
 
