@@ -81,7 +81,7 @@ before_deploy:
   # Generate artifacts for release
   - cd C:/projects/%PROJECT_NAME%/dist
     # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-gnu'
-  - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
+  - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%-%PYTHON_RELEASE_VERSION%.zip *
   - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%-%PYTHON_RELEASE_VERSION%.zip
 
 deploy:

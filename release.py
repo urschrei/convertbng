@@ -37,12 +37,12 @@ dicts = [
     },
 {
     'tag': tag,
-    'target': 'x86_64-pc-windows-gnu',
+    'target': 'x86_64-pc-windows-gnu-cp27',
     'extension': 'zip'
     },
 {
     'tag': tag,
-    'target': 'i686-pc-windows-gnu',
+    'target': 'i686-pc-windows-gnu-cp27',
     'extension': 'zip'
     }
 ]
