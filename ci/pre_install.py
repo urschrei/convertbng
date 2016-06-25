@@ -5,7 +5,6 @@ import os
 import sys
 import io
 import requests
-import cStringIO
 import zipfile
 import tarfile
 
@@ -49,14 +48,14 @@ elif 'linux' in platform:
 # Construct download URL
 fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
-print("URL:", built)
+print(("URL:", built))
 # Get compressed archive and extract binary (and lib, on Windows)
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
 
 if fname[1] == '.zip':
-    so = cStringIO.StringIO(content)
+    so = io.StringIO(content)
     raw_zip = zipfile.ZipFile(so)
     raw_zip.extractall(path)
 else:
