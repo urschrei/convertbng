@@ -12,7 +12,7 @@ import tarfile
 # We need to build the module using a Rust binary
 # This logic tries to grab it from GitHub, based on the platform
 platform = sys.platform
-print platform
+print(platform)
 
 # If we sign our requests, GH doesn't aggressively rate-limit us
 if not 'win32' in platform:
@@ -49,7 +49,7 @@ elif 'linux' in platform:
 # Construct download URL
 fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
-print "URL:", built
+print("URL:", built)
 # Get compressed archive and extract binary (and lib, on Windows)
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
