@@ -34,7 +34,6 @@ from sys import platform
 from array import array
 import numpy as np
 import os
-from subprocess import check_output
 
 if platform == "darwin":
     prefix = 'lib'
@@ -56,8 +55,9 @@ try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
+    from subprocess import getoutput
     fpath = os.path.join(file_path, ".libs")
-    fname = check_output(["ls", fpath]).split()[0]
+    fname = getoutput(["ls", fpath], universal_newlines=True).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
