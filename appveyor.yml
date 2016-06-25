@@ -7,22 +7,29 @@ environment:
 
   matrix:
 
-    # Python 2.7.10 is the latest version and is not pre-installed.
+    # Pre-installed Python versions, which Appveyor may upgrade to
+    # a later point release.
+    # See: http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27.10-x64"
       PYTHON_VERSION: "2.7.11"
       PYTHON_ARCH: "64"
+      PYTHON_RELEASE_VERSION: "cp27"
       TARGET: x86_64-pc-windows-gnu
       CHANNEL: stable
-
-    # Pre-installed Python versions, which Appveyor may upgrade to
-    # a later point release.
-    # See: http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27"
       PYTHON_VERSION: "2.7.11" # currently 2.7.11
       TARGET: i686-pc-windows-gnu
       PYTHON_ARCH: "32"
+      PYTHON_RELEASE_VERSION: "cp27"
+      CHANNEL: stable
+
+    - PYTHON: "C:\\Python35-x64"
+      PYTHON_VERSION: "3.5.0" # currently 2.7.11
+      TARGET: x86_64-pc-windows-gnu
+      PYTHON_ARCH: "64"
+      PYTHON_RELEASE_VERSION: "cp35"
       CHANNEL: stable
 
 install:
