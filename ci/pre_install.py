@@ -53,12 +53,10 @@ print(("URL:", built))
 release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
 fname = os.path.splitext(built)
 content = release.content
-
+so = io.BytesIO(content)
 if fname[1] == '.zip':
-    so = io.BytesIO(content)
     raw_zip = zipfile.ZipFile(so)
     raw_zip.extractall(path)
 else:
-    fo = io.BytesIO(content)
-    tar = tarfile.open(mode="r:gz", fileobj=fo)
+    tar = tarfile.open(mode="r:gz", fileobj=so)
     tar.extractall(path)

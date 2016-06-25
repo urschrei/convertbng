@@ -8,7 +8,6 @@ Retrieve latest compressed wheels from GitHub
 Created by Stephan Hügel on 2016-06-19
 """
 
-import cStringIO
 import io
 import tarfile
 import zipfile
@@ -48,11 +47,10 @@ for dct in dicts:
     # don't continue if something's wrong
     retrieved.raise_for_status()
     content = retrieved.content
+    so = io.BytesIO(content)
     if dct.get('extension') == 'zip':
-        so = cStringIO.StringIO(content)
         raw_zip = zipfile.ZipFile(so)
         raw_zip.extractall(path)
     else:
-        fo = io.BytesIO(content)
-        tar = tarfile.open(mode="r:gz", fileobj=fo)
+        tar = tarfile.open(mode="r:gz", fileobj=so)
         tar.extractall(path)
