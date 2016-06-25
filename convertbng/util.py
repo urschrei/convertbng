@@ -35,15 +35,10 @@ from array import array
 import numpy as np
 import os
 
-if platform == "darwin":
-    prefix = 'lib'
-    ext = "dylib"
-elif "linux" in platform:
-    prefix = 'lib'
-    ext = "so"
-elif "win32" in platform:
-    prefix = ''
-    ext = 'dll'
+__author__ = u"Stephan Hügel"
+__version__ = "0.4.29"
+
+file_path = os.path.dirname(__file__)
 
 # Python 3 check
 if (version_info > (3, 0)):
@@ -51,19 +46,26 @@ if (version_info > (3, 0)):
 else:
     from subprocess import check_output as spop
 
-__author__ = u"Stephan Hügel"
-__version__ = "0.4.29"
+if platform == "darwin":
+    prefix = 'lib'
+    ext = "dylib"
+elif "linux" in platform:
+    prefix = 'lib'
+    ext = "so"
+    fpath = os.path.join(file_path, ".libs")
+    print(spop(["ls", fpath]))
 
-file_path = os.path.dirname(__file__)
+elif "win32" in platform:
+    prefix = ''
+    ext = 'dll'
+
 prefix = {'win32': ''}.get(platform, 'lib')
 extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
 try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
-    fpath = os.path.join(file_path, ".libs")
     fname = spop(["ls", fpath]).split()[0]
-    print(spop(["ls", fpath]))
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
