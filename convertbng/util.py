@@ -70,7 +70,7 @@ except OSError:
     if not py3:
         fname = spop(["ls", fpath]).split()[0]
     else:
-        fname = spop(["ls %s" % fpath]).split[0]
+        fname = spop(["ls %s" % fpath]).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
