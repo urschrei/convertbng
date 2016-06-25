@@ -55,7 +55,7 @@ fname = os.path.splitext(built)
 content = release.content
 
 if fname[1] == '.zip':
-    so = io.StringIO(content)
+    so = io.BytesIO(content)
     raw_zip = zipfile.ZipFile(so)
     raw_zip.extractall(path)
 else:
