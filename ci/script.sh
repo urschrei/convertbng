@@ -2,7 +2,7 @@
 set -e -x
 # run the tests!
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    mkdir -p $HOME/build/urschrei/convertbng/wheelhouse
+    mkdir -p $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
     docker pull $DOCKER_IMAGE
     docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/ci/build_wheel.sh
     # clean up numpy
@@ -16,9 +16,9 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     ls wheelhouse
     mkdir to_test
     cd to_test
-    pip install convertbng --no-index -f $HOME/build/urschrei/convertbng/wheelhouse
+    pip install $PROJECT_NAME --no-index -f $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
     nosetests convertbng
-    cd $HOME/build/urschrei/convertbng
+    cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
     repair_wheelhouse wheelhouse

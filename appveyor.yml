@@ -63,8 +63,8 @@ test_script:
   # Run the project tests outside the project root, because it's on the PYTHONPATH
   - md to_test
   - cd to_test
-  - pip install convertbng --no-index -f C:/projects/convertbng/dist
-  - nosetests convertbng
+  - pip install %PROJECT_NAME% --no-index -f C:/projects/%PROJECT_NAME%/dist
+  - nosetests %PROJECT_NAME%
 
 after_test:
   # - cd C:/projects/convertbng
@@ -79,10 +79,10 @@ artifacts:
 
 before_deploy:
   # Generate artifacts for release
-  - cd C:/projects/convertbng/dist
+  - cd C:/projects/%PROJECT_NAME%/dist
     # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-gnu'
   - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
-  - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip
+  - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%-%PYTHON_RELEASE_VERSION%.zip
 
 deploy:
   appveyor_repo_tag: true
