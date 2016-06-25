@@ -13,6 +13,9 @@ matrix:
     - os: osx
       env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11
       sudo: required
+    - os: osx
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.5.1
+      sudo: required
 
 before_install:
   - echo $LATEST_TAG > key.txt
