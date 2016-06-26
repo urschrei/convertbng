@@ -19,7 +19,7 @@ url = "https://github.com/urschrei/convertbng/releases/download/{tag}/convertbng
 # get latest tag
 tag = check_output(["git", "describe", "--abbrev=0"]).strip()
 
-dicts = [
+releases = [
 {
     'tag': tag,
     'target': 'x86_64-apple-darwin-cp27',
@@ -44,16 +44,21 @@ dicts = [
     'tag': tag,
     'target': 'i686-pc-windows-gnu-cp27',
     'extension': 'zip'
+    },
+{
+    'tag': tag,
+    'target': 'x86_64-pc-windows-gnu-cp34',
+    'extension': 'zip'
     }
 ]
-for dct in dicts:
-    built = url.format(**dct)
+for release in releases:
+    built = url.format(**release)
     retrieved = requests.get(built, stream=True)
     # don't continue if something's wrong
     retrieved.raise_for_status()
     content = retrieved.content
     so = io.BytesIO(content)
-    if dct.get('extension') == 'zip':
+    if release.get('extension') == 'zip':
         raw_zip = zipfile.ZipFile(so)
         raw_zip.extractall(path)
     else:
