@@ -9,8 +9,14 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 `pip install convertbng`  
 Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 
-##Note
-`convertbng` is currently available for Python 2.7 and 3.5 64-bit architectures as a [manylinux](https://www.python.org/dev/peps/pep-0513/) wheel, an OS X wheel, and a Python 2.7 Windows wheel. 32-bit Python 2.7 on 64-bit Windows is also supported.
+##Supported Platforms
+The package has been built for and tested on the following platforms:
+- Linux 64-bit, Python 2.7 and 3.5, as a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
+- OS X 64-bit, Python 2.7 and 3.5, as a wheel for versions 10.6 and above
+- Windows 32-bit and 64-bit Python 2.7, as a wheel
+
+No additional runtimes should be necessary.
+
 ###Windows binaries
 The Rust DLL and the Cython extension used by this package have been built with a [MinGW](http://www.mingw.org) toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
