@@ -13,11 +13,9 @@ Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 The package has been built for and tested on the following platforms:
 - Linux 64-bit, Python 2.7 and 3.5, as a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
 - OS X 64-bit, Python 2.7 and 3.5, as a wheel for versions 10.6 and above
-- Windows 32-bit and 64-bit Python 2.7, as a wheel
+- Windows 32-bit and 64-bit Python 2.7, as a wheel.
 
-No additional runtimes should be necessary.
-
-###Windows binaries
+###Windows Binaries
 The Rust DLL and the Cython extension used by this package have been built with a [MinGW](http://www.mingw.org) toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 #Usage
@@ -57,11 +55,13 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
     res_list_np = convert_bng(lons_np, lats_np)
 
 #Experimental Cython Module
-If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement `from convertbng.util import` to **`from convertbng.cutil import`**.  
+If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
+`from convertbng.util import` to  
+**`from convertbng.cutil import`**  
 
 The conversion functions will accept most sequences which implement `__iter__`, as above (`list`, `tuple`, `float`, `array.array`, `numpy.ndarray`), but **will always return `NumPy f64 ndarray`**. In addition, you must ensure that your inputs are `float`, `f64`, or `d` in the case of `array.array`.  
 
-This module is currently experimental, and should not be used in production unless you're comfortable verifying the results by comparing them to the existing functions.
+
 
 #Available Conversions (AKA I Want To…)
 - transform longitudes and latitudes to OSGB36 Eastings and Northings **very accurately**:
