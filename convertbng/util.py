@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-from ctypes import cdll, c_double, Structure, c_void_p, cast, c_size_t, POINTER
+from ctypes import cdll, c_double, Structure, c_void_p, cast, c_size_t, POINTER, string_at
 from sys import platform, version_info
 from array import array
 import numpy as np
@@ -121,10 +121,18 @@ class _Result_Tuple(Structure):
 
 def _void_array_to_list(restuple, _func, _args):
     """ Convert the FFI result to Python data structures """
-    res_a = list(POINTER(c_double * restuple.e.len).from_buffer_copy(restuple.e)[0])
-    res_b = list(POINTER(c_double * restuple.n.len).from_buffer_copy(restuple.n)[0])
+    shape = (restuple.e.len, 1)
+    array_size = np.prod(shape)
+    mem_size = 8 * array_size
+
+    array_str_e = string_at(restuple.e.data, mem_size)
+    array_str_n = string_at(restuple.n.data, mem_size)
+
+    ls_e = np.frombuffer(array_str_e, float, array_size).tolist()
+    ls_n = np.frombuffer(array_str_n, float, array_size).tolist()
+
     drop_array(restuple.e, restuple.n)
-    return res_a, res_b
+    return ls_e, ls_n
 
 
 # Multi-threaded FFI functions
