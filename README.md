@@ -54,6 +54,12 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
     lats_np = np.array(lats)
     res_list_np = convert_bng(lons_np, lats_np)
 
+## But I Have a List of Coordinate Pairs
+    coords = [[1.0, 2.0], [3.0, 4.0]]
+    a, b = list(zip(*coords))
+    # a is (1.0, 3.0)
+    # b is (2.0, 4.0)   
+
 #Experimental Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
 `from convertbng.util import` to  
