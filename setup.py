@@ -89,10 +89,11 @@ setup(
     include_package_data=True,
     distclass=BinaryDistribution,
     download_url='https://github.com/urschrei/convertbng/tarball/v%s' % version,
-    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89', 'OSTN02'],
+    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89', 'OSTN02', 'OSTN15'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
