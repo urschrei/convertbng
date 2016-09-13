@@ -36,7 +36,7 @@ import numpy as np
 import os
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 file_path = os.path.dirname(__file__)
 
@@ -134,7 +134,8 @@ def _void_array_to_list(restuple, _func, _args):
 
         return ls_e, ls_n
     finally:
-        drop_array(restuple.e, restuple.n)
+        # drop_array(restuple.e, restuple.n)
+        pass
 
 # Multi-threaded FFI functions
 convert_bng = lib.convert_to_bng_threaded

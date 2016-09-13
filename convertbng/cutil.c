@@ -1984,7 +1984,7 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
  *         e_numpy = np.copy(e)
  *         n_numpy = np.copy(n)             # <<<<<<<<<<<<<<
  *         # free the returned arrays by passing them back across the FFI boundary
- *         drop_float_array(result.e, result.n)
+ *         # drop_float_array(result.e, result.n)
  */
   __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -2022,18 +2022,9 @@ static PyObject *__pyx_pf_10convertbng_5cutil_11ffi_wrapper_wrapped(PyObject *__
   __pyx_v_n_numpy = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "convertbng/cutil.pyx":84
- *         n_numpy = np.copy(n)
- *         # free the returned arrays by passing them back across the FFI boundary
- *         drop_float_array(result.e, result.n)             # <<<<<<<<<<<<<<
- *         return e_numpy, n_numpy
- *     return wrapped
- */
-  drop_float_array(__pyx_v_result.e, __pyx_v_result.n);
-
   /* "convertbng/cutil.pyx":85
  *         # free the returned arrays by passing them back across the FFI boundary
- *         drop_float_array(result.e, result.n)
+ *         # drop_float_array(result.e, result.n)
  *         return e_numpy, n_numpy             # <<<<<<<<<<<<<<
  *     return wrapped
  * 
@@ -2118,7 +2109,7 @@ static PyObject *__pyx_f_10convertbng_5cutil_ffi_wrapper(struct _Result_Tuple (*
   __pyx_t_1 = 0;
 
   /* "convertbng/cutil.pyx":86
- *         drop_float_array(result.e, result.n)
+ *         # drop_float_array(result.e, result.n)
  *         return e_numpy, n_numpy
  *     return wrapped             # <<<<<<<<<<<<<<
  * 

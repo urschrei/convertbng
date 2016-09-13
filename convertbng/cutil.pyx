@@ -81,7 +81,7 @@ cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
         e_numpy = np.copy(e)
         n_numpy = np.copy(n)
         # free the returned arrays by passing them back across the FFI boundary
-        drop_float_array(result.e, result.n)
+        # drop_float_array(result.e, result.n)
         return e_numpy, n_numpy
     return wrapped
 
