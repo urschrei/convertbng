@@ -11,8 +11,8 @@ Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 
 ##Supported Platforms
 The package has been built for and tested on the following platforms:
-- Linux 64-bit, Python 2.7 and 3.5, as a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
-- OS X 64-bit, Python 2.7 and 3.5, as a wheel for versions 10.6 and above
+- Linux 64-bit, Python 2.7 and 3.6, as a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
+- OS X 64-bit, Python 2.7 and 3.6, as a wheel for versions 10.6 and above
 - Windows 32-bit and 64-bit Python 2.7 and 32-bit Python 3.4, as a wheel.
 
 ###Windows Binaries
