@@ -12,6 +12,7 @@ import io
 import tarfile
 import zipfile
 import requests
+from multiprocessing import Pool
 from subprocess import check_output
 
 path = 'dist/'
@@ -51,16 +52,22 @@ releases = [
     'extension': 'zip'
     }
 ]
-for release in releases:
-    built = url.format(**release)
-    retrieved = requests.get(built, stream=True)
+
+def retrieve(url):
+    sess = requests.Session()
+    retrieved = sess.get(url, stream=True)
     # don't continue if something's wrong
     retrieved.raise_for_status()
-    content = retrieved.content
-    so = io.BytesIO(content)
-    if release.get('extension') == 'zip':
-        raw_zip = zipfile.ZipFile(so)
+    try:
+        raw_zip = zipfile.ZipFile(io.BytesIO(retrieved.content))
         raw_zip.extractall(path)
-    else:
-        tar = tarfile.open(mode="r:gz", fileobj=so)
+    except zipfile.BadZipfile:
+        # it's a tar
+        tar = tarfile.open(mode="r:gz", fileobj=io.BytesIO(retrieved.content))
         tar.extractall(path)
+
+urls = (url.format(**release) for release in releases)
+
+# let's do this in parallel
+pool = Pool(processes=5)
+pool.map(retrieve, urls)
