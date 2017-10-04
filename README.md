@@ -16,7 +16,7 @@ The package has been built for and tested on the following platforms:
 - Windows 32-bit and 64-bit Python 2.7 and 32-bit Python 3.4, as a wheel.
 
 ### Windows Binaries
-The Rust DLL and the Cython extension used by this package have been built with a [MinGW](http://www.mingw.org) toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
+The Rust DLL and the Cython extension used by this package have been built with an MSVC toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 # Usage
 The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  
@@ -34,25 +34,27 @@ South: 49.9600
 
 All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
 
-    from convertbng.util import convert_bng, convert_lonlat
+```python
+from convertbng.util import convert_bng, convert_lonlat
 
-    # convert a single value
-    res = convert_bng(lon, lat)
+# convert a single value
+res = convert_bng(lon, lat)
 
-    # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN15 corrections
-    lons = [lon1, lon2, lon3]
-    lats = [lat1, lat2, lat3]
-    res_list = convert_bng(lons, lats)
+# convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN15 corrections
+lons = [lon1, lon2, lon3]
+lats = [lat1, lat2, lat3]
+res_list = convert_bng(lons, lats)
 
-    # convert lists of BNG Eastings and Northings to longitude, latitude
-    eastings = [easting1, easting2, easting3]
-    northings = [northing1, northing2, northing3]
-    res_list_en = convert_lonlat(eastings, northings)
+# convert lists of BNG Eastings and Northings to longitude, latitude
+eastings = [easting1, easting2, easting3]
+northings = [northing1, northing2, northing3]
+res_list_en = convert_lonlat(eastings, northings)
 
-    # assumes numpy imported as np
-    lons_np = np.array(lons)
-    lats_np = np.array(lats)
+# assumes numpy imported as np
+lons_np = np.array(lons)
+lats_np = np.array(lats)
     res_list_np = convert_bng(lons_np, lats_np)
+```
 
 ## But I Have a List of Coordinate Pairs
     coords = [[1.0, 2.0], [3.0, 4.0]]
