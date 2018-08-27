@@ -24,7 +24,7 @@ elif 'win32' in platform:
     path = "C:\projects\convertbng\convertbng"
 
 # Get the latest release details for the binary
-project = 'rdp'
+project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
     headers={'Authorization':'token %s' % ghkey}).json()
