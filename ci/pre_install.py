@@ -28,6 +28,7 @@ project = 'lonlat_bng'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
     headers={'Authorization':'token %s' % ghkey}).json()
+print("Latest release: %s" % latest_release)
 # print(latest_release)
 tagname = latest_release['tag_name']
 # What platform are we on?
