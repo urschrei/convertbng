@@ -24,11 +24,11 @@ elif 'win32' in platform:
     path = "C:\projects\convertbng\convertbng"
 
 # Get the latest release details for the binary
-project = 'lonlat_bng'
+project = 'rdp'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
     headers={'Authorization':'token %s' % ghkey}).json()
-
+# print(latest_release)
 tagname = latest_release['tag_name']
 # What platform are we on?
 if 'darwin' in platform:
@@ -38,9 +38,9 @@ elif 'win32' in platform:
     lib = "lonlat_bng.dll"
     # distinguish between 64-bit and 32-bit Windows Pythons
     if sys.maxsize > 2**32:
-        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-gnu.zip'
+        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-pc-windows-msvc.zip'
     else:
-        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-i686-pc-windows-gnu.zip'
+        url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-i686-pc-windows-msvc.zip'
 elif 'linux' in platform:
     lib = "liblonlat_bng.so"
     url = 'https://github.com/urschrei/{project}/releases/download/{tagname}/{project}-{tagname}-x86_64-unknown-linux-gnu.tar.gz'
@@ -50,7 +50,8 @@ fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
 print(("URL:", built))
 # Get compressed archive and extract binary (and lib, on Windows)
-release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
+print("Current Python version: %s " % sys.version)
+release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)
 fname = os.path.splitext(built)
 content = release.content
 so = io.BytesIO(content)

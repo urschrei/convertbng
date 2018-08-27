@@ -1,8 +1,11 @@
+language: generic
+
 env:
   global:
     - PROJECT_NAME=convertbng
-    - secure: R6T9yVugds0+ybYA8c6wsJ2gWQslOTf40oTCchictjMzv80l509YSBZCCGP0zV3Z+2NCZdsqexTzgI1USV+cPL4+nKkHUzdrvrPoCGNKEwKDDNS5Kog8AfakPzagXTM5bIEa8HGEz5i9gb9TBo+X3fT8dYqGOHMVktN4JKXmWnNfNgnBTpfchmdVpfUM/bODmcE25TM60Z7WxcTvgZIcPO8yfLIE1ltoTVLobvnwRgiWa870hOyLmkVdt4wwisUtWd7bUd1ZGix2X0EcNTVL+mBp2eBloEBcOLGlQ1TVVUaGbQkfjFBP7jA0imG6CjJOwR2M7K2LcuZeke4AuuajCNyGBDF6uDjm3FPuNrerMRT81nFnspwiaNtFNDCiise3JbG2P0w5yXfTxIOXDyGmfeWs1ACE/qdDbZTMAhxRz8YjVbv4z9AZXwtrkIKVOIiogCwApNzqeBsbditLGdYcPMcqtuYw+D++7YrDSe7tEJw8ZWWFpV5s65LAS93BUlUD6upQH3rSREDZpWRwhoJAtNdXcpWihCjPlb/RbXWvqR+IRwPBvGSRdjBfmBxvXI/NFoVM/e0lLW9ECCMLI6NYnMl2cg4VnA3EoiMfr7R2nauYOsKwogaIH5PQY/+wBTcD73XzyWUikKStUHvG13Rw6bCDW4X76GYvuon8C7d4Sn0=
     - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+    # LATEST_TAG
+    - secure: AffSkQzpkgZyPKgi4vanN7B7W3RxlIIaLMIPlmclLvtVVOfV+AH0AqHgDaIUUWKAOYiIJzQBhGLVfzcbJForg1ioZVj8AcBdbsM9mFJk9kq09y5YJ55izeQ7onmYiibrkh40zs5TNAsrcXXwIHlRbZc1S2edaWOPUfMBc9DhHuofuA2yHH6zc247/pVykdVCZmtQgx0EzWfS9/eesbjUF/m5R+uudNGNxXoJesyWshMTktFxUqVguuRe5uzY1LeOJtXLXtvPCXLuxDUZ/++5zCt+BdyJyhMf1j8z1wDSzdYz4hbhTt9Hxs7BbQwWtmME0LVboFasdDm4Ssbjs5J5z4aellDij1KAwNGnOo74Dueythpcy+r+jqN53SwvP1Jz/s+XqYJ6djqVR5p7OlCdeA3TDhuydQtt3cMRfDmGf2Alzxy4+6DA7Fg8wp0iL/ODx4t6NxEy6JGqXRcgyCz2W91mXIKB1pyWtWc/9b66UVwV27ueO+DRuMn+kFokmekcfV1EyU9WhZ4zQSxmTKODsfxJ4KnrXWgYMPtEIuxCZKw8xFO06aTk+B/xlXNHMq+v9CK+71abTNsJEYd7w8yWv9/vEz1bgbpqXpvn83kUvzwa7eGQogbPvW6WZUB9XSQJM8+2mtpwr7Dd7h/PlIXL+O2+U6X3NZKPi5TFUQB3/pw=
 
 matrix:
   include:
@@ -11,10 +14,20 @@ matrix:
       services:
         - docker
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11 RELEASE_PYTHON_VERSION=-cp27
+      osx_image: xcode9.3beta
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.14 RELEASE_PYTHON_VERSION=-cp27
       sudo: required
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.6.0 RELEASE_PYTHON_VERSION=-cp36
+      osx_image: xcode9.3beta
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.4.4 RELEASE_PYTHON_VERSION=-cp34
+      sudo: required
+    - os: osx
+      osx_image: xcode9.3beta
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.5.1 RELEASE_PYTHON_VERSION=-cp35
+      sudo: required
+    - os: osx
+      osx_image: xcode9.3beta
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.6.5 RELEASE_PYTHON_VERSION=-cp36
       sudo: required
 
 before_install:
@@ -58,7 +71,7 @@ deploy:
   # step and `travis` is the official Travis CI gem (see https://rubygems.org/gems/travis/)
   # - Enter the "encrypted value" below
   api_key:
-        - secure: gintTCgG/ZR/aCm+oVoFxxetAtdGf+mPJ6hV03uaM06xW61FUORPXepVaDrOYDN6SAjcvnPUWLqI4cpAMyN0XJo837v/CT/Hy09hgQu30kv+qJeVYyTopdf12QcPtgRsVr891O8NEwOK5DbAkqtbImMek0gPGrkJKLr4WnUY14DVebCpKE7FStQffRNbzigxm5rCATk4bjbQuL8AyUdMWI1m1K0W9xcVnt9NlOIvLSqQbK/pTeuMqKyYloXPgF61inswACw7jwjyeYFZ+DG3o5D+efyCCwSUFPeLYjljrcFE8/4ug6JPFCkyUDnXk6iIYdG4ag45ZLFtA5xz6TSOpMVEhafzQnBIpiebDUq8IpUal7tWiz5n8qUkAErZnSnSkQOhIZdPOMZYPPiLm5mrEmQRiTy5S39axj9A3w/ungIBmnjcijhZheLybphl78ZJtC4MKGenH/wLwZNDN5liQq0DJq5iFNVvdVLBW/M/03zWPsWyGidzdrjwEItTc2PA6D6d0Njkaavr5KmsL7AK/7izhusJnuPB48zH+71AefZyGqt92VjCoQatndiw3DehJeK6BPc7Wpk+zuYihaHs1aV+oPSJpOpP9YnzQye+Tue4DYPWGdzCZ4qKkH7VhjITTMIKZ3iIlGjruSWlh4t/sRplZ4B7UaEm0h//2trZmRg=
+        - secure: AffSkQzpkgZyPKgi4vanN7B7W3RxlIIaLMIPlmclLvtVVOfV+AH0AqHgDaIUUWKAOYiIJzQBhGLVfzcbJForg1ioZVj8AcBdbsM9mFJk9kq09y5YJ55izeQ7onmYiibrkh40zs5TNAsrcXXwIHlRbZc1S2edaWOPUfMBc9DhHuofuA2yHH6zc247/pVykdVCZmtQgx0EzWfS9/eesbjUF/m5R+uudNGNxXoJesyWshMTktFxUqVguuRe5uzY1LeOJtXLXtvPCXLuxDUZ/++5zCt+BdyJyhMf1j8z1wDSzdYz4hbhTt9Hxs7BbQwWtmME0LVboFasdDm4Ssbjs5J5z4aellDij1KAwNGnOo74Dueythpcy+r+jqN53SwvP1Jz/s+XqYJ6djqVR5p7OlCdeA3TDhuydQtt3cMRfDmGf2Alzxy4+6DA7Fg8wp0iL/ODx4t6NxEy6JGqXRcgyCz2W91mXIKB1pyWtWc/9b66UVwV27ueO+DRuMn+kFokmekcfV1EyU9WhZ4zQSxmTKODsfxJ4KnrXWgYMPtEIuxCZKw8xFO06aTk+B/xlXNHMq+v9CK+71abTNsJEYd7w8yWv9/vEz1bgbpqXpvn83kUvzwa7eGQogbPvW6WZUB9XSQJM8+2mtpwr7Dd7h/PlIXL+O2+U6X3NZKPi5TFUQB3/pw=
   file_glob: true
   file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}${RELEASE_PYTHON_VERSION}.*
   # don't delete the artifacts from previous phases
