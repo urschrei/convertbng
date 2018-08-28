@@ -34,7 +34,7 @@ class BinaryDistribution(Distribution):
         return False
 
 version=find_version("convertbng/util.py")
-with open('README.rst') as f:
+with open('README.md') as f:
     readme = f.read()
 
 try:
@@ -107,6 +107,6 @@ setup(
     packages=find_packages(),
     install_requires=['numpy >= 1.11.0'],
     ext_modules = extensions,
-    long_description=README.md,
+    long_description=readme,
     long_description_content_type="text/markdown",
 )
