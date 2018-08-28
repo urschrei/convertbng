@@ -107,6 +107,6 @@ setup(
     packages=find_packages(),
     install_requires=['numpy >= 1.11.0'],
     ext_modules = extensions,
-    long_description=README,
+    long_description=README.md,
     long_description_content_type="text/markdown",
 )
