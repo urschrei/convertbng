@@ -3,3 +3,4 @@ nose
 wheel
 requests
 numpy
+cython
