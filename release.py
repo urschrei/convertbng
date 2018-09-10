@@ -37,6 +37,11 @@ releases = [
         },
     {
         'tag': tag,
+        'target': 'x86_64-apple-darwin-cp37',
+        'extension': 'tar.gz'
+        },
+    {
+        'tag': tag,
         'target': 'x86_64-unknown-linux-gnu',
         'extension': 'tar.gz'
         },
