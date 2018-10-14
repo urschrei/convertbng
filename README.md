@@ -61,7 +61,15 @@ lats_np = np.array(lats)
     coords = [[1.0, 2.0], [3.0, 4.0]]
     a, b = list(zip(*coords))
     # a is (1.0, 3.0)
-    # b is (2.0, 4.0)   
+    # b is (2.0, 4.0)
+
+### But I have `Shapely` Geometries
+    from shapely.geometry import LineString
+
+    ls = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
+    new_linestring = LineString(
+        zip(*convert_etrs89_to_lonlat(*zip(*ls.coords)))
+    )
 
 # Experimental Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
