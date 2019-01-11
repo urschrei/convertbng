@@ -33,8 +33,8 @@ __author__ = u"Stephan Hügel"
 
 import numpy as np
 from convertbng_p cimport (
-    _FFIArray,
-    _Result_Tuple,
+    Array,
+    ResultTuple,
     convert_to_bng_threaded,
     convert_to_lonlat_threaded,
     convert_to_osgb36_threaded,
@@ -48,7 +48,7 @@ from convertbng_p cimport (
     )
 
 # should catch a ValueError here, in case something non-double is passed
-cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
+cdef ffi_wrapper(ResultTuple (*func)(Array, Array)):
     """ Accepts a function pointer and two arguments
             longitudes
             latitudes
@@ -60,7 +60,7 @@ cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
         # The [::1] promises it's contiguous in memory
         cdef double[::1] wlon = np.array(inlon, dtype=np.float64)
         cdef double [::1] wlat = np.array(inlat, dtype=np.float64)
-        cdef _FFIArray x_ffi, y_ffi
+        cdef Array x_ffi, y_ffi
         # get a pointer to the data, and cast it to void*
         x_ffi.data = <void*>&wlon[0]
         # This may be ... * sizeof(double) - it depends on the C api
@@ -69,7 +69,7 @@ cdef ffi_wrapper(_Result_Tuple (*func)(_FFIArray, _FFIArray)):
         y_ffi.data = <void*>&wlat[0]
         y_ffi.len = wlat.shape[0]
         # call across the FFI boundary
-        cdef _Result_Tuple result = func(x_ffi, y_ffi)
+        cdef ResultTuple result = func(x_ffi, y_ffi)
         # get data pointers for the two result arrays
         cdef double* eastings_ptr = <double*>(result.e.data)
         cdef double* northings_ptr = <double*>(result.n.data)

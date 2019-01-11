@@ -1,5 +1,11 @@
 language: generic
 
+
+addons:
+  homebrew:
+    packages:
+    - python@2
+
 env:
   global:
     - PROJECT_NAME=convertbng
