@@ -10,7 +10,8 @@ from convertbng.util import (
     convert_osgb36_to_etrs89,
     convert_etrs89_to_osgb36,
     convert_etrs89_to_lonlat,
-    convert_epsg3857_to_wgs84
+    convert_epsg3857_to_wgs84,
+    convert_to_etrs89
 )
 from convertbng.cutil import convert_bng as cconvert_bng
 from ctypes import ArgumentError
@@ -229,6 +230,12 @@ class ConvertbngTests(unittest.TestCase):
         """ Tests ETRS89 --> Lon, Lat conversion"""
         expected =([1.71607397], [52.65800783])
         result = convert_etrs89_to_lonlat(651307.003, 313255.686)
+        self.assertEqual(expected, result)
+
+    def test_lonlat_to_etrs89(self):
+        """ Tests Lon, Lat --> ETRS89 conversion"""
+        expected =([651307.003], [313255.686])
+        result = convert_to_etrs89(1.71607397, 52.65800783)
         self.assertEqual(expected, result)
 
     def test_epsg3857_to_wgs84(self):

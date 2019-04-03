@@ -26,10 +26,10 @@ The functions accept either a sequence (such as a list or numpy array) of longit
 **NOTE**: Coordinate pairs outside the BNG bounding box, or without OSTN15 coverage will return a result of  
 `[[nan], [nan]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
 
-**Latitude**:  
+**Longitude**:  
 East: 1.7800  
 West: -7.5600  
-**Longitude**:  
+**Latitude**:  
 North: 60.8400  
 South: 49.9600  
 
@@ -86,7 +86,7 @@ The conversion functions will accept most sequences which implement `__iter__`, 
 - transform OSGB36 Eastings and Northings to longitude and latitude, **very accurately**:
     - use `convert_lonlat()`
 - transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN15 corrections):
-    - use `convert_etrs89()`
+    - use `convert_to_etrs89()`
 - transform ETRS89 Eastings and Northings to ETRS89 longitude and latitude, **very quickly** (the transformation does not use OSTN15):
     - use `convert_etrs89_to_lonlat()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN15 corrections:

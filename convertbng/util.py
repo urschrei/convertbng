@@ -36,7 +36,7 @@ import numpy as np
 import os
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.6.9"
+__version__ = "0.6.10"
 
 file_path = os.path.dirname(__file__)
 
@@ -215,6 +215,16 @@ convert_epsg3857_to_wgs84.__doc__ = """
     Convert Google Web Mercator (EPSG3857) coordinates to WGS84
     Latitude and Longitude
     Returns a list of two lists containing latitudes and longitudes,
+    respectively
+    """
+
+convert_to_etrs89 = lib.convert_to_etrs89_threaded
+convert_to_etrs89.argtypes = (_FFIArray, _FFIArray)
+convert_to_etrs89.restype = _Result_Tuple
+convert_to_etrs89.errcheck = _void_array_to_list
+convert_to_etrs89.__doc__ = """
+    Transform longitudes and latitudes to ETRS89 Eastings and Northings (without OSTN15 corrections)
+    Returns a list of two lists containing Easting and Northing floats,
     respectively
     """
 
