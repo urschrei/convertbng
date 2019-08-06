@@ -9,7 +9,7 @@ addons:
 env:
   global:
     - PROJECT_NAME=convertbng
-    - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+    - DOCKER_IMAGE=quay.io/pypa/manylinux2010_x86_64
     - secure: vhxwFNwpTYW++3pDXwAQnhC31jQQY8thUQaUvJdRj5Vx51qUa9rX3dRypYaBW2osN3PreAGNLOjUKhhobBr0dXkx6s5k8Ring9nnzZNwA+ZTsM8Ch4Ywq3ilDmgxPr/90Goe36x3pGuDTU+AMeBl+ySL5Lmx2Jn/uifAnDS44j/QWYxh3gwGVgZ9qA0Uo8h9LRrn7cUZ1ywHTbHs+ErkQYeMsiP0ILGM6VlyI0wpTF6FhSM2xa47UyErLZ7YkBjDHwcqL1ameZUsoOKwvc5fLZ4lPD6dZAQO0vHQ6nmjqENsK2BgK3UjMHT55+ukJq37u5sergv4KB2YmOH0HM7AW3mBUlUyg0fwWyJ3N0GENoTa6cJLkWK4yLO+FmR/qE5PiKUaue2l7QLJSjS6HgLUytCPkAPp90wxYegLFfXJnGYN54r7D5HrLbvbK57hqx050bmQtZ9bt1DquYunLux/2oMEpmJ6Bkvb/AVc6ktOfRleC+trCUOsSL9cGeyCMVV+cOFrUxt6HYkOGjpyvao1vNFNULwxI8n6Abr4RpJX8lbke2U3lLg3RvQ6HmyGNx2hAm5gqZBjGhnpGryFPIA9H0W5gxgASYq6cfv8ln7Ifj0dhQx/T/vZ76c7wD//AUJ0Lay4N8zn8YMbBOSoTse7A4w2OQsJGGK3voN790qqUVY=
 matrix:
   include:
