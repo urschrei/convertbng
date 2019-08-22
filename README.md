@@ -64,12 +64,24 @@ lats_np = np.array(lats)
     # b is (2.0, 4.0)
 
 ### But I have `Shapely` Geometries
-    from shapely.geometry import LineString
 
-    ls = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
-    new_linestring = LineString(
-        zip(*convert_etrs89_to_lonlat(*zip(*ls.coords)))
-    )
+```python
+from convertbng.util import convert_etrs89_to_lonlat
+from shapely.geometry import LineString
+from shapely.ops import transform
+from math import isnan
+from functools import partial
+
+def t(f, xs, ys):
+    xs_t, ys_t = f(xs, ys)
+    assert not any([isnan(x) for x in xs_t]), "Transformed xs contains NaNs"
+    assert not any([isnan(y) for y in ys_t]), "Transformed ys contains NaNs"
+    return xs_t, ys_t
+
+line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
+
+new_line = transform(partial(t, convert_etrs89_to_lonlat), line)
+```
 
 # Experimental Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
