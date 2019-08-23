@@ -1,6 +1,6 @@
 setuptools
 nose
 wheel
-requests
+requests[security]
 numpy
 cython

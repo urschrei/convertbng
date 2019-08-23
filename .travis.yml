@@ -35,7 +35,7 @@ matrix:
       sudo: required
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" != "osx" ]; then
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       sudo apt-get install -y libffi-dev libssl-dev
     fi
   # Make LATEST_TAG available to pre_install.py
