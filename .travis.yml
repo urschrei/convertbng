@@ -35,6 +35,7 @@ matrix:
       sudo: required
 
 before_install:
+  - sudo apt-get install -y libffi-dev libssl-dev
   # Make LATEST_TAG available to pre_install.py
   - echo $LATEST_TAG > key.txt
   - echo $PRE_CMD
