@@ -72,15 +72,19 @@ from shapely.ops import transform
 from math import isnan
 from functools import partial
 
-def t(f, xs, ys):
+def transform_protect_nan(f, xs, ys):
+    # This function protects Shapely against NaN values in the output of the
+    # transform, which would otherwise case a segfault.
     xs_t, ys_t = f(xs, ys)
     assert not any([isnan(x) for x in xs_t]), "Transformed xs contains NaNs"
     assert not any([isnan(y) for y in ys_t]), "Transformed ys contains NaNs"
     return xs_t, ys_t
 
+convert_etrs89_to_lonlat_protect_nan = partial(transform_protect_nan, convert_etrs89_to_lonlat)
+
 line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
 
-new_line = transform(partial(t, convert_etrs89_to_lonlat), line)
+new_line = transform(convert_etrs89_to_lonlat_protect_nan, line)
 ```
 
 # Experimental Cython Module
