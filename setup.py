@@ -81,7 +81,7 @@ else:
 setup(
     name='convertbng',
     version=version,
-    description='Fast lon, lat to and from ETRS89 and BNG (OSGB36) using Rust FFI',
+    description='Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform via Rust FFI',
     author='Stephan Hügel',
     author_email='urschrei@gmail.com',
     license='MIT License',
@@ -89,12 +89,14 @@ setup(
     include_package_data=True,
     distclass=BinaryDistribution,
     download_url='https://github.com/urschrei/convertbng/tarball/v%s' % version,
-    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89', 'OSTN02'],
+    keywords=['Geo', 'BNG', 'OSGB36', 'GIS', 'ETRS89', 'OSTN02', 'OSTN15'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.8'
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
