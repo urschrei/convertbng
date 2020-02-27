@@ -14,9 +14,11 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     source venv/bin/activate
     pip wheel . -w wheelhouse
     ls wheelhouse
+    pip --version
     mkdir to_test
     cd to_test
-    pip install $PROJECT_NAME --no-index -f $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
+    ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
+    pip install $PROJECT_NAME --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
     nosetests $PROJECT_NAME
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
