@@ -17,8 +17,8 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     pip --version
     mkdir to_test
     cd to_test
-    ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
-    pip install $PROJECT_NAME --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
+    cnv=$(ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/convert*)
+    pip install $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/$cnv --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
     nosetests $PROJECT_NAME
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
