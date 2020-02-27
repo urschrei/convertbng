@@ -35,27 +35,27 @@ South: 49.9600
 
 All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
 
-```python
-from convertbng.util import convert_bng, convert_lonlat
 
-# convert a single value
-res = convert_bng(lon, lat)
+    from convertbng.util import convert_bng, convert_lonlat
 
-# convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN15 corrections
-lons = [lon1, lon2, lon3]
-lats = [lat1, lat2, lat3]
-res_list = convert_bng(lons, lats)
+    # convert a single value
+    res = convert_bng(lon, lat)
 
-# convert lists of BNG Eastings and Northings to longitude, latitude
-eastings = [easting1, easting2, easting3]
-northings = [northing1, northing2, northing3]
-res_list_en = convert_lonlat(eastings, northings)
+    # convert lists of longitude and latitude values to OSGB36 Eastings and Northings, using OSTN15 corrections
+    lons = [lon1, lon2, lon3]
+    lats = [lat1, lat2, lat3]
+    res_list = convert_bng(lons, lats)
 
-# assumes numpy imported as np
-lons_np = np.array(lons)
-lats_np = np.array(lats)
-    res_list_np = convert_bng(lons_np, lats_np)
-```
+    # convert lists of BNG Eastings and Northings to longitude, latitude
+    eastings = [easting1, easting2, easting3]
+    northings = [northing1, northing2, northing3]
+    res_list_en = convert_lonlat(eastings, northings)
+
+    # assumes numpy imported as np
+    lons_np = np.array(lons)
+    lats_np = np.array(lats)
+        res_list_np = convert_bng(lons_np, lats_np)
+
 
 ## But I Have a List of Coordinate Pairs
     coords = [[1.0, 2.0], [3.0, 4.0]]
@@ -65,27 +65,25 @@ lats_np = np.array(lats)
 
 ### But I have `Shapely` Geometries
 
-```python
-from convertbng.util import convert_etrs89_to_lonlat
-from shapely.geometry import LineString
-from shapely.ops import transform
-from math import isnan
-from functools import partial
+    from convertbng.util import convert_etrs89_to_lonlat
+    from shapely.geometry import LineString
+    from shapely.ops import transform
+    from math import isnan
+    from functools import partial
 
-def transform_protect_nan(f, xs, ys):
-    # This function protects Shapely against NaN values in the output of the
-    # transform, which would otherwise case a segfault.
-    xs_t, ys_t = f(xs, ys)
-    assert not any([isnan(x) for x in xs_t]), "Transformed xs contains NaNs"
-    assert not any([isnan(y) for y in ys_t]), "Transformed ys contains NaNs"
-    return xs_t, ys_t
+    def transform_protect_nan(f, xs, ys):
+        # This function protects Shapely against NaN values in the output of the
+        # transform, which would otherwise case a segfault.
+        xs_t, ys_t = f(xs, ys)
+        assert not any([isnan(x) for x in xs_t]), "Transformed xs contains NaNs"
+        assert not any([isnan(y) for y in ys_t]), "Transformed ys contains NaNs"
+        return xs_t, ys_t
 
-convert_etrs89_to_lonlat_protect_nan = partial(transform_protect_nan, convert_etrs89_to_lonlat)
+    convert_etrs89_to_lonlat_protect_nan = partial(transform_protect_nan, convert_etrs89_to_lonlat)
 
-line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
+    line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
 
-new_line = transform(convert_etrs89_to_lonlat_protect_nan, line)
-```
+    new_line = transform(convert_etrs89_to_lonlat_protect_nan, line)
 
 # Experimental Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
