@@ -15,6 +15,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     pip wheel . -w wheelhouse
     ls wheelhouse
     pip --version
+    python -m platform platform.version
     mkdir to_test
     cd to_test
     cnv=$(ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/convert*)
