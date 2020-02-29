@@ -65,7 +65,7 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
 
 ### But I have `Shapely` Geometries
 
-    from convertbng.util import convert_etrs89_to_lonlat
+    from convertbng.util import convert_etrs89_to_ll
     from shapely.geometry import LineString
     from shapely.ops import transform
     from math import isnan
@@ -79,7 +79,7 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
         assert not any([isnan(y) for y in ys_t]), "Transformed ys contains NaNs"
         return xs_t, ys_t
 
-    convert_etrs89_to_lonlat_protect_nan = partial(transform_protect_nan, convert_etrs89_to_lonlat)
+    convert_etrs89_to_lonlat_protect_nan = partial(transform_protect_nan, convert_etrs89_to_ll)
 
     line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
 
@@ -102,7 +102,7 @@ The conversion functions will accept most sequences which implement `__iter__`, 
 - transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN15 corrections):
     - use `convert_to_etrs89()`
 - transform ETRS89 Eastings and Northings to ETRS89 longitude and latitude, **very quickly** (the transformation does not use OSTN15):
-    - use `convert_etrs89_to_lonlat()`
+    - use `convert_etrs89_to_ll()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN15 corrections:
     - use `convert_etrs89_to_osgb36()`
 
