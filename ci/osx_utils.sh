@@ -18,7 +18,7 @@ LATEST_3p4=3.4.4
 LATEST_3p5=3.5.9
 LATEST_3p6=3.6.5
 LATEST_3p7=3.7.6
-LATEST_3p8=3.8.1
+LATEST_3p8=3.8.5
 
 # Get our own location on this filesystem
 # MULTIBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
