@@ -20,6 +20,7 @@ mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/convertbng/liblonlat_bng.so /usr/local/lib
+objdump -x /usr/local/lib/liblonlat_bng.so | grep RPATH
 # cp /io/convertbng/cutil.so /usr/local/lib
 
 # Compile wheels
@@ -34,12 +35,12 @@ mkdir /io/wheelhouse_r
 
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
+    auditwheel show $whl
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
 # remove the 2010 wheels, since we're manylinux1-compatible
 rm /io/wheelhouse_r/*2010*
-ls /io/wheelhouse_r
 
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
