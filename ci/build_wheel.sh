@@ -32,8 +32,6 @@ done
 
 mkdir /io/wheelhouse_r
 
-pip install auditwheel==2.1.1
-
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
     auditwheel repair $whl -w /io/wheelhouse_r/
