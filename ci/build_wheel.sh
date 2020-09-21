@@ -37,6 +37,8 @@ for whl in wheelhouse/*.whl; do
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
+# remove the 2010 wheels, since we're manylinux1-compatible
+rm /io/wheelhouse_r/*2010*
 ls /io/wheelhouse_r
 
 # Install packages and test
