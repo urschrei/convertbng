@@ -20,7 +20,6 @@ mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/convertbng/liblonlat_bng.so /usr/local/lib
-objdump -x /usr/local/lib/liblonlat_bng.so | grep RPATH
 # cp /io/convertbng/cutil.so /usr/local/lib
 
 # Compile wheels
