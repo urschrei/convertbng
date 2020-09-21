@@ -34,12 +34,16 @@ mkdir /io/wheelhouse_r
 
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
-    auditwheel show $whl
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
 # remove the 2010 wheels, since we're manylinux1-compatible
 rm /io/wheelhouse_r/*2010*
+FILES=/io/wheelhouse_r/*
+for f in $FILES
+do
+  auditwheel show $f
+done
 
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
