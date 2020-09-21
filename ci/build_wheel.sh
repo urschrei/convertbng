@@ -29,7 +29,6 @@ for PYBIN in ${PYBINS[@]}; do
 done
 
 # output possibly-renamed wheels to new dir
-
 mkdir /io/wheelhouse_r
 
 # Bundle external shared libraries into the wheels
