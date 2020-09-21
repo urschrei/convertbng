@@ -31,9 +31,9 @@ clean:
 .PHONY: test
 test: convertbng/liblonlat_bng.dylib convertbng/cutil.so
 	@echo "Running Python 2.7 module tests"
-	@venv/bin/nose2 -v
+	@venv/bin/nosetests -v
 	@echo "Running Python 3.5 module tests"
-	@venv3/bin/nose2 -v
+	@venv3/bin/nosetests -v
 
 .PHONY: release
 release:

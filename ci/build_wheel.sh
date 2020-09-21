@@ -49,6 +49,6 @@ done
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install convertbng --no-index -f wheelhouse
-    (cd $HOME; ${PYBIN}/nose2 convertbng)
+    (cd $HOME; ${PYBIN}/nosetests convertbng)
 done
 cp wheelhouse/* /io/wheelhouse

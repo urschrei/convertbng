@@ -4,7 +4,7 @@ environment:
     PACKAGE_NAME: convertbng
     BUILD_COMMIT: master
     BUILD_DEPENDS: "cython"
-    TEST_DEPENDS: "nose2, setuptools"
+    TEST_DEPENDS: "nose, setuptools"
     TARBALL_KEY:
       secure: HF4RmkVMj/9RATVwspMqijy1Z0fmK9xw60lCvVoTPHRMgnvIkqhavlP3VAkrA5+K
 
@@ -80,7 +80,7 @@ test_script:
   - mkdir test
   - cd test
   - pip install %PACKAGE_NAME% --no-index -f C:/projects/%PACKAGE_NAME%/dist
-  - nose2 -v %PACKAGE_NAME%
+  - nosetests -v %PACKAGE_NAME%
 
 after_test:
   - cd C:/projects/%PACKAGE_NAME%

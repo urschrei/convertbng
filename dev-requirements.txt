@@ -1,5 +1,5 @@
 setuptools
-nose2
+nose
 wheel==0.31.1
 requests[security]
 numpy
