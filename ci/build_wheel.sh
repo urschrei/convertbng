@@ -37,9 +37,9 @@ for whl in wheelhouse/*.whl; do
 done
 
 # remove the 2010 wheels, since we're manylinux1-compatible
-rm /io/wheelhouse/*
+rm /io/wheelhouse/*.whl
 rm /io/wheelhouse_r/*2010*
-cp /io/wheelhouse_r/* /io/wheelhouse
+cp /io/wheelhouse_r/*.whl /io/wheelhouse
 FILES=/io/wheelhouse/*
 for f in $FILES
 do
