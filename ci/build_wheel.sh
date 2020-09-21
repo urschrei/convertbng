@@ -36,5 +36,5 @@ done
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
-    (cd $HOME; ${PYBIN}/nosetests convertbng)
+    (cd $HOME; ${PYBIN}/nose2 convertbng)
 done

@@ -158,7 +158,7 @@ Finally, we link the Rust conversion functions from `util.py` [again](https://gi
 
 # Tests
 You can run the Python module tests by running "make test".  
-Tests require both `numpy` and `nose`.
+Tests require both `numpy` and `nose2`.
 
 # License
 [MIT](license.txt)

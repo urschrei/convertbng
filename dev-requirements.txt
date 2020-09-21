@@ -1,5 +1,5 @@
 setuptools
-nose
+nose2
 wheel
 requests[security]
 numpy
