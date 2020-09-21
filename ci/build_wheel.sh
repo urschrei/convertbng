@@ -37,8 +37,7 @@ for whl in wheelhouse/*.whl; do
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
-ls wheelhouse
-ls wheelhouse_r
+ls /io/wheelhouse_r
 
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
