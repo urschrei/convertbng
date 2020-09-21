@@ -1,6 +1,6 @@
 setuptools
 nose2
-wheel
+wheel==0.31.1
 requests[security]
 numpy
 cython
