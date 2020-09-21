@@ -28,13 +28,20 @@ for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip wheel /io/ -w wheelhouse/ --no-deps
 done
 
+# output possibly-renamed wheels to new dir
+
+mkdir /io/wheelhouse_r
+
 # Bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w /io/wheelhouse_r/
 done
+
+ls wheelhouse
+ls wheelhouse_r
 
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
-    ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse
+    ${PYBIN}/pip install convertbng --no-index -f /io/wheelhouse_r
     (cd $HOME; ${PYBIN}/nose2 convertbng)
 done
