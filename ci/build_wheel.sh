@@ -31,8 +31,9 @@ done
 # output possibly-renamed wheels to new dir
 mkdir /io/wheelhouse_r
 
-# Bundle external shared libraries into the wheels
+# Show dependencies, then bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
+    auditwheel show $whl
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
