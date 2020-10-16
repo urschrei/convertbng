@@ -15,6 +15,7 @@ function before_install {
     get_macpython_environment $TRAVIS_PYTHON_VERSION venv
     source venv/bin/activate
     pip install --upgrade pip wheel
+    pip install --upgrade auditwheel
     pip install -r dev-requirements.txt
     pip install --install-option="--no-cython-compile" cython
     pip install python-coveralls
