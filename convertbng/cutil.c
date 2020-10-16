@@ -15,10 +15,12 @@
         ],
         "include_dirs": [
             "./convertbng",
-            "convertbng"
+            "convertbng",
+            "/Users/sth/dev/convertbng/venv/lib/python3.7/site-packages/numpy/core/include"
         ],
+        "language": "c",
         "libraries": [
-            "lonlat_bng"
+            "rdp"
         ],
         "library_dirs": [
             "convertbng"
