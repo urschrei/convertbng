@@ -19,8 +19,8 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     mkdir to_test
     cd to_test
     cnv=$(ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/convert*)
-    # pip install $cnv --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
-    # nosetests $PROJECT_NAME
+    pip install $cnv --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
+    nosetests $PROJECT_NAME
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
