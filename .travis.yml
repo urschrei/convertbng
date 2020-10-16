@@ -50,8 +50,7 @@ script:
   # only run coverage reporting on OS X
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       source venv/bin/activate;
-      ls wheelhouse
-      pip install wheelhouse/$PROJECT_NAME
+      for x in `ls wheelhouse`; do pip install $x; done
       nosetests --with-coverage --cover-package $PROJECT_NAME;
     fi
 
