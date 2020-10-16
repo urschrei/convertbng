@@ -14,7 +14,6 @@ PYBINS=(
 
 mkdir -p /io/wheelhouse
 # ls -la /io
-# ls -la /io/convertbng
 echo $LD_LIBRARY_PATH
 mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
