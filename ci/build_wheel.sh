@@ -3,7 +3,7 @@ set -e -x
 
 PYBINS=(
   # "/opt/python/cp27-cp27m/bin"
-  "/opt/python/cp27-cp27mu/bin"
+  # "/opt/python/cp27-cp27mu/bin"
   # "/opt/python/cp33-cp33m/bin"
   # "/opt/python/cp34-cp34m/bin"
   # "/opt/python/cp35-cp35m/bin"
@@ -32,7 +32,6 @@ mkdir /io/wheelhouse_r
 
 # Show dependencies, then bundle external shared libraries into the wheels
 for whl in wheelhouse/*.whl; do
-    auditwheel show $whl
     auditwheel repair $whl -w /io/wheelhouse_r/
 done
 
