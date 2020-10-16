@@ -229,6 +229,6 @@ function repair_wheelhouse {
     local wheelhouse=$1
     pip install delocate
     delocate-listdeps $wheelhouse/*.whl # lists library dependencies
-    # delocate-wheel $wheelhouse/*.whl # copies library dependencies into wheel
+    delocate-wheel $wheelhouse/*.whl # copies library dependencies into wheel
     delocate-addplat --rm-orig -x 10_9 -x 10_10 -x 10_11 $wheelhouse/*.whl
 }
