@@ -49,9 +49,9 @@ script:
   - bash ci/script.sh
   # only run coverage reporting on OS X
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      source venv/bin/activate;
-      pip install $PROJECT_NAME --no-index -f wheelhouse;
-      nosetests --with-coverage --cover-package $PROJECT_NAME;
+      # source venv/bin/activate;
+      # pip install $PROJECT_NAME --no-index -f wheelhouse;
+      # nosetests --with-coverage --cover-package $PROJECT_NAME;
     fi
 
 branches:
@@ -60,8 +60,8 @@ branches:
 
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      source venv/bin/activate;
-      coveralls;
+      # source venv/bin/activate;
+      # coveralls;
     fi
 
 before_deploy:
