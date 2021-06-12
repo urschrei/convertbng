@@ -21,7 +21,6 @@ mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/convertbng/liblonlat_bng.so /usr/local/lib
-cp /io/convertbng/cutil.so /usr/local/lib
 
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
