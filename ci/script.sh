@@ -12,17 +12,17 @@ fi
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     source ci/osx_utils.sh
     source venv/bin/activate
-    pip wheel . -w wheelhouse --no-deps
+    pip wheel . -w wheelhouse
     ls wheelhouse
     pip --version
     python -m platform platform.version
+    mkdir to_test
+    cd to_test
+    cnv=$(ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/convert*)
+    # pip install $cnv --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
+    # nosetests $PROJECT_NAME
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
     repair_wheelhouse wheelhouse
-    mkdir to_test
-    cd to_test
-    cnv=$(ls $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/convert*)
-    pip install $cnv --no-index --find-links=file://$HOME/build/urschrei/$PROJECT_NAME/wheelhouse
-    nosetests $PROJECT_NAME
 fi
