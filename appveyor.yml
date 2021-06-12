@@ -6,7 +6,7 @@ environment:
     BUILD_DEPENDS: "cython"
     TEST_DEPENDS: "nose, setuptools"
     TARBALL_KEY:
-      secure: HF4RmkVMj/9RATVwspMqijy1Z0fmK9xw60lCvVoTPHRMgnvIkqhavlP3VAkrA5+K
+      secure: psW+kKtkU39hgGWU3m+NJpQTm1mmcR83dd0wj5vQRHKMTWGK9XUna9f4mFObacRP
 
   matrix:
     - PYTHON: "C:\\Miniconda"
