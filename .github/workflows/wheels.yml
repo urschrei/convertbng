@@ -44,6 +44,8 @@ jobs:
             else
                 echo "filename=${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-apple-darwin.tar.gz" >> $GITHUB_ENV
             fi
+        shell: bash
+
       - id: get-rust-lib
         uses: stryd/fetch-release-asset@v1
         with:
