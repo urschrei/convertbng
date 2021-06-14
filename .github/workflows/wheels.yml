@@ -62,7 +62,7 @@ jobs:
                if [ "$RUNNER_OS" == "Linux" ]; then
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
                elif [ "$RUNNER_OS" == "Windows" ]; then
-                    7z x ${{ steps.get-rust-lib.outputs.location }} -o convertbng
+                    7z x ${{ steps.get-rust-lib.outputs.location }} -oconvertbng
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
                fi
