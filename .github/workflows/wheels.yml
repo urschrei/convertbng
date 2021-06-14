@@ -35,7 +35,11 @@ jobs:
 
       # Used to host cibuildwheel
       - uses: actions/setup-python@v2
-
+      - id: make-assets-dir
+        run: |
+            if [ ! "$RUNNER_OS" == "Windows" ]; then
+              sudo mkdir ${{ env.github_workspace }}/assets
+            fi
       - id: set-filename
         run: |
             if [ "$RUNNER_OS" == "Linux" ]; then
