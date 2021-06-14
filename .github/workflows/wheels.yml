@@ -21,11 +21,21 @@ jobs:
       - run: echo "Lib version ${{ steps.latest-tag.outputs.tag }}"
 
 
-  get_rust_lib:
-    name: Get latest release of Rust lib
+
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
     needs: get_latest_lib_tag
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-2019, macOS-10.15]
+
     steps:
+      - uses: actions/checkout@v2
+
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v2
+
       - id: set-filename
         run: |
             if [ "$RUNNER_OS" == "Linux" ]; then
@@ -43,20 +53,6 @@ jobs:
           version: ${{ needs.get_latest_lib_tag.outputs.tag }}
           asset_name: ${{ env.filename }}
           save_as: convertbng/rustlib.zip
-
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    needs: get_rust_lib
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, windows-2019, macOS-10.15]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Used to host cibuildwheel
-      - uses: actions/setup-python@v2
 
       - name: Install cibuildwheel
 
