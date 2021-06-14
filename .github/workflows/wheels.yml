@@ -26,20 +26,21 @@ jobs:
     needs: get_latest_lib_tag
     runs-on: ubuntu-latest
     steps:
-      uses: stryd/fetch-release-asset@v1
-      with:
-        access_token: ${{ secrets.GH_TOKEN }}
-        repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
-        version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
-        asset_name:   |
-                   if [ "$RUNNER_OS" == "Linux" ]; then
-                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
-                   elif [ "$RUNNER_OS" == "Windows" ]; then
-                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-pc-windows-msvc.zip
-                   else
-                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
-                   fi
-        save_as: convertbng/rustlib.zip
+      - id: get-rust-lib
+        uses: stryd/fetch-release-asset@v1
+        with:
+          access_token: ${{ secrets.GH_TOKEN }}
+          repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
+          version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
+          asset_name:   |
+                     if [ "$RUNNER_OS" == "Linux" ]; then
+                          ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
+                     elif [ "$RUNNER_OS" == "Windows" ]; then
+                          ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-pc-windows-msvc.zip
+                     else
+                          ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
+                     fi
+          save_as: convertbng/rustlib.zip
 
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
