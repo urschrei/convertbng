@@ -65,7 +65,7 @@ jobs:
                     7z x ${{ steps.get-rust-lib.outputs.location }} -o.\convertbng
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
-                    sudo cp convertbng/liblonlat_bng.dylib /usr/lib/liblonlat_bng.dylib
+                    export LD_LIBRARY_PATH="$(pwd)/convertbng"
                fi
         shell: bash
 
@@ -74,7 +74,7 @@ jobs:
         # to supply options, put them in 'env', like:
         env:
           CIBW_BEFORE_BUILD: pip install numpy
-          CIBW_BUILD_VERBOSITY: 2
+          CIBW_BUILD_VERBOSITY: 1
           CIBW_TEST_REQUIRES: setuptools nose numpy cython
           CIBW_BUILD: cp37-macosx_x86_64  cp37-manylinux_x86_64 cp38-macosx_x86_64 cp38-manylinux_x86_64 cp39-macosx_x86_64 cp39-macosx_arm64 cp39-manylinux_x86_64
           CIBW_TEST_COMMAND: nosetests
