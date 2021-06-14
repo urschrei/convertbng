@@ -1,4 +1,6 @@
 name: Build
+env:
+  rustlib: lonlat_bng
 
 on: [push, pull_request]
 
@@ -12,11 +14,11 @@ jobs:
     steps:
       - id: set_rustlib_repo
         run: |
-          echo "rustlib_repo=lonlat_bng" >> $GITHUB_ENV
+          echo "rustlib_repo=${{ workflow.Build.env.rustlib }}" >> $GITHUB_ENV
       - id: latest-tag
         uses: oprypin/find-latest-tag@v1
         with:
-          repository: urschrei/lonlat_bng  # The repository to scan.
+          repository: urschrei/${{ workflow.Build.env.rustlib }}  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
       - run: echo "Lib version ${{ steps.latest-tag.outputs.tag }}"
 
@@ -65,9 +67,12 @@ jobs:
                     7z x ${{ steps.get-rust-lib.outputs.location }} -o.\convertbng
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
+                    otool -L convertbng/lib${{ workflow.Build.env.rustlib }}.dyblib
                     export LD_LIBRARY_PATH="$(pwd)/convertbng"
                fi
         shell: bash
+        - name: check lib path
+          run: echo $LD_LIBRARY_PATH
 
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
