@@ -64,6 +64,7 @@ jobs:
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
                fi
+        shell: bash
 
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
