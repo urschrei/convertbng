@@ -29,7 +29,7 @@ jobs:
       - id: get-rust-lib
         uses: stryd/fetch-release-asset@v1
         with:
-          access_token: ${{ secrets.GH_TOKEN }}
+          access_token: ${{ secrets.LONLAT_RETRIEVAL }}
           repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
           version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
           asset_name:   |
