@@ -25,9 +25,9 @@ jobs:
     name: Get latest release of Rust lib
     needs: get_latest_lib_tag
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       uses: stryd/fetch-release-asset@v1
-      with:  
+      with:
         access_token: ${{ secrets.GH_TOKEN }}
         repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
         version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
