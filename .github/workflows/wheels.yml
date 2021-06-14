@@ -33,11 +33,11 @@ jobs:
           version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
           file:   |
                    if [ "$RUNNER_OS" == "Linux" ]; then
-                        ${{ repo }}-${{ tag }}-x86_64-unknown-linux-gnu.tar.gz
+                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
                    elif [ "$RUNNER_OS" == "Windows" ]; then
-                        ${{ repo }}-${{ tag }}-x86_64-pc-windows-msvc.zip
+                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-pc-windows-msvc.zip
                    else
-                        ${{ repo }}-${{ tag }}-x86_64-apple-darwin.tar.gz
+                        ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
                    fi
           target: convertbng/rustlib.zip
           token: ${{ secrets.GITHUB_TOKEN }}
