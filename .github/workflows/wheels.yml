@@ -38,7 +38,7 @@ jobs:
       - id: make-assets-dir
         run: |
             if [ ! "$RUNNER_OS" == "Windows" ]; then
-              sudo mkdir ${{ env.github_workspace }}/assets
+              sudo mkdir $GITHUB_WORKSPACE/assets
             fi
       - id: set-filename
         run: |
