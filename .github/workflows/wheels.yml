@@ -28,11 +28,11 @@ jobs:
           version: "tags/${{ steps.latest-tag.outputs.tag }}"
           file:   |
                    if [ "$RUNNER_OS" == "Linux" ]; then
-                        ${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
+                        "${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz"
                    elif [ "$RUNNER_OS" == "Windows" ]; then
-                        ${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-pc-windows-msvc.zip
+                        "${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-pc-windows-msvc.zip"
                    else
-                        ${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
+                        "${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-apple-darwin.tar.gz"
                    fi
           target: "convertbng/rustlib.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
