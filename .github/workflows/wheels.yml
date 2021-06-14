@@ -31,7 +31,7 @@ jobs:
         with:
           access_token: ${{ secrets.LONLAT_RETRIEVAL }}
           repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
-          version: tags/${{ needs.get_latest_lib_tag.outputs.tag }}
+          version: "latest"
           asset_name:   |
                      if [ "$RUNNER_OS" == "Linux" ]; then
                           ${{ needs.get_latest_lib_tag.outputs.repo }}-${{ needs.get_latest_lib_tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
