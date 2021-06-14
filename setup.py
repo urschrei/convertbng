@@ -87,6 +87,7 @@ else:
 setup(
     name='convertbng',
     version=version,
+    python_requires='>=3.7',
     description="Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform via Rust FFI",
     author="Stephan Hügel",
     author_email="urschrei@gmail.com",
