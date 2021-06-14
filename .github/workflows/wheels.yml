@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs:
   set_rustlib_name:
+    runs-on: ubuntu-latest
     steps:
       - name: Set the rust lib repo name
         id: set_rustlib_repo
