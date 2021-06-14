@@ -56,18 +56,18 @@ jobs:
           repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
           version: ${{ needs.get_latest_lib_tag.outputs.tag }}
           asset_name: ${{ env.filename }}
-          save_as: ${{ env.github_workspace }}/assets/rustlib.zip
+          save_as: rustlib.zip # should map to $LOCATION
 
       - name: Install cibuildwheel
 
         run:   |
                python -m pip install cibuildwheel==1.11.1.post1
                if [ "$RUNNER_OS" == "Linux" ]; then
-                    tar -xvf assets/rustlib.zip -C convertbng
+                    tar -xvf $LOCATION -C convertbng
                elif [ "$RUNNER_OS" == "Windows" ]; then
-                    7z x assets/rustlib.zip -o convertbng
+                    7z x $LOCATION -o convertbng
                else
-                    tar -xvf assets/rustlib.zip -C convertbng
+                    tar -xvf $LOCATION -C convertbng
                fi
 
       - name: Build wheels
