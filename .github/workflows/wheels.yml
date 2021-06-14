@@ -52,7 +52,7 @@ jobs:
           repo: urschrei/${{ needs.get_latest_lib_tag.outputs.repo }}
           version: ${{ needs.get_latest_lib_tag.outputs.tag }}
           asset_name: ${{ env.filename }}
-          save_as: convertbng/rustlib.zip
+          save_as: ${{ env.github_workspace }}/convertbng/rustlib.zip
 
       - name: Install cibuildwheel
 
