@@ -10,11 +10,12 @@ jobs:
       - id: set_rustlib_repo
         run: |
           echo "rustlib_repo=lonlat_bng" >> $GITHUB_ENV
-      - id: latest-tag  # The step ID to refer to later
+      - id: latest-tag
         uses: oprypin/find-latest-tag@v1
         with:
           repository: urschrei/lonlat_bng  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
+      - run: echo "Lib version ${{ steps.latest-tag.outputs.tag }}"
 
 
   get_rust_lib:
