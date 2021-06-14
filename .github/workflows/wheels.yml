@@ -34,7 +34,7 @@ jobs:
                    else
                         ${{ env.rustlib_repo }}-${{ steps.latest-tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
                    fi
-          target: "convertbng/rustlib.zip"
+          target: convertbng/rustlib.zip
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_wheels:
