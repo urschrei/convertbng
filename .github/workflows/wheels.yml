@@ -1,0 +1,78 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  set_rustlib_name:
+    steps:
+      - name: Set the rust lib repo name
+        id: set_rustlib_repo
+        run: |
+          echo "rustlib_repo=lonlat_bng" >> $GITHUB_ENV
+
+  get_latest_lib_tag:
+    name: Get latest Rust lib tag
+    runs-on: ubuntu-latest
+    steps:
+      - id: latest-tag  # The step ID to refer to later
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: urschrei/{{ env.rustlib_repo }}  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+
+
+  get_rust_lib:
+    name: Get latest release of Rust lib
+    runs-on: ubuntu-latest
+    uses: dsaltares/fetch-gh-release-asset@master
+    with:
+      repo: "urschrei/{{ env.rustlib_repo }}"
+      version: "tags/{{ steps.latest-tag.outputs.tag }}"
+      file:   |
+               if [ "$RUNNER_OS" == "Linux" ]; then
+                    {{ env.rustlib_repo }}-{{ steps.latest-tag.outputs.tag }}-x86_64-unknown-linux-gnu.tar.gz
+               elif [ "$RUNNER_OS" == "Windows" ]; then
+                    {{ env.rustlib_repo }}-{{ steps.latest-tag.outputs.tag }}-x86_64-pc-windows-msvc.zip
+               else
+                    {{ env.rustlib_repo }}-{{ steps.latest-tag.outputs.tag }}-x86_64-apple-darwin.tar.gz
+               fi
+      target: "convertbng/rustlib.zip"
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-2019, macOS-10.15]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v2
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel==1.11.1.post1
+
+        # unzip rustlib into convertbng here
+        run:   |
+               if [ "$RUNNER_OS" == "Linux" ]; then
+                    tar -xvf convertbng/rustlib.zip
+               elif [ "$RUNNER_OS" == "Windows" ]; then
+                    7z x convertbng/rustlib.zip
+               else
+                    tar -xvf convertbng/rustlib.zip
+               fi
+
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir wheelhouse
+        # to supply options, put them in 'env', like:
+        env:
+          CIBW_TEST_REQUIRES: setuptools nose numpy cython
+          CIBW_BUILD: cp37-macosx_x86_64 cp37-win_amd64 cp37-manylinux_x86_64 cp38-macosx_x86_64 cp38-win_amd64 cp38-manylinux_x86_64 cp39-macosx_x86_64 cp39-macosx_arm64 cp39-win_amd64 cp39-manylinux_x86_64
+          CIBW_TEST_COMMAND: nosetests
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./wheelhouse/*.whl
