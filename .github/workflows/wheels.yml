@@ -13,7 +13,7 @@ jobs:
       - id: latest-tag  # The step ID to refer to later
         uses: oprypin/find-latest-tag@v1
         with:
-          repository: urschrei/"{{ env.rustlib_repo }}"  # The repository to scan.
+          repository: urschrei/lonlat_bng  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
 
 
