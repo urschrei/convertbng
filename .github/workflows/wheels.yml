@@ -65,6 +65,7 @@ jobs:
                     7z x ${{ steps.get-rust-lib.outputs.location }} -o.\convertbng
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
+                    sudo cp convertbng/liblonlat_bng.dylib /usr/lib/liblonlat_bng.dylib
                fi
         shell: bash
 
