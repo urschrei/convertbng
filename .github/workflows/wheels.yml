@@ -67,12 +67,12 @@ jobs:
                     7z x ${{ steps.get-rust-lib.outputs.location }} -o.\convertbng
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C convertbng
-                    otool -L convertbng/lib${{ workflow.Build.env.rustlib }}.dyblib
+                    otool -L convertbng/lib${{ workflow.Build.env.rustlib }}.dylib
                     export LD_LIBRARY_PATH="$(pwd)/convertbng"
                fi
         shell: bash
-        - name: check lib path
-          run: echo $LD_LIBRARY_PATH
+      - name: check lib path
+        run: echo $LD_LIBRARY_PATH
 
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
