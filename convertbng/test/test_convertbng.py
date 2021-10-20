@@ -242,3 +242,10 @@ class ConvertbngTests(unittest.TestCase):
         """ Tests EPSG3857 to WGS84 conversion """
         expected = ([-5.625000000783013], [52.48278022732355])
         result = convert_epsg3857_to_wgs84(-626172.1357121646, 6887893.4928337997)
+
+    def test_large_array(self):
+        """
+        Try to trigger segfault as per https://github.com/urschrei/convertbng/issues/9
+
+        """
+        [convert_bng([-1.89983], [52.48142]) for x in range(10000)]
