@@ -246,6 +246,7 @@ class ConvertbngTests(unittest.TestCase):
     def test_large_array(self):
         """
         Try to trigger segfault as per https://github.com/urschrei/convertbng/issues/9
+        Note: this segfault currently only appears when using ctypes
 
         """
-        [convert_bng([-1.89983], [52.48142]) for x in range(10000)]
+        [cconvert_bng([-1.89983], [52.48142]) for x in range(10000)]
