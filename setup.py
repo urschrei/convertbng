@@ -11,7 +11,6 @@ import re
 import io
 import sys
 from setuptools import setup, find_packages, Distribution, Extension
-import numpy
 
 def read(*names, **kwargs):
     with io.open(
@@ -73,7 +72,7 @@ extensions = Extension("convertbng.cutil",
                     libraries=["lonlat_bng"],
                     depends=ddirs,
                     language='c',
-                    include_dirs=['convertbng', numpy.get_include()],
+                    include_dirs=['convertbng'],
                     library_dirs=['convertbng'],
                     extra_compile_args=["-O3"],
                     extra_link_args=ldirs
