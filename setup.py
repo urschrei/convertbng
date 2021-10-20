@@ -79,7 +79,7 @@ extensions = Extension("convertbng.cutil",
 )
 
 if has_cython:
-    extensions = cythonize([extensions,])
+    extensions = cythonize([extensions,], compiler_directives={'language_level' : "3"})
 else:
     extensions = [extensions,]
 
