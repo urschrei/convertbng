@@ -1,5 +1,4 @@
-[![Travis (.org)](https://img.shields.io/travis/:urschrei/:convertbng.svg)](https://travis-ci.org/urschrei/convertbng)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/t9icsmbsut93k7pg?branch=master&svg=true)](https://ci.appveyor.com/project/urschrei/convertbng) [![Coverage Status](https://coveralls.io/repos/github/urschrei/convertbng/badge.svg?branch=master)](https://coveralls.io/github/urschrei/convertbng?branch=master) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt)
+[![Coverage Status](https://coveralls.io/repos/github/urschrei/convertbng/badge.svg?branch=master)](https://coveralls.io/github/urschrei/convertbng?branch=master) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt)
 
 # Description
 A utility library for converting decimal [WGS84](http://spatialreference.org/ref/epsg/wgs-84/) longitude and latitude coordinates into ETRS89 ([EPSG:25830](http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/)) and/or British National Grid (More correctly: OSGB36, or [EPSG:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) Eastings and Northings, and vice versa.  
@@ -12,8 +11,8 @@ Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 
 ## Supported Platforms
 The package has been built for and tested on the following platforms:
-- Linux 64-bit Python 3.{7, 8, 9, 10} a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
-- macOS Darwin 64-bit, Python 3.{7, 8, 9, 10} as a wheel for versions 10.6 and above
+- Linux 64-bit Python 3.{8, 9, 10} a [manylinux1](https://www.python.org/dev/peps/pep-0513) wheel
+- macOS Darwin 64-bit, Python 3.{8, 9, 10} as a wheel for versions 10.6 and above
 - Windows 32-bit and 64-bit Python 3.{6, 7}
 
 ### Windows Binaries
