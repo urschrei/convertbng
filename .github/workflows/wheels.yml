@@ -70,7 +70,6 @@ jobs:
           CIBW_BEFORE_BUILD_MACOS: pip install numpy cython
           CIBW_BEFORE_BUILD: pip install numpy cython
           CIBW_TEST_REQUIRES: setuptools pytest numpy cython
-          CIBW_TEST_COMMAND: 'pytest {package}'
           CIBW_BUILD: cp3{7,8,9,10}-macosx_x86_64 cp3{7,8,9,10}-manylinux_x86_64 cp3{8,9,10}-macosx_arm64
           CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_TEST_SKIP: "*:arm64"
