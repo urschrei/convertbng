@@ -59,9 +59,7 @@ jobs:
                echo ${{ steps.get-rust-lib.outputs.location }}
                tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C ${{ env.wheelname }}
                mkdir wheelhouse
-               if [ "$RUNNER_OS" == "Linux" ]; then
-                    cp ${{ env.wheelname }}/*.so wheelhouse
-               elif [ "$RUNNER_OS" == "Windows" ]; then
+               if [ "$RUNNER_OS" == "Windows" ]; then
                     cp ${{ env.wheelname }}/*.{dll,lib} wheelhouse
                fi
         shell: bash
