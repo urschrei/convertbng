@@ -5,9 +5,6 @@ env:
 
 on: [push, pull_request]
 
-env:
-    MACOSX_DEPLOYMENT_TARGET: "10.14"
-
 jobs:
   get_latest_lib_tag:
     name: Get latest Rust lib tag
@@ -66,8 +63,6 @@ jobs:
                     cp ${{ env.wheelname }}/*.so wheelhouse
                elif [ "$RUNNER_OS" == "Windows" ]; then
                     cp ${{ env.wheelname }}/*.{dll,lib} wheelhouse
-               else
-                    cp ${{ env.wheelname }}/*.dylib wheelhouse
                fi
         shell: bash
 
