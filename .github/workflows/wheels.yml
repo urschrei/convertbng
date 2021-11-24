@@ -2,7 +2,7 @@ name: Build and test wheels, release on new tag
 env:
   rustlib: lonlat_bng
   wheelname: convertbng
-  MACOSX_DEPLOYMENT_TARGET: 10.14
+  MACOSX_DEPLOYMENT_TARGET: 10.11
 
 on: [push, pull_request]
 
@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-11]
 
     steps:
       - uses: actions/checkout@v2
@@ -74,7 +74,7 @@ jobs:
       - name: Build and Test Wheels
         uses: pypa/cibuildwheel@v2.2.2
         env:
-          CIBW_ENVIRONMENT: MACOSX_DEPLOYMENT_TARGET=10.14
+          CIBW_ENVIRONMENT: MACOSX_DEPLOYMENT_TARGET=10.11
           CIBW_BEFORE_BUILD_MACOS: brew install openblas && OPENBLAS="$(brew --prefix openblas)" pip install numpy
           CIBW_BEFORE_BUILD: pip install numpy
           CIBW_TEST_REQUIRES: setuptools pytest numpy cython
@@ -96,7 +96,7 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     name: Release repaired and tested wheels
     needs: build_wheels
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
