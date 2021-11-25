@@ -11,7 +11,7 @@ from convertbng.util import (
     convert_etrs89_to_osgb36,
     convert_etrs89_to_lonlat,
     convert_epsg3857_to_wgs84,
-    convert_to_etrs89
+    convert_to_etrs89,
 )
 from convertbng.cutil import convert_bng as cconvert_bng
 from ctypes import ArgumentError
@@ -19,39 +19,30 @@ from random import randrange
 
 
 class ConvertbngTests(unittest.TestCase):
-    """ Tests for convert_bng
-    """
+    """Tests for convert_bng"""
 
     def setUp(self):
-        """ Set stuff up
-        """
+        """Set stuff up"""
         pass
 
     def testConvertLonLat(self):
         """ Test multithreaded lon, lat --> BNG function """
-        expected = (
-            [516274.46, 398915.554],
-            [173141.101, 521544.09]
-        )
-   
+        expected = ([516274.46, 398915.554], [173141.101, 521544.09])
+
         result = convert_bng(
-            [-0.32824866, -2.0183041005533306],
-            [51.44533267, 54.589097162646141]
+            [-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]
         )
         self.assertEqual(expected, result)
 
     def testCythonConvertLonLat(self):
         """ Test Cythonised multithreaded lon, lat --> BNG function """
-        expected = (
-            [516274.46000000002, 398915.554],
-            [173141.101, 521544.09000000003]
-        )
-   
+        expected = ([516274.46000000002, 398915.554], [173141.101, 521544.09000000003])
+
         result = cconvert_bng(
             np.array([-0.32824866, -2.0183041005533306]),
-            np.array([51.44533267, 54.589097162646141])
+            np.array([51.44533267, 54.589097162646141]),
         )
-        # dump array result into list 
+        # dump array result into list
         a, b = list(result[0]), list(result[1])
         self.assertEqual(expected, (a, b))
 
@@ -59,25 +50,18 @@ class ConvertbngTests(unittest.TestCase):
         """ Test Cythonised multithreaded lon, lat --> BNG function with lists """
         expected = (
             np.array([516274.460, 398915.542]),
-            np.array([173141.098, 521544.088])
+            np.array([173141.098, 521544.088]),
         )
-   
+
         result = cconvert_bng(
-            [-0.32824866, -2.0183041005533306],
-            [51.44533267, 54.589097162646141]
+            [-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]
         )
         self.assertEqual(expected[0][0], result[0][0])
 
     def testConvertBNG(self):
         """ Test multithreaded BNG --> lon, lat function """
-        expected = (
-            [-0.32822654, -2.01831267],
-            [51.44533145, 54.58910534]
-        )
-        result = convert_lonlat(
-            [516276, 398915],
-            [173141, 521545]
-        )
+        expected = ([-0.32822654, -2.01831267], [51.44533145, 54.58910534])
+        result = convert_lonlat([516276, 398915], [173141, 521545])
         self.assertEqual(expected, result)
 
     def testConvertLonLatSingle(self):
@@ -95,7 +79,7 @@ class ConvertbngTests(unittest.TestCase):
     def testConvertString(self):
         """ Test that an error is thrown for incorrect types """
         with self.assertRaises(ArgumentError) as result:
-            convert_bng(['Foo'], ['Bar'])
+            convert_bng(["Foo"], ["Bar"])
 
     def testConvertIterable(self):
         """ Test lon, lat --> BNG conversion of tuples """
@@ -106,21 +90,15 @@ class ConvertbngTests(unittest.TestCase):
     def testConvertArray(self):
         """ Test lon, lat --> BNG conversion of array.array """
         expected = ([651409.804], [313177.45])
-        result = convert_bng(array.array('d', [1.716073973]), array.array('d', [52.658007833]))
+        result = convert_bng(
+            array.array("d", [1.716073973]), array.array("d", [52.658007833])
+        )
         self.assertEqual(expected, result)
 
     def testGenerator(self):
         """ Test that the lon, lat -> BNG function can consume generators """
-        expected = (
-            [516274.46, 398915.554],
-            [173141.101, 521544.09]
-        )
-        inp = [
-            [-0.32824866,
-                -2.0183041005533306],
-            [51.44533267,
-                54.589097162646141]
-        ]
+        expected = ([516274.46, 398915.554], [173141.101, 521544.09])
+        inp = [[-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]]
         lon_generator = (n for n in inp[0])
         lat_generator = (n for n in inp[1])
         result = convert_bng(lon_generator, lat_generator)
@@ -138,7 +116,7 @@ class ConvertbngTests(unittest.TestCase):
         lon_arr = np.random.uniform(W, E, [num_coords])
         lat_arr = np.random.uniform(S, N, [num_coords])
         convert_bng(lon_arr, lat_arr)
-        
+
     def testLargeArrayConversion(self):
         """ Test that we don't get segmentation fault: 11 on large (1MM points) arrays using Ctypes """
         # UK bounding box
@@ -228,13 +206,13 @@ class ConvertbngTests(unittest.TestCase):
 
     def test_etrs89_to_lonlat(self):
         """ Tests ETRS89 --> Lon, Lat conversion"""
-        expected =([1.71607397], [52.65800783])
+        expected = ([1.71607397], [52.65800783])
         result = convert_etrs89_to_lonlat(651307.003, 313255.686)
         self.assertEqual(expected, result)
 
     def test_lonlat_to_etrs89(self):
         """ Tests Lon, Lat --> ETRS89 conversion"""
-        expected =([651307.003], [313255.686])
+        expected = ([651307.003], [313255.686])
         result = convert_to_etrs89(1.71607397, 52.65800783)
         self.assertEqual(expected, result)
 

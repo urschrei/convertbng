@@ -29,7 +29,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-from ctypes import cdll, c_double, Structure, c_void_p, cast, c_size_t, POINTER, string_at
+from ctypes import (
+    cdll,
+    c_double,
+    Structure,
+    c_void_p,
+    cast,
+    c_size_t,
+    POINTER,
+    string_at,
+)
 from sys import platform, version_info
 from array import array
 import numpy as np
@@ -41,26 +50,28 @@ __version__ = "0.6.35"
 file_path = os.path.dirname(__file__)
 
 if platform == "darwin":
-    prefix = 'lib'
+    prefix = "lib"
     ext = "dylib"
 elif "linux" in platform:
-    prefix = 'lib'
+    prefix = "lib"
     ext = "so"
     fpath = os.path.join(file_path, ".libs")
 
 elif "win32" in platform:
-    prefix = ''
-    ext = 'dll'
+    prefix = ""
+    ext = "dll"
 
-prefix = {'win32': ''}.get(platform, 'lib')
-extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
+prefix = {"win32": ""}.get(platform, "lib")
+extension = {"darwin": ".dylib", "win32": ".dll"}.get(platform, ".so")
 
 # Python 3 check
-if (version_info > (3, 0)):
+if version_info > (3, 0):
     from subprocess import getoutput as spop
+
     py3 = True
 else:
     from subprocess import check_output as spop
+
     py3 = False
 
 try:
@@ -76,15 +87,15 @@ except OSError:
 
 class _FFIArray(Structure):
     """ Convert sequence of floats to a C-compatible void array """
-    _fields_ = [("data", c_void_p),
-                ("len", c_size_t)]
+
+    _fields_ = [("data", c_void_p), ("len", c_size_t)]
 
     @classmethod
     def from_param(cls, seq):
         """  Allow implicit conversions from a sequence of 64-bit floats."""
         return seq if isinstance(seq, cls) else cls(seq)
 
-    def __init__(self, seq, data_type = c_double):
+    def __init__(self, seq, data_type=c_double):
         """
         Convert sequence of values into array, then ctypes Structure
 
@@ -94,12 +105,12 @@ class _FFIArray(Structure):
         numpy array -> array.array -> read-only buffer -> CPython iterable
         """
         if isinstance(seq, float):
-            seq = array('d', [seq])
+            seq = array("d", [seq])
         try:
             len(seq)
         except TypeError:
-             # we've got an iterator or a generator, so consume it
-            seq = array('d', seq)
+            # we've got an iterator or a generator, so consume it
+            seq = array("d", seq)
         array_type = data_type * len(seq)
         try:
             raw_seq = array_type.from_buffer(seq.astype(np.float64))
@@ -108,15 +119,15 @@ class _FFIArray(Structure):
                 raw_seq = array_type.from_buffer_copy(seq.astype(np.float64))
             except (TypeError, AttributeError):
                 # it's a list or a tuple
-                raw_seq = array_type.from_buffer(array('d', seq))
+                raw_seq = array_type.from_buffer(array("d", seq))
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
 
 class _Result_Tuple(Structure):
     """ Container for returned FFI data """
-    _fields_ = [("e", _FFIArray),
-                ("n", _FFIArray)]
+
+    _fields_ = [("e", _FFIArray), ("n", _FFIArray)]
 
 
 def _void_array_to_list(restuple, _func, _args):
@@ -132,6 +143,7 @@ def _void_array_to_list(restuple, _func, _args):
     ls_n = np.frombuffer(array_str_n, float, array_size).tolist()
 
     return ls_e, ls_n
+
 
 # Multi-threaded FFI functions
 convert_bng = lib.convert_to_bng_threaded
@@ -149,7 +161,7 @@ convert_lonlat = lib.convert_to_lonlat_threaded
 convert_lonlat.argtypes = (_FFIArray, _FFIArray)
 convert_lonlat.restype = _Result_Tuple
 convert_lonlat.errcheck = _void_array_to_list
-convert_lonlat.__doc__ =  """
+convert_lonlat.__doc__ = """
     Multi-threaded BNG --> lon, lat conversion
     Returns a list of two lists containing Longitude and Latitude floats,
     respectively
