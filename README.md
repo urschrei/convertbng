@@ -55,6 +55,12 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
     lats_np = np.array(lats)
         res_list_np = convert_bng(lons_np, lats_np)
 
+# Cython Module
+If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, but performance on large datasets is better. They are selected by changing the import statement  
+`from convertbng.util import` to  
+**`from convertbng.cutil import`**  
+
+The conversion functions will accept most sequences which implement `__iter__`, as above (`list`, `tuple`, `float`, `array.array`, `numpy.ndarray`), but **will always return `NumPy f64 ndarray`**. In addition, you must ensure that your inputs are `float`, `f64`, or `d` in the case of `array.array`.  
 
 ## But I Have a List of Coordinate Pairs
     coords = [[1.0, 2.0], [3.0, 4.0]]
@@ -83,13 +89,6 @@ All functions try to be liberal about what containers they accept: `list`, `tupl
     line = LineString([[651307.003, 313255.686], [651307.004, 313255.687]])
 
     new_line = transform(convert_etrs89_to_lonlat_protect_nan, line)
-
-# Experimental Cython Module
-If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, and are selected by changing the import statement  
-`from convertbng.util import` to  
-**`from convertbng.cutil import`**  
-
-The conversion functions will accept most sequences which implement `__iter__`, as above (`list`, `tuple`, `float`, `array.array`, `numpy.ndarray`), but **will always return `NumPy f64 ndarray`**. In addition, you must ensure that your inputs are `float`, `f64`, or `d` in the case of `array.array`.  
 
 
 
