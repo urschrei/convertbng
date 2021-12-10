@@ -45,7 +45,7 @@ import numpy as np
 import os
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.6.35"
+__version__ = "0.6.36"
 
 file_path = os.path.dirname(__file__)
 

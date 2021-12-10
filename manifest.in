@@ -5,6 +5,7 @@ include convertbng/*.h
 include convertbng/*.pxd
 include convertbng/*.pyd
 include convertbng/*.so
+include convertbng/*.dylib
 include convertbng/rdp.dll
 include license.txt
 include README.md
