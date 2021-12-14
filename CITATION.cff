@@ -1,6 +1,6 @@
 cff-version: 1.1.0
 message: "If you use this software, please cite it using these metadata."
-abstract: "Convertbng: convert latitude and longitude to and from ETRS89 and OSGB36 coordinates using the OSTN15 transform"
+abstract: "Convertbng: convert WGS84 latitude and longitude to and from ETRS89 and OSGB36 coordinates using the OSTN15 transform"
 authors:
   -
     family-names: "Hügel"
