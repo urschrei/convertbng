@@ -160,3 +160,21 @@ Tests require both `numpy` and `nose`.
 
 # License
 [MIT](license.txt)
+
+## Citing `Convertbng`
+If Convertbng has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing it as follows (example in APA style, 7th edition):
+
+> Hügel, S. (2021). Convertbng (Version X.Y.Z) [Computer software]. https://doi.org/10.5281/zenodo.5774931
+
+In Bibtex format:
+
+    @software{Hugel_Convertbng_2021,
+    author = {Hügel, Stephan},
+    doi = {10.5281/zenodo.5774931},
+    license = {MIT},
+    month = {12},
+    title = {{Convertbng}},
+    url = {https://github.com/urschrei/convertbng},
+    version = {X.Y.Z},
+    year = {2021}
+    }
