@@ -45,7 +45,7 @@ import numpy as np
 import os
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.6.36"
+__version__ = "0.6.37"
 
 file_path = os.path.dirname(__file__)
 
@@ -86,13 +86,13 @@ except OSError:
 
 
 class _FFIArray(Structure):
-    """ Convert sequence of floats to a C-compatible void array """
+    """Convert sequence of floats to a C-compatible void array"""
 
     _fields_ = [("data", c_void_p), ("len", c_size_t)]
 
     @classmethod
     def from_param(cls, seq):
-        """  Allow implicit conversions from a sequence of 64-bit floats."""
+        """Allow implicit conversions from a sequence of 64-bit floats."""
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type=c_double):
@@ -125,13 +125,13 @@ class _FFIArray(Structure):
 
 
 class _Result_Tuple(Structure):
-    """ Container for returned FFI data """
+    """Container for returned FFI data"""
 
     _fields_ = [("e", _FFIArray), ("n", _FFIArray)]
 
 
 def _void_array_to_list(restuple, _func, _args):
-    """ Convert the FFI result to Python data structures """
+    """Convert the FFI result to Python data structures"""
     shape = (restuple.e.len, 1)
     array_size = np.prod(shape)
     mem_size = 8 * array_size
