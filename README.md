@@ -100,7 +100,7 @@ The conversion functions will accept most sequences which implement `__iter__`, 
 - transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN15 corrections):
     - use `convert_to_etrs89()`
 - transform ETRS89 Eastings and Northings to ETRS89 longitude and latitude, **very quickly** (the transformation does not use OSTN15):
-    - use `convert_etrs89_to_ll()`
+    - use `convert_etrs89_to_lonlat()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN15 corrections:
     - use `convert_etrs89_to_osgb36()`
 
