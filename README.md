@@ -40,7 +40,7 @@ from convertbng.util import convert_bng, convert_lonlat
 # convert a single value
 res = convert_bng(lon, lat)
 
-# convert longitude and latitude values to OSGB36 Eastings and Northings using OSTN15 corrections
+# convert longitude and latitude to OSGB36 Eastings and Northings using OSTN15 corrections
 lons = [lon1, lon2, lon3]
 lats = [lat1, lat2, lat3]
 res_list = convert_bng(lons, lats)
