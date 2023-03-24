@@ -11,9 +11,9 @@ Please use an up-to-date version of pip (`8.1.2` as of June 2016)
 
 ## Supported Platforms
 The package has been built for and tested on the following platforms:
-- Linux 64-bit Python 3.{7, 8, 9, 10} (manylinux)
-- macOS x86_64 and aarch64 Python 3.{7, 8, 9, 10}
-- Windows 64-bit Python 3.{7, 8, 9, 10}
+- Linux x86_64 and aarch64 Python 3.{7, 8, 9, 10, 11} (Manylinux2014)
+- macOS x86_64 and arm64 Python 3.{7, 8, 9, 10, 11}
+- Windows 64-bit Python 3.{7, 8, 9, 10, 11}
 
 ### Windows Binaries
 The Rust DLL and the Cython extension used by this package have been built with an MSVC toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.

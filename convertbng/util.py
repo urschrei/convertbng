@@ -29,23 +29,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
+import os
+from array import array
 from ctypes import (
-    cdll,
-    c_double,
     Structure,
+    c_double,
+    c_size_t,
     c_void_p,
     cast,
-    c_size_t,
-    POINTER,
+    cdll,
     string_at,
 )
 from sys import platform, version_info
-from array import array
-import numpy as np
-import os
 
-__author__ = u"Stephan Hügel"
-__version__ = "0.6.39"
+import numpy as np
+
+__author__ = "Stephan Hügel"
+__version__ = "0.6.41"
 
 file_path = os.path.dirname(__file__)
 
