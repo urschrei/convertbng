@@ -155,12 +155,13 @@ Finally, we link the Rust conversion functions from `util.py` [again](https://gi
 
 # Building the binary for local development
 - ensure you have Rust 1.x and Cargo [installed](https://www.rustup.rs)
-- clone https://github.com/urschrei/lonlat_bng, and ensure it's adjacent to this dir (i.e. `code/witnessme/convertbng` and `code/witnessme/rust_bng`)
-- in this dir, run `make clean` then `make`
+- download the Rust extension for your platform from [github](https://github.com/urschrei/rust_bng/releases)
+- copy the binary into the `convertbng` directory
+- run `python setup.py build_ext --inplace`
 
 # Tests
-You can run the Python module tests by running "make test".  
-Tests require both `numpy` and `nose`.
+- install `pytest`
+- run `pytest`
 
 # License
 [MIT](license.txt)
