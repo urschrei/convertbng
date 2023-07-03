@@ -44,7 +44,7 @@ jobs:
           arch: arm64
           id: macos_arm64
         - os: windows-latest
-          pybuilds: cp3{7,8,9,10,11}-win_amd64
+          pybuilds: cp3{7,9,10,11}-win_amd64
           arch: x86_64
           id: windows
 
