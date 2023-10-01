@@ -3,8 +3,8 @@ cutil.c
 *.eggs
 test/output*
 _version.py
-src/pypolyline/header.h
-libpolylineffi.so
+src/convertbng/header.h
+liblonlat_bng.so
 rustlib/*
 *.so
 *.dylib
