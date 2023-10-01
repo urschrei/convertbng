@@ -18,7 +18,7 @@ ddirs = []
 if "linux" in sys.platform:
     # from http://stackoverflow.com/a/10252190/416626
     # the $ORIGIN trick is not perfect, though
-    ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN"]
+    ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN/"]
     platform_lib = "liblonlat_bng.so"
 if sys.platform == "darwin":
     # You must compile your binary with rpath support for this to work
@@ -26,25 +26,24 @@ if sys.platform == "darwin":
     platform_lib = "liblonlat_bng.dylib"
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 if sys.platform == "win32":
-    ddirs = ["convertbng/header.h"]
+    ddirs = ["src/convertbng/header.h"]
     platform_lib = "lonlat_bng.dll"
 
 
-extensions = Extension(
-    "convertbng.cutil",
-    sources=["convertbng/cutil.pyx"],
+extension = Extension(
+    name="convertbng.cutil",
+    sources=["src/convertbng/cutil.pyx"],
     libraries=["lonlat_bng"],
     depends=ddirs,
     language="c",
-    include_dirs=["convertbng", numpy.get_include()],
-    library_dirs=["convertbng"],
-    extra_compile_args=["-O3"],
+    include_dirs=["src/convertbng", numpy.get_include()],
+    library_dirs=["src/convertbng"],
     extra_link_args=ldirs,
 )
 
 extensions = cythonize(
     [
-        extensions,
+        extension,
     ],
     compiler_directives={"language_level": "3"},
 )
@@ -54,5 +53,5 @@ setup(
     package_data={
         "convertbng": [platform_lib],
     },
-    ext_modules=extensions,
+    ext_modules=[extension],
 )
