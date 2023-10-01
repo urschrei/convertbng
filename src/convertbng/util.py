@@ -45,7 +45,6 @@ from sys import platform, version_info
 import numpy as np
 
 __author__ = "Stephan Hügel"
-__version__ = "0.6.43"
 
 file_path = os.path.dirname(__file__)
 
