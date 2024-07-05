@@ -1,4 +1,4 @@
-[![CI Status](https://github.com/urschrei/convertbng/actions/workflows/wheels.yml/badge.svg)](https://github.com/urschrei/convertbng/actions/workflows/wheels.yml) [![Coverage Status](https://coveralls.io/repos/github/urschrei/convertbng/badge.svg?branch=master)](https://coveralls.io/github/urschrei/convertbng?branch=master) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt) [![Downloads](https://pepy.tech/badge/convertbng)](https://pepy.tech/project/convertbng)[![DOI](https://zenodo.org/badge/37950596.svg)](https://zenodo.org/badge/latestdoi/37950596)
+[![CI Status](https://github.com/urschrei/convertbng/actions/workflows/wheels.yml/badge.svg)](https://github.com/urschrei/convertbng/actions/workflows/wheels.yml) [![Coverage Status](https://coveralls.io/repos/github/urschrei/convertbng/badge.svg?branch=master)](https://coveralls.io/github/urschrei/convertbng?branch=master) [![PyPI Version](https://img.shields.io/pypi/v/convertbng.svg)](https://pypi.python.org/pypi/convertbng) [![Downloads](https://pepy.tech/badge/convertbng)](https://pepy.tech/project/convertbng)[![DOI](https://zenodo.org/badge/37950596.svg)](https://zenodo.org/badge/latestdoi/37950596)
 
 # Description
 A utility library for converting decimal [WGS84](http://spatialreference.org/ref/epsg/wgs-84/) longitude and latitude coordinates into ETRS89 ([EPSG:25830](http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/)) and/or British National Grid (More correctly: OSGB36, or [EPSG:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) Eastings and Northings, and vice versa.  
@@ -164,7 +164,7 @@ Finally, we link the Rust conversion functions from `util.py` [again](https://gi
 - run `pytest`
 
 # License
-[MIT](license.txt)
+[Blue Oak Model License](LICENSE.md)
 
 ## Citing `Convertbng`
 If Convertbng has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing it as follows (example in APA style, 7th edition):
