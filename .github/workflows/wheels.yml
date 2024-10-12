@@ -8,6 +8,7 @@ permissions:
 env:
   rustlib: lonlat_bng
   wheelname: convertbng
+  CIBW_BUILD_FRONTEND: build[uv]
 
 on: [push, pull_request]
 
