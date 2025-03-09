@@ -116,7 +116,7 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ matrix.arch }}
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_TEST_SKIP: "*:arm64"
-          MACOSX_DEPLOYMENT_TARGET=11.0
+          MACOSX_DEPLOYMENT_TARGET: 11.0
 
       - id: attest
         name: Attest Build Provenance
