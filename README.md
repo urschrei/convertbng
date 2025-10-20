@@ -6,8 +6,8 @@ A utility library for converting decimal [WGS84](http://spatialreference.org/ref
 Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) using FFI, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
 
 # Installation
-`pip install convertbng`  
-Please use an up-to-date version of pip (`8.1.2` as of June 2016)
+- `pip install convertbng`
+- `uv add convertbng`
 
 ### Supported Python Versions
 Simplification supports all [_currently_ supported Python versions](https://devguide.python.org/versions/).
