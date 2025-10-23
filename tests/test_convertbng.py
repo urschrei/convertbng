@@ -1,21 +1,23 @@
-import unittest
-import numpy as np
 import array
 import math
+import unittest
+from ctypes import ArgumentError
+from random import randint, randrange
+
+import numpy as np
+from convertbng.cutil import convert_bng as cconvert_bng
+
 from convertbng.util import (
     convert_bng,
-    convert_lonlat,
-    convert_to_osgb36,
-    convert_osgb36_to_lonlat,
-    convert_osgb36_to_etrs89,
-    convert_etrs89_to_osgb36,
-    convert_etrs89_to_lonlat,
     convert_epsg3857_to_wgs84,
+    convert_etrs89_to_lonlat,
+    convert_etrs89_to_osgb36,
+    convert_lonlat,
+    convert_osgb36_to_etrs89,
+    convert_osgb36_to_lonlat,
     convert_to_etrs89,
+    convert_to_osgb36,
 )
-from convertbng.cutil import convert_bng as cconvert_bng
-from ctypes import ArgumentError
-from random import randrange
 
 
 class ConvertbngTests(unittest.TestCase):
@@ -57,6 +59,16 @@ class ConvertbngTests(unittest.TestCase):
             [-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]
         )
         self.assertEqual(expected[0][0], result[0][0])
+
+    def test_loop(self):
+        """See https://github.com/urschrei/convertbng/issues/101"""
+
+        def test_conversion(easting, northing):
+            res = convert_lonlat(easting, northing)
+            return [res[0][0], res[1][0]]
+
+        for i in range(500000):
+            test_conversion([randint(10000, 50000)], [randint(10000, 50000)])
 
     def testConvertBNG(self):
         """Test multithreaded BNG --> lon, lat function"""
