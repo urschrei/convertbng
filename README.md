@@ -13,7 +13,8 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 1. Ensure you have a copy of `liblonlat_bng` and `header.h` from https://github.com/urschrei/lonlat_bng/releases, and it's in the `src/convertbng` subdir
 2. run `uv sync --dev`
 3. run `pytest .`
-4. If you make changes, you must rebuild the extension: `uv sync --reinstall`
+
+Changes in `pyx` and `pxd` files, and the Rust library and header will bust the cache, triggering a rebuild when `uv` commands are run.
 
 ### Supported Python Versions
 Simplification supports all [_currently_ supported Python versions](https://devguide.python.org/versions/).
