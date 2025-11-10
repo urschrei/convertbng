@@ -70,6 +70,25 @@ class ConvertbngTests(unittest.TestCase):
         for i in range(500000):
             test_conversion([randint(10000, 50000)], [randint(10000, 50000)])
 
+    def test_non_convergence(self):
+        """
+        https://github.com/urschrei/lonlat_bng/issues/37#issuecomment-3511393210
+        """
+        extremes = [
+            [405110, 373787],
+            [425917, 241074],
+            [408884, 333642],
+        ]
+        expected = [
+            [-1.92485417, 53.26107641],
+            [-1.6233221, 52.06744836],
+            [-1.86937174, 52.90016459],
+        ]
+        for i, j in zip(extremes, expected):
+            exp = ([j[0]], [j[1]])
+            converted = convert_lonlat([i[0]], [i[1]])
+            self.assertEqual(exp, converted)
+
     def testConvertBNG(self):
         """Test multithreaded BNG --> lon, lat function"""
         expected = ([-0.32822654, -2.01831267], [51.44533145, 54.58910534])
