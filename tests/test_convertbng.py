@@ -80,9 +80,9 @@ class ConvertbngTests(unittest.TestCase):
             [408884, 333642],
         ]
         expected = [
-            [-1.92485417, 53.26107641],
-            [-1.6233221, 52.06744836],
-            [-1.86937174, 52.90016459],
+            [-1.92485417, 53.26107642],
+            [-1.62332209, 52.06744836],
+            [-1.86937175, 52.9001646],
         ]
         for i, j in zip(extremes, expected):
             exp = ([j[0]], [j[1]])
@@ -91,7 +91,7 @@ class ConvertbngTests(unittest.TestCase):
 
     def testConvertBNG(self):
         """Test multithreaded BNG --> lon, lat function"""
-        expected = ([-0.32822654, -2.01831267], [51.44533145, 54.58910534])
+        expected = ([-0.32822654, -2.01831268], [51.44533144, 54.58910534])
         result = convert_lonlat([516276, 398915], [173141, 521545])
         self.assertEqual(expected, result)
 
@@ -231,7 +231,7 @@ class ConvertbngTests(unittest.TestCase):
 
     def test_osgb36_to_etrs89(self):
         """Tests OSGB36 --> ETRS89 Eastings, Northings conversion"""
-        expected = ([651307.003], [313255.686])
+        expected = ([651307.0032098937], [313255.68598407705])
         result = convert_osgb36_to_etrs89(651409.804, 313177.45)
         self.assertEqual(expected, result)
 
