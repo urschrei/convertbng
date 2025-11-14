@@ -6,8 +6,8 @@ A utility library for converting decimal [WGS84](http://spatialreference.org/ref
 Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) using FFI, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
 
 # Installation
-- `pip install convertbng`
 - `uv add convertbng`
+- `pip install convertbng`
 
 ## Installing for local development
 1. Ensure you have a copy of `liblonlat_bng` and `header.h` from https://github.com/urschrei/lonlat_bng/releases, and it's in the `src/convertbng` subdir
@@ -64,6 +64,17 @@ lons_np = np.array(lons)
 lats_np = np.array(lats)
     res_list_np = convert_bng(lons_np, lats_np)
 ```
+
+# Accuracy
+The [Rust library](https://github.com/urschrei/lonlat_bng) produces the following results when round-tripping the 40 OSTN15 test points (only differences are shown)
+
+| Test Point | Input OSGB36 E (m) | Input OSGB36 N (m) | Lon diff (°) | Lat diff (°) | E diff (m) | N diff (m) |
+|:-----------|-------------------:|-------------------:|-------------:|-------------:|-----------:|-----------:|
+| TP27       | 319188.434         | 670947.534         | —            | —            | —          | +0.001     |
+| TP31       | 9587.909           | 899448.996         | +6×10⁻⁸      | -3×10⁻⁸      | +0.003     | -0.004     |
+| TP32       | 71713.132          | 938516.404         | +2×10⁻⁸      | -1×10⁻⁸      | +0.001     | -0.002     |
+| TP37       | 180862.461         | 1029604.114        | —            | —            | —          | -0.001     |
+| TP38       | 421300.525         | 1072147.239        | —            | —            | —          | -0.001     |
 
 # Cython Module
 If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, but performance on large datasets is better. They are selected by changing the import statement  
