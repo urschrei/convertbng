@@ -1,5 +1,3 @@
-import array
-import math
 import unittest
 from ctypes import ArgumentError
 from random import randint, randrange

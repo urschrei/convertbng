@@ -93,7 +93,7 @@ jobs:
         uses: robinraju/release-downloader@v1.12
         name: Download latest Rust lib release
         with:
-          token: ${{ secrets.LONLAT_RETRIEVAL }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: urschrei/${{ env.rustlib }}
           tag: ${{ needs.get_latest_lib_tag.outputs.tag }}
           fileName: ${{ env.filename }}
