@@ -134,7 +134,7 @@ Provided for completeness:
     - use `convert_osgb36_to_etrs89()`
 
 # Relationship between ETRS89 and WGS84
-From [Transformations and OSGM02™ User guide](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/formats-for-developers.html), p7. Emphasis mine.
+From the Ordnance Survey *Transformations and OSGM02™ User guide*, p7. Emphasis mine.
 >[…] ETRS89 is a precise version of the better known WGS84 reference system optimised for use in Europe; **however, for most purposes it can be considered equivalent to WGS84**.
 Specifically, the motion of the European continental plate is not apparent in ETRS89, which allows a fixed relationship to be established between this system and Ordnance Survey mapping coordinate systems.
 Additional precise versions of WGS84 are currently in use, notably ITRS; these are not equivalent to ETRS89. The difference between ITRS and ETRS89 is in the order of 0.25 m (in 1999), and growing by 0.025 m per year in UK and Ireland. This effect is only relevant in international scientific applications. **For all navigation, mapping, GIS, and engineering applications within the tectonically stable parts of Europe (including UK and Ireland), the term ETRS89 should be taken as synonymous with WGS84**.
@@ -153,15 +153,14 @@ In essence, this means that anywhere you see ETRS89 in this README, you can subs
 `convert_bng` and `convert_lonlat` first use the standard seven-step [Helmert transform](https://en.wikipedia.org/wiki/Helmert_transformation) to convert coordinates. This is fast, but not particularly accurate – it can introduce positional error up to approximately 5 metres. For most applications, this is not of particular concern – the input data (especially those originating with smartphone GPS) probably exceed this level of error in any case. In order to adjust for this, the OSTN15 adjustments for the kilometer-grid the ETRS89 point falls in are retrieved, and a linear interpolation to give final, accurate coordinates is carried out. This process happens in reverse for `convert_lonlat`.
 
 ## OSTN15
-[OSTN15](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html) data are used for highly accurate conversions from ETRS89 latitude and longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [National GPS Network](https://www.ordnancesurvey.co.uk/business-and-government/products/os-net/index.html):
+[OSTN15](https://www.ordnancesurvey.co.uk/products/os-net/for-developers) data are used for highly accurate conversions from ETRS89 latitude and longitude, or ETRS89 Eastings and Northings to OSGB36 Eastings and Northings, and vice versa. These data will usually have been recorded using the [OS Net](https://www.ordnancesurvey.co.uk/products/os-net) GNSS reference station network:
 
 ### Accuracy of *Your* Data
-Conversion of your coordinates using OSTN15 transformations will be accurate, but if you're using consumer equipment, or got your data off the web, be aware that you're converting coordinates which probably weren't accurately recorded in the first place. That's because [accurate surveying is difficult](https://www.ordnancesurvey.co.uk/business-and-government/help-and-support/navigation-technology/os-net/surveying.html).
+Conversion of your coordinates using OSTN15 transformations will be accurate, but if you're using consumer equipment, or got your data off the web, be aware that you're converting coordinates which probably weren't accurately recorded in the first place. That's because [accurate surveying is difficult](https://www.ordnancesurvey.co.uk/products/os-net).
 
 ### Accuracy of the OSTN15 transformation used in this library
-- ETRS89 longitude and latitude / Eastings and Northings to OSGB36 conversion agrees with the provided Ordnance Survey test data in **39 of the 40** test coordinates (excluding two coordinates designed to return no data; these correctly fail).
-- The only discrepancy – in point `TP31`–  is **1mm**.
-- OSGB36 to ETRS89 longitude and latitude conversion is accurate to within 8 decimal places, or 1.1mm.
+- Round-tripping the 40 OSTN15 test points produces a perfect match at 35 of them; the remaining 5 differ by at most 4mm in Eastings/Northings (see table above). The two test points designed to return no data correctly fail.
+- Longitude/latitude residuals are at most ~6×10⁻⁸° (a few mm at this latitude).
 
 ### A Note on Ellipsoids
 WGS84 and ETRS89 coordinates use the GRS80 ellipsoid, whereas OSGB36 uses the Airy 1830 ellipsoid, which provides a regional best fit for Britain. Positions for coordinates in Great Britain can differ by over 100m as a result. It is thus inadvisable to attempt calculations using mixed ETRS89 and OSGB36 coordinates.
