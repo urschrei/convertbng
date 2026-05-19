@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 3.21)
-project(${SKBUILD_PROJECT_NAME} LANGUAGES C)
+cmake_minimum_required(VERSION 3.21...3.31)
+project(
+  ${SKBUILD_PROJECT_NAME}
+  VERSION ${SKBUILD_PROJECT_VERSION}
+  LANGUAGES C)
 
 # Define source directory
 set(convertbng_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/convertbng")
@@ -56,7 +59,7 @@ elseif(UNIX)
 endif()
 
 # Install the extension module
-install(TARGETS cutil DESTINATION convertbng)
+install(TARGETS cutil DESTINATION ${SKBUILD_PROJECT_NAME})
 
 # Install the shared library
 if(APPLE)
@@ -65,11 +68,13 @@ elseif(UNIX)
   set(LONLAT_BNG_LIB_NAME "liblonlat_bng.so")
 elseif(WIN32)
   set(LONLAT_BNG_LIB_NAME "lonlat_bng.dll")
+else()
+  message(FATAL_ERROR "Unsupported platform: cannot determine lonlat_bng library name")
 endif()
 
 install(FILES ${convertbng_SRC_DIR}/${LONLAT_BNG_LIB_NAME}
-        DESTINATION convertbng)
+        DESTINATION ${SKBUILD_PROJECT_NAME})
 
 # Install header file
 install(FILES ${convertbng_SRC_DIR}/header.h
-        DESTINATION convertbng)
+        DESTINATION ${SKBUILD_PROJECT_NAME})
