@@ -19,7 +19,8 @@ from ctypes import (
     cdll,
     string_at,
 )
-from sys import platform, version_info
+from subprocess import getoutput
+from sys import platform
 
 import numpy as np
 
@@ -27,39 +28,15 @@ __author__ = "Stephan Hügel"
 
 file_path = os.path.dirname(__file__)
 
-if platform == "darwin":
-    prefix = "lib"
-    ext = "dylib"
-elif "linux" in platform:
-    prefix = "lib"
-    ext = "so"
-    fpath = os.path.join(file_path, ".libs")
-
-elif "win32" in platform:
-    prefix = ""
-    ext = "dll"
-
 prefix = {"win32": ""}.get(platform, "lib")
 extension = {"darwin": ".dylib", "win32": ".dll"}.get(platform, ".so")
-
-# Python 3 check
-if version_info > (3, 0):
-    from subprocess import getoutput as spop
-
-    py3 = True
-else:
-    from subprocess import check_output as spop
-
-    py3 = False
+fpath = {"darwin": "", "win32": ""}.get(platform, os.path.join(file_path, ".libs"))
 
 try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "lonlat_bng" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
-    if not py3:
-        fname = spop(["ls", fpath]).split()[0]
-    else:
-        fname = spop(["ls %s" % fpath]).split()[0]
+    fname = getoutput("ls %s" % fpath).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
 
 
@@ -75,12 +52,12 @@ class _FFIArray(Structure):
 
     def __init__(self, seq, data_type=c_double):
         """
-        Convert sequence of values into array, then ctypes Structure
+        Convert sequence of values into array, then ctypes Structure.
 
-        Rather than checking types (bad), we just try to blam seq
-        into a ctypes object using from_buffer. If that doesn't work,
-        we try successively more conservative approaches:
-        numpy array -> array.array -> read-only buffer -> CPython iterable
+        numpy arrays go via .astype(float64) and from_buffer, falling
+        back to from_buffer_copy for read-only / non-contiguous buffers.
+        Anything else (array.array, list, tuple, iterable) is funnelled
+        through array.array("d", seq).
         """
         if isinstance(seq, float):
             seq = array("d", [seq])
@@ -90,14 +67,17 @@ class _FFIArray(Structure):
             # we've got an iterator or a generator, so consume it
             seq = array("d", seq)
         array_type = data_type * len(seq)
-        try:
-            raw_seq = array_type.from_buffer(seq.astype(np.float64))
-        except (TypeError, AttributeError):
+        if isinstance(seq, np.ndarray):
             try:
-                raw_seq = array_type.from_buffer_copy(seq.astype(np.float64))
-            except (TypeError, AttributeError):
-                # it's a list or a tuple
-                raw_seq = array_type.from_buffer(array("d", seq))
+                raw_seq = array_type.from_buffer(
+                    seq.astype(np.float64)  # ty: ignore[no-matching-overload]
+                )
+            except TypeError:
+                raw_seq = array_type.from_buffer_copy(
+                    seq.astype(np.float64)  # ty: ignore[no-matching-overload]
+                )
+        else:
+            raw_seq = array_type.from_buffer(array("d", seq))
         self.data = cast(raw_seq, c_void_p)
         self.len = len(seq)
 
