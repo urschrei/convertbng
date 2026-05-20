@@ -9,6 +9,16 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) u
 - `uv add convertbng`
 - `pip install convertbng`
 
+Pre-built wheels are published for every supported platform (see [Supported Platforms](#supported-platforms)), so the commands above install a ready-to-use binary and compile nothing.
+
+## How the package is built
+Coordinate conversion is performed by a pre-built Rust library, [`lonlat_bng`](https://github.com/urschrei/lonlat_bng), which `convertbng` links against over FFI. The Rust code is *not* compiled as part of this package: each wheel bundles the appropriate `lonlat_bng` shared library (`.dylib`, `.so`, or `.dll`) alongside the cbindgen-generated `header.h`.
+
+## Building from the source distribution (sdist)
+The sdist deliberately does **not** bundle the shared library or `header.h`: these are platform-specific build artefacts rather than source, so a single sdist cannot carry the correct ones for every platform. Installing a wheel is the supported path for the platforms listed below; building from the sdist is for everyone else.
+
+To build from the sdist, download the release archive for your platform from the [`lonlat_bng` releases](https://github.com/urschrei/lonlat_bng/releases) and extract its contents into `src/convertbng/` before building. Each archive contains the shared library (`liblonlat_bng.dylib`, `liblonlat_bng.so`, or `lonlat_bng.dll`, plus the MSVC import library on Windows) and the matching `header.h`. This is the same step CI performs before building each wheel.
+
 ## Installing for local development
 1. Ensure you have a copy of `liblonlat_bng` and `header.h` from https://github.com/urschrei/lonlat_bng/releases, and it's in the `src/convertbng` subdir
 2. run `uv sync --dev`
@@ -172,11 +182,8 @@ The main detail of interest is the FFI interface between Python and Rust, the Py
 The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to receive, safely access, return, and free data across the FFI boundary.  
 Finally, we link the Rust conversion functions from `util.py` [again](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L103-L205). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
 
-# Building the binary for local development
-- ensure you have Rust 1.x and Cargo [installed](https://www.rustup.rs)
-- download the Rust extension for your platform from [github](https://github.com/urschrei/rust_bng/releases)
-- copy the binary into the `convertbng` directory
-- run `python setup.py build_ext --inplace`
+# Building for local development
+You do **not** need a Rust toolchain: the `lonlat_bng` library is pre-built and downloaded from its [releases](https://github.com/urschrei/lonlat_bng/releases); this package only compiles the Cython extension and links against it. See [Installing for local development](#installing-for-local-development) above for the steps.
 
 # Tests
 - install `pytest`
