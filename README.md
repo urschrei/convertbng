@@ -3,7 +3,7 @@
 # Description
 A utility library for converting decimal [WGS84](http://spatialreference.org/ref/epsg/wgs-84/) longitude and latitude coordinates into ETRS89 ([EPSG:25830](http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/)) and/or British National Grid (More correctly: OSGB36, or [EPSG:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) Eastings and Northings, and vice versa.  
 
-Conversion is handled by a [Rust binary](https://github.com/urschrei/rust_bng) using FFI, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
+Conversion is handled by a [Rust binary](https://github.com/urschrei/lonlat_bng) using FFI, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
 
 # Installation
 - `uv add convertbng`
@@ -178,7 +178,7 @@ WGS84 and ETRS89 coordinates use the GRS80 ellipsoid, whereas OSGB36 uses the Ai
 [![OSTN15](ostn002_s.gif)]( "OSTN15")
 
 ## Implementation
-The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found in [util.py](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L64-L100) (the `ctypes` implementation), [cutil.pyx](https://github.com/urschrei/convertbng/blob/master/convertbng/cutil.pyx#L51-L86) (the `cython` implementation), and the Rust side of which can be found in [ffi.rs](https://github.com/urschrei/rust_bng/blob/master/src/ffi.rs#L47-L271).  
+The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found in [util.py](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L64-L100) (the `ctypes` implementation), [cutil.pyx](https://github.com/urschrei/convertbng/blob/master/convertbng/cutil.pyx#L51-L86) (the `cython` implementation), and the Rust side of which can be found in [ffi.rs](https://github.com/urschrei/lonlat_bng/blob/master/src/ffi.rs).  
 The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to receive, safely access, return, and free data across the FFI boundary.  
 Finally, we link the Rust conversion functions from `util.py` [again](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L103-L205). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
 
