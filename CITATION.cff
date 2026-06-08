@@ -7,7 +7,7 @@ authors:
     given-names: Stephan
     orcid: "https://orcid.org/0000-0003-4379-2450"
 title: "Convertbng"
-date-released: 2021-12-12
+date-released: 2026-06-08
 doi: "10.5281/zenodo.5774931"
 keywords:
   - geo
@@ -15,4 +15,4 @@ keywords:
   - polyline
 license: BlueOak-1.0.0
 repository-code: "https://github.com/urschrei/convertbng"
-version: "0.2.72"
+version: "1.0.0"
