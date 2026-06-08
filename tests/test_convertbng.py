@@ -18,6 +18,17 @@ from convertbng.util import (
 )
 
 
+def _round8(result):
+    """Round a (eastings/lons, northings/lats) FFI result to 8 decimal places.
+
+    The Rust library returns longitude/latitude at full f64 precision. The
+    published reference values are meaningful to ~8 d.p. (sub-millimetre), and
+    trig-derived coordinates are not bit-stable across the platforms convertbng
+    ships wheels for, so lon/lat results are compared at 8 d.p.
+    """
+    return ([round(v, 8) for v in result[0]], [round(v, 8) for v in result[1]])
+
+
 class ConvertbngTests(unittest.TestCase):
     """Tests for convert_bng"""
 
@@ -85,13 +96,13 @@ class ConvertbngTests(unittest.TestCase):
         for i, j in zip(extremes, expected):
             exp = ([j[0]], [j[1]])
             converted = convert_lonlat([i[0]], [i[1]])
-            self.assertEqual(exp, converted)
+            self.assertEqual(exp, _round8(converted))
 
     def testConvertBNG(self):
         """Test multithreaded BNG --> lon, lat function"""
         expected = ([-0.32822654, -2.01831268], [51.44533144, 54.58910534])
         result = convert_lonlat([516276, 398915], [173141, 521545])
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _round8(result))
 
     def testConvertLonLatSingle(self):
         """Test lon, lat --> BNG conversion of single values"""
@@ -107,7 +118,7 @@ class ConvertbngTests(unittest.TestCase):
 
     def testConvertString(self):
         """Test that an error is thrown for incorrect types"""
-        with self.assertRaises(ArgumentError) as result:
+        with self.assertRaises(ArgumentError):
             convert_bng(["Foo"], ["Bar"])
 
     def testConvertIterable(self):
@@ -219,7 +230,7 @@ class ConvertbngTests(unittest.TestCase):
         # expected = [[1.716073973], [52.658007833]]
         expected = ([1.71607397], [52.65800783])
         result = convert_osgb36_to_lonlat(651409.804, 313177.45)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _round8(result))
 
     def test_etrs89_to_osgb36(self):
         """Tests ETRS89 Eastings, Northings --> OSGB36 conversion"""
@@ -237,7 +248,7 @@ class ConvertbngTests(unittest.TestCase):
         """Tests ETRS89 --> Lon, Lat conversion"""
         expected = ([1.71607397], [52.65800783])
         result = convert_etrs89_to_lonlat(651307.003, 313255.686)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _round8(result))
 
     def test_lonlat_to_etrs89(self):
         """Tests Lon, Lat --> ETRS89 conversion"""
@@ -247,8 +258,9 @@ class ConvertbngTests(unittest.TestCase):
 
     def test_epsg3857_to_wgs84(self):
         """Tests EPSG3857 to WGS84 conversion"""
-        expected = ([-5.625000000783013], [52.48278022732355])
+        expected = ([-5.625], [52.48278023])
         result = convert_epsg3857_to_wgs84(-626172.1357121646, 6887893.4928337997)
+        self.assertEqual(expected, _round8(result))
 
     def test_large_array(self):
         """
