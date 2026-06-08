@@ -27,7 +27,9 @@ To build from the sdist, download the release archive for your platform from the
 Changes in `pyx` and `pxd` files, and the Rust library and header will bust the cache, triggering a rebuild when `uv` commands are run.
 
 ### Supported Python Versions
-Simplification supports all [_currently_ supported Python versions](https://devguide.python.org/versions/).
+convertbng supports all [_currently_ supported Python versions](https://devguide.python.org/versions/).
+
+Binary wheels target the CPython [Stable ABI](https://docs.python.org/3/c-api/stable.html) (`abi3`): a single `abi3` wheel per platform covers CPython 3.11 and later, while CPython 3.10 receives a standard version-specific wheel.
 
 ### Supported Platforms
 - Linux (`manylinux`-compatible) x86_64 and aarch64
