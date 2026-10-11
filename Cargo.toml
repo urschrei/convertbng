@@ -1,0 +1,24 @@
+[package]
+name = "convertbng"
+version = "1.0.0"
+authors = ["Stephan Hügel <urschrei@gmail.com>"]
+description = "Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform"
+repository = "https://github.com/urschrei/convertbng"
+license = "BlueOak-1.0.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[lib]
+name = "cutil"
+crate-type = ["cdylib"]
+
+[dependencies]
+lonlat_bng = "0.9.0"
+numpy = "0.29.0"
+pyo3 = { version = "0.29.3", features = ["abi3-py311"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

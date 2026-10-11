@@ -1,7 +1,7 @@
 [project]
 name = "convertbng"
 version = "1.0.0"
-description = "Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform via Rust FFI"
+description = "Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -36,25 +36,16 @@ dev = [
     "pytest>=8.4.1",
 ]
 
-[tool.scikit-build]
-minimum-version = "build-system.requires"
-wheel.packages = ["src/convertbng"]
-# Build a single Stable ABI (abi3) wheel for CPython 3.11+. Typed memoryviews,
-# which cutil.pyx relies on, are only available under the Limited API from
-# CPython 3.11 onwards, so that is the floor.
-wheel.py-api = "cp311"
+[tool.maturin]
+python-source = "src"
+module-name = "convertbng.cutil"
 
 [build-system]
-requires = [
-    "scikit-build-core>=0.11",
-    "numpy >= 2.0.0",
-    "cython >= 3.1.0",
-    "cython-cmake"
-]
-build-backend = "scikit_build_core.build"
+requires = ["maturin>=1.10,<2"]
+build-backend = "maturin"
 
 [tool.uv]
-cache-keys = [{ file = "pyproject.toml" }, { file = "src/**/*.{h,c,pyx,pxd,dylib,so,dll}" }, { file = "CMakeLists.txt" }]
+cache-keys = [{ file = "pyproject.toml" }, { file = "Cargo.toml" }, { file = "Cargo.lock" }, { file = "src/**/*.rs" }]
 
 [tool.pytest.ini_options]
 minversion = "8.4.1"
@@ -70,13 +61,12 @@ build-frontend = "build[uv]"
 test-requires = ["pytest"]
 test-command = "pytest {package}"
 
-[tool.cibuildwheel.macos]
-environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
+[tool.cibuildwheel.linux]
+# manylinux images don't ship a Rust toolchain
+before-all = "curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal"
+environment = { PATH = "$HOME/.cargo/bin:$PATH" }
 
-[tool.cibuildwheel.windows]
-# cibuildwheel 4.0.0 runs delvewheel by default on Windows. We already bundle
-# lonlat_bng.dll next to the extension module via CMake, and it is resolved at
-# runtime from the module's own directory, so the repair step is unnecessary and
-# fails because delvewheel does not search the wheel's package directory for
-# lonlat_bng.dll.
-repair-wheel-command = ""
+[tool.cibuildwheel.macos]
+# x86_64 wheels are cross-compiled on arm64 runners; maturin picks the target from ARCHFLAGS
+before-all = "rustup target add x86_64-apple-darwin aarch64-apple-darwin"
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }

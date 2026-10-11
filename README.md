@@ -3,7 +3,7 @@
 # Description
 A utility library for converting decimal [WGS84](http://spatialreference.org/ref/epsg/wgs-84/) longitude and latitude coordinates into ETRS89 ([EPSG:25830](http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/)) and/or British National Grid (More correctly: OSGB36, or [EPSG:27700](http://spatialreference.org/ref/epsg/osgb-1936-british-national-grid/)) Eastings and Northings, and vice versa.  
 
-Conversion is handled by a [Rust binary](https://github.com/urschrei/lonlat_bng) using FFI, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
+Conversion is handled by the Rust [`lonlat_bng`](https://github.com/urschrei/lonlat_bng) crate, and is quite fast. Some benchmarks can be found [here](https://github.com/urschrei/lonlat_bng#benchmark).
 
 # Installation
 - `uv add convertbng`
@@ -12,19 +12,17 @@ Conversion is handled by a [Rust binary](https://github.com/urschrei/lonlat_bng)
 Pre-built wheels are published for every supported platform (see [Supported Platforms](#supported-platforms)), so the commands above install a ready-to-use binary and compile nothing.
 
 ## How the package is built
-Coordinate conversion is performed by a pre-built Rust library, [`lonlat_bng`](https://github.com/urschrei/lonlat_bng), which `convertbng` links against over FFI. The Rust code is *not* compiled as part of this package: each wheel bundles the appropriate `lonlat_bng` shared library (`.dylib`, `.so`, or `.dll`) alongside the cbindgen-generated `header.h`.
+Coordinate conversion is performed by the Rust [`lonlat_bng`](https://github.com/urschrei/lonlat_bng) crate. `convertbng` is a [PyO3](https://pyo3.rs) extension module that depends on it directly, built with [maturin](https://www.maturin.rs). Each wheel contains a single compiled extension module, and no separate shared library.
 
 ## Building from the source distribution (sdist)
-The sdist deliberately does **not** bundle the shared library or `header.h`: these are platform-specific build artefacts rather than source, so a single sdist cannot carry the correct ones for every platform. Installing a wheel is the supported path for the platforms listed below; building from the sdist is for everyone else.
-
-To build from the sdist, download the release archive for your platform from the [`lonlat_bng` releases](https://github.com/urschrei/lonlat_bng/releases) and extract its contents into `src/convertbng/` before building. Each archive contains the shared library (`liblonlat_bng.dylib`, `liblonlat_bng.so`, or `lonlat_bng.dll`, plus the MSVC import library on Windows) and the matching `header.h`. This is the same step CI performs before building each wheel.
+Installing a wheel is the supported path for the platforms listed below. On any other platform, `pip` and `uv` will build the sdist, which requires a [Rust toolchain](https://rustup.rs).
 
 ## Installing for local development
-1. Ensure you have a copy of `liblonlat_bng` and `header.h` from https://github.com/urschrei/lonlat_bng/releases, and it's in the `src/convertbng` subdir
-2. run `uv sync --dev`
-3. run `pytest .`
+1. Ensure you have a [Rust toolchain](https://rustup.rs) installed
+2. run `uv sync --dev` (this builds the extension)
+3. run `uv run pytest`
 
-Changes in `pyx` and `pxd` files, and the Rust library and header will bust the cache, triggering a rebuild when `uv` commands are run.
+Changes to `Cargo.toml`, `Cargo.lock`, or any `.rs` file will bust the cache, triggering a rebuild when `uv` commands are run.
 
 ### Supported Python Versions
 convertbng supports all [_currently_ supported Python versions](https://devguide.python.org/versions/).
@@ -37,14 +35,13 @@ Binary wheels target the CPython [Stable ABI](https://docs.python.org/3/c-api/st
 - Windows 64-bit
 
 ### Windows Binaries
-The Rust DLL and the Cython extension used by this package have been built with an MSVC toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
+The extension module used by this package has been built with an MSVC toolchain. You shouldn't need to install any additional runtimes in order for the wheel to work, but please open an issue if you encounter any errors.
 
 # Usage
-The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Note the return type:  
-`"returns a list of two lists containing floats, respectively"`
+The functions accept either a sequence (such as a list or numpy array) of longitude or easting values and a sequence of latitude or northing values, **or** a single longitude/easting value and single latitude/northing value. Every function returns a tuple of two float64 NumPy arrays (e.g. Eastings and Northings).
 
 **NOTE**: Coordinate pairs outside the BNG bounding box, or without OSTN15 coverage will return a result of  
-`[[nan], [nan]]`, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
+`nan` in both arrays, which cannot be mapped. Since transformed coordinates are guaranteed to be returned in the same order as the input, it is trivial to check for this value. Alternatively, ensure your data fall within the bounding box before transforming them:  
 
 **Longitude**:  
 East: 1.7800  
@@ -53,10 +50,10 @@ West: -7.5600
 North: 60.8400  
 South: 49.9600  
 
-All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators.
+All functions try to be liberal about what containers they accept: `list`, `tuple`, `array.array`, `numpy.ndarray`, and pretty much anything that has the `__iter__` attribute should work, including generators. Inputs must be one-dimensional and the same length (a `ValueError` is raised otherwise), and must contain numbers (a `TypeError` is raised otherwise).
 
 ```python
-from convertbng.util import convert_bng, convert_lonlat
+from convertbng.cutil import convert_bng, convert_lonlat
 
 # convert a single value
 res = convert_bng(lon, lat)
@@ -74,7 +71,7 @@ res_list_en = convert_lonlat(eastings, northings)
 # assumes numpy imported as np
 lons_np = np.array(lons)
 lats_np = np.array(lats)
-    res_list_np = convert_bng(lons_np, lats_np)
+eastings_np, northings_np = convert_bng(lons_np, lats_np)
 ```
 
 # Accuracy
@@ -88,13 +85,6 @@ The [Rust library](https://github.com/urschrei/lonlat_bng) produces the followin
 | TP37       | 180862.461         | 1029604.114        | —            | —            | —          | -0.001     |
 | TP38       | 421300.525         | 1072147.239        | —            | —            | —          | -0.001     |
 
-# Cython Module
-If you're comfortable with restricting yourself to `NumPy f64` arrays, you may use the Cython functions instead. These are identical to those listed below, but performance on large datasets is better. They are selected by changing the import statement  
-`from convertbng.util import` to  
-**`from convertbng.cutil import`**  
-
-The conversion functions will accept most sequences which implement `__iter__`, as above (`list`, `tuple`, `float`, `array.array`, `numpy.ndarray`), but **will always return `NumPy f64 ndarray`**. In addition, you must ensure that your inputs are `float`, `f64`, or `d` in the case of `array.array`.  
-
 ## But I Have a List of Coordinate Pairs
 
 ```python
@@ -106,7 +96,7 @@ a, b = list(zip(*coords))
 ### But I have `Shapely` Geometries
 
 ```python
-from convertbng.util import convert_etrs89_to_ll
+from convertbng.cutil import convert_etrs89_to_ll
 from shapely.geometry import LineString
 from shapely.ops import transform
 from math import isnan
@@ -136,7 +126,7 @@ new_line = transform(convert_etrs89_to_lonlat_protect_nan, line)
 - transform longitudes and latitudes to ETRS89 Eastings and Northings, **very quickly** (without OSTN15 corrections):
     - use `convert_to_etrs89()`
 - transform ETRS89 Eastings and Northings to ETRS89 longitude and latitude, **very quickly** (the transformation does not use OSTN15):
-    - use `convert_etrs89_to_lonlat()`
+    - use `convert_etrs89_to_ll()`
 - convert ETRS89 Eastings and Northings to their most accurate real-world representation, using the OSTN15 corrections:
     - use `convert_etrs89_to_osgb36()`
 
@@ -180,12 +170,10 @@ WGS84 and ETRS89 coordinates use the GRS80 ellipsoid, whereas OSGB36 uses the Ai
 [![OSTN15](ostn002_s.gif)]( "OSTN15")
 
 ## Implementation
-The main detail of interest is the FFI interface between Python and Rust, the Python side of which can be found in [util.py](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L64-L100) (the `ctypes` implementation), [cutil.pyx](https://github.com/urschrei/convertbng/blob/master/convertbng/cutil.pyx#L51-L86) (the `cython` implementation), and the Rust side of which can be found in [ffi.rs](https://github.com/urschrei/lonlat_bng/blob/master/src/ffi.rs).  
-The [ctypes](https://docs.python.org/2/library/ctypes.html) library expects C-compatible data structures, which we define in Rust (see above). We then define methods which allow us to receive, safely access, return, and free data across the FFI boundary.  
-Finally, we link the Rust conversion functions from `util.py` [again](https://github.com/urschrei/convertbng/blob/master/convertbng/util.py#L103-L205). Note the `errcheck` assignments, which convert the FFI-compatible ctypes data structures to tuple lists. 
+The extension module is defined in [`src/lib.rs`](src/lib.rs). It copies each input into a Rust `Vec<f64>` (reading NumPy arrays and other float64 buffers directly), releases the GIL, and converts the coordinates in parallel using `lonlat_bng`'s threaded functions. The results are handed to NumPy without a further copy.
 
 # Building for local development
-You do **not** need a Rust toolchain: the `lonlat_bng` library is pre-built and downloaded from its [releases](https://github.com/urschrei/lonlat_bng/releases); this package only compiles the Cython extension and links against it. See [Installing for local development](#installing-for-local-development) above for the steps.
+You need a Rust toolchain. See [Installing for local development](#installing-for-local-development) above for the steps.
 
 # Tests
 - install `pytest`
