@@ -1,18 +1,17 @@
 import unittest
-from ctypes import ArgumentError
-from random import randint, randrange
+from random import randint
 
 import numpy as np
-from convertbng.cutil import convert_bng as cconvert_bng
+import pytest
 
-from convertbng.util import (
+from convertbng.cutil import (
     convert_bng,
     convert_epsg3857_to_wgs84,
-    convert_etrs89_to_lonlat,
+    convert_etrs89_to_ll,
     convert_etrs89_to_osgb36,
     convert_lonlat,
     convert_osgb36_to_etrs89,
-    convert_osgb36_to_lonlat,
+    convert_osgb36_to_ll,
     convert_to_etrs89,
     convert_to_osgb36,
 )
@@ -29,6 +28,11 @@ def _round8(result):
     return ([round(v, 8) for v in result[0]], [round(v, 8) for v in result[1]])
 
 
+def _lists(result):
+    """Convert a pair of result arrays to a pair of lists"""
+    return (result[0].tolist(), result[1].tolist())
+
+
 class ConvertbngTests(unittest.TestCase):
     """Tests for convert_bng"""
 
@@ -43,13 +47,13 @@ class ConvertbngTests(unittest.TestCase):
         result = convert_bng(
             [-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]
         )
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def testCythonConvertLonLat(self):
         """Test Cythonised multithreaded lon, lat --> BNG function"""
         expected = ([516274.46000000002, 398915.554], [173141.101, 521544.09000000003])
 
-        result = cconvert_bng(
+        result = convert_bng(
             np.array([-0.32824866, -2.0183041005533306]),
             np.array([51.44533267, 54.589097162646141]),
         )
@@ -64,7 +68,7 @@ class ConvertbngTests(unittest.TestCase):
             np.array([173141.098, 521544.088]),
         )
 
-        result = cconvert_bng(
+        result = convert_bng(
             [-0.32824866, -2.0183041005533306], [51.44533267, 54.589097162646141]
         )
         self.assertEqual(expected[0][0], result[0][0])
@@ -108,24 +112,24 @@ class ConvertbngTests(unittest.TestCase):
         """Test lon, lat --> BNG conversion of single values"""
         expected = ([651409.804], [313177.45])
         result = convert_bng(1.716073973, 52.658007833)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def testConvertTuple(self):
         """Test lon, lat --> BNG conversion of tuples"""
         expected = ([651409.804], [313177.45])
         result = convert_bng((1.716073973,), (52.658007833,))
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def testConvertString(self):
         """Test that an error is thrown for incorrect types"""
-        with self.assertRaises(ArgumentError):
+        with self.assertRaises(TypeError):
             convert_bng(["Foo"], ["Bar"])
 
     def testConvertIterable(self):
         """Test lon, lat --> BNG conversion of tuples"""
         expected = ([651409.804], [313177.45])
         result = convert_bng(iter([1.7160739736]), iter([52.658007833]))
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     # def testConvertArray(self):
     #     """ Test lon, lat --> BNG conversion of array.array """
@@ -142,7 +146,7 @@ class ConvertbngTests(unittest.TestCase):
         lon_generator = (n for n in inp[0])
         lat_generator = (n for n in inp[1])
         result = convert_bng(lon_generator, lat_generator)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def testNumpyConversion(self):
         """Test lon, lat --> BNG conversion of numpy arrays"""
@@ -181,25 +185,7 @@ class ConvertbngTests(unittest.TestCase):
         num_coords = 1000000
         lon_ls = np.random.uniform(W, E, [num_coords])
         lat_ls = np.random.uniform(S, N, [num_coords])
-        cconvert_bng(lon_ls, lat_ls)
-
-    def testCythonConsistency(self):
-        """Ensure Ctypes and Cython give same results"""
-        # London bounding box
-        N = 51.691874116909894
-        E = 0.3340155643740321
-        S = 51.28676016315085
-        W = -0.5103750689005356
-        num_coords = 100
-
-        rand = randrange(0, 100)
-        lon_ls = np.random.uniform(W, E, [num_coords])
-        lat_ls = np.random.uniform(S, N, [num_coords])
-        # result is a list, so convert to an array. Ugh.
-        res_ctypes = np.array(convert_bng(lon_ls, lat_ls)[0][rand])
-        res_cython = cconvert_bng(lon_ls, lat_ls)[0][rand]
-
-        self.assertEqual(res_ctypes, res_cython)
+        convert_bng(lon_ls, lat_ls)
 
     # def testBadValues(self):
     #     """ Test that values outside the bounding box return -1, -1 """
@@ -222,39 +208,39 @@ class ConvertbngTests(unittest.TestCase):
         """Tests lon, lat --> OSGB36 conversion"""
         expected = ([651409.804], [313177.45])
         result = convert_to_osgb36(1.716073973, 52.658007833)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def test_osgb36_to_lonlat(self):
         """Tests OSGB36 --> Lon, Lat conversion"""
         # Not sure why this is being truncated
         # expected = [[1.716073973], [52.658007833]]
         expected = ([1.71607397], [52.65800783])
-        result = convert_osgb36_to_lonlat(651409.804, 313177.45)
+        result = convert_osgb36_to_ll(651409.804, 313177.45)
         self.assertEqual(expected, _round8(result))
 
     def test_etrs89_to_osgb36(self):
         """Tests ETRS89 Eastings, Northings --> OSGB36 conversion"""
         expected = ([651409.804], [313177.45])
         result = convert_etrs89_to_osgb36(651307.003, 313255.686)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def test_osgb36_to_etrs89(self):
         """Tests OSGB36 --> ETRS89 Eastings, Northings conversion"""
         expected = ([651307.0032098937], [313255.68598407705])
         result = convert_osgb36_to_etrs89(651409.804, 313177.45)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def test_etrs89_to_lonlat(self):
         """Tests ETRS89 --> Lon, Lat conversion"""
         expected = ([1.71607397], [52.65800783])
-        result = convert_etrs89_to_lonlat(651307.003, 313255.686)
+        result = convert_etrs89_to_ll(651307.003, 313255.686)
         self.assertEqual(expected, _round8(result))
 
     def test_lonlat_to_etrs89(self):
         """Tests Lon, Lat --> ETRS89 conversion"""
         expected = ([651307.003], [313255.686])
         result = convert_to_etrs89(1.71607397, 52.65800783)
-        self.assertEqual(expected, result)
+        self.assertEqual(expected, _lists(result))
 
     def test_epsg3857_to_wgs84(self):
         """Tests EPSG3857 to WGS84 conversion"""
@@ -268,4 +254,62 @@ class ConvertbngTests(unittest.TestCase):
         Note: this segfault currently only appears when using ctypes
 
         """
-        [cconvert_bng([-1.89983], [52.48142]) for x in range(10000)]
+        [convert_bng([-1.89983], [52.48142]) for x in range(10000)]
+
+
+LON, LAT = 1.716073973, 52.658007833
+EXPECTED = ([651409.804], [313177.45])
+
+
+@pytest.mark.parametrize(
+    "make_input",
+    [
+        lambda v: v,
+        np.float64,
+        np.array,
+        lambda v: [v],
+        lambda v: iter([v]),
+        lambda v: (x for x in [v]),
+        lambda v: np.array([v, 0.0])[::2],
+        lambda v: np.array([v], dtype=np.longdouble),
+    ],
+)
+def test_accepted_inputs(make_input):
+    result = convert_bng(make_input(LON), make_input(LAT))
+    assert _lists(result) == EXPECTED
+
+
+def test_int_scalars():
+    assert _lists(convert_bng(1, 52)) == _lists(convert_bng(1.0, 52.0))
+
+
+def test_empty():
+    assert _lists(convert_bng([], [])) == ([], [])
+
+
+def test_mismatched_lengths():
+    with pytest.raises(ValueError, match="same length, got 2 and 1"):
+        convert_bng([LON, LON], [LAT])
+
+
+def test_two_dimensional():
+    with pytest.raises(ValueError, match="one-dimensional"):
+        convert_bng(np.array([[LON]]), np.array([[LAT]]))
+
+
+@pytest.mark.parametrize("bad", [None, "1.7", b"1.7", ["1.7"], [None]])
+def test_not_numbers(bad):
+    with pytest.raises(TypeError):
+        convert_bng(bad, [LAT])
+
+
+def test_returns_arrays():
+    e, n = convert_bng([LON], [LAT])
+    assert isinstance(e, np.ndarray) and e.dtype == np.float64 and e.flags.writeable
+    assert isinstance(n, np.ndarray) and n.dtype == np.float64
+
+
+def test_input_not_modified():
+    lons, lats = np.array([LON]), np.array([LAT])
+    convert_bng(lons, lats)
+    assert lons.tolist() == [LON] and lats.tolist() == [LAT]
