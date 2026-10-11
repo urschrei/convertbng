@@ -1,6 +1,6 @@
 [project]
 name = "convertbng"
-version = "1.0.0"
+version = "2.0.0"
 description = "Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform"
 readme = "README.md"
 requires-python = ">=3.11"

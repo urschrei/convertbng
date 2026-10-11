@@ -1,6 +1,6 @@
 [package]
 name = "convertbng"
-version = "1.0.0"
+version = "2.0.0"
 authors = ["Stephan Hügel <urschrei@gmail.com>"]
 description = "Fast lon, lat to and from ETRS89 and BNG (OSGB36) using the OS OSTN15 transform"
 repository = "https://github.com/urschrei/convertbng"
